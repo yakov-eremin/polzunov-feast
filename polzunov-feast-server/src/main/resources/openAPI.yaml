@@ -1,0 +1,305 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI Specification for Polzunov.Feast (clients)
+  version: '0.1'
+  description:
+    Протокол сетевого обмена для приложения Polzunov.Feast (клиентская часть).
+servers:
+  - url: 'http://localhost:8080' #поменять на реальный адрес сервера
+security:
+  - bearerAuth: []
+tags:
+  - name: user
+    description: Операции, связанные с профилем пользователя.
+  - name: route
+    description: Операции, связанные с маршрутом.
+  - name: event
+    description: Операции, связанные с событиями.
+
+paths:
+  ###################################### user ############################################################################
+  /user/signIn:
+    post:
+      summary: Аутентификация пользователя.
+      operationId: signInUser
+      security: []
+      tags:
+        - user
+      requestBody:
+        description: Передается логин и пароль пользователя.
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: Пользователь аутентифицирован, в теле ответа - его JWT.
+          content:
+            'text/plain':
+              schema:
+                type: string
+                format: JWT
+                example: eyJraWQiOiIwNmRhYjlkNS04MDQwLTQ2MjgtYTc5Zi01OGJhY2UzYWE2NTUiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoidXNlciIsImV4cCI6MTY3MTc5NjE5MCwiaWF0IjoxNjcxNzkyNTkwLCJzY29wZSI6InJlYWQifQ.vfVqGvaYUWq49ytQiRMRXzE0_vlQykbmhlrhv_lY3dvqwohyW239bKIAQ4E3mWB2dc4jgPc2cyP0a4VvrNcWZvI72rLzBtUYAhXa1zNmIrsoi0xNV7wZ2SGlmJZrA7vxLoaMaKH3oMOBmZQf9M2t_d4UptOHEd90czc6TG6tsq8x9K8Xb9t5MucPpfgr0vxSo8cR0fdGrUgbRMnbHM-aLVhRZ7TYWe7jnBC61FOZRoF6-L0_PL-Eo5uQWOjsI8TRzsjSwYlebN0VlxKQjVV7sVTFVuvSJxmlL0722kohifPMaiJ2bc0VS4_fZGVT-J_e3D1YxEzloZPNfMc-8gZZNw
+        '400':
+          description: BAD REQUEST
+        '500':
+          description: INTERNAL SERVER ERROR
+
+  /user/signUp:
+    post:
+      summary: Регистрация нового пользователя.
+      operationId: signUpUser
+      security: []
+      tags:
+        - user
+      requestBody:
+        description: Передается объект User, которого нужно зарегистрировать.
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Пользователь зарегистрирован, в теле ответа - его JWT.
+          content:
+            'text/plain':
+              schema:
+                type: string
+                format: JWT
+                example: eyJraWQiOiIwNmRhYjlkNS04MDQwLTQ2MjgtYTc5Zi01OGJhY2UzYWE2NTUiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoidXNlciIsImV4cCI6MTY3MTc5NjE5MCwiaWF0IjoxNjcxNzkyNTkwLCJzY29wZSI6InJlYWQifQ.vfVqGvaYUWq49ytQiRMRXzE0_vlQykbmhlrhv_lY3dvqwohyW239bKIAQ4E3mWB2dc4jgPc2cyP0a4VvrNcWZvI72rLzBtUYAhXa1zNmIrsoi0xNV7wZ2SGlmJZrA7vxLoaMaKH3oMOBmZQf9M2t_d4UptOHEd90czc6TG6tsq8x9K8Xb9t5MucPpfgr0vxSo8cR0fdGrUgbRMnbHM-aLVhRZ7TYWe7jnBC61FOZRoF6-L0_PL-Eo5uQWOjsI8TRzsjSwYlebN0VlxKQjVV7sVTFVuvSJxmlL0722kohifPMaiJ2bc0VS4_fZGVT-J_e3D1YxEzloZPNfMc-8gZZNw
+        '400':
+          description: BAD REQUEST
+        '500':
+          description: INTERNAL SERVER ERROR
+
+  /user/update:
+    post:
+      summary: Обновление профиля пользователя.
+      operationId: updateUser
+      tags:
+        - user
+      requestBody:
+        description: Передается объект User с новыми данными.
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Профиль пользователя обновлен.
+        '400':
+          description: BAD REQUEST
+        '401':
+          description: UNAUTHORIZED
+        '500':
+          description: INTERNAL SERVER ERROR
+
+  /user/delete:
+    get:
+      summary: Удаление профиля пользователя.
+      operationId: deleteUser
+      tags:
+        - user
+      responses:
+        '200':
+          description: Пользователь удален.
+        '400':
+          description: BAD REQUEST
+        '401':
+          description: UNAUTHORIZED
+        '500':
+          description: INTERNAL SERVER ERROR
+
+##################################### events ###########################################################################
+  /event/getAll:
+    get:
+      summary: Получение списка событий.
+      operationId: getAllEvents
+      security: [] #события могут получать все пользователи, в том числе не зарегистрированные
+      tags:
+        - event
+      responses:
+        '200':
+          description: События отправлены.
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: BAD REQUEST
+        '500':
+          description: INTERNAL SERVER ERROR
+
+############################################ route #####################################################################
+  /route/get:
+    get:
+      summary: Получение маршрута пользователя.
+      operationId: getUserRoute
+      tags:
+        - route
+      responses:
+        '200':
+          description: Маршрут отправлен.
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Route'
+        '400':
+          description: BAD REQUEST
+        '401':
+          description: UNAUTHORIZED
+        '500':
+          description: INTERNAL SERVER ERROR
+
+  /route/createNew:
+    post:
+      summary: Сохранение нового маршрута.
+      operationId: createNewUserRoute
+      tags:
+        - route
+      requestBody:
+        description: Передается новый объект Route.
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Route'
+      responses:
+        '200':
+          description: Маршрут сохранен.
+        '400':
+          description: BAD REQUEST
+        '401':
+          description: UNAUTHORIZED
+        '500':
+          description: INTERNAL SERVER ERROR
+
+  /route/update:
+    post:
+      summary: Обновление сущесвтвующего маршрута.
+      operationId: updateUserRoute
+      tags:
+        - route
+      requestBody:
+        description: Передается объект Route с новыми данными.
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Route'
+      responses:
+        '200':
+          description: Изменения маршрута сохранены.
+        '400':
+          description: BAD REQUEST
+        '401':
+          description: UNAUTHORIZED
+        '500':
+          description: INTERNAL SERVER ERROR
+
+  /route/delete:
+    get:
+      summary: Удаление маршрута пользователя.
+      operationId: deleteUserRoute
+      tags:
+        - route
+      responses:
+        '200':
+          description: Маршрут удален.
+        '400':
+          description: BAD REQUEST
+        '401':
+          description: UNAUTHORIZED
+        '500':
+          description: INTERNAL SERVER ERROR
+
+#################################### Передаваемые объекты ##############################################################
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        login:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+    Credentials:
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        timeStart:
+          type: string
+        timeEnd:
+          type: string
+        place:
+          $ref: '#/components/schemas/Place'
+        pathDescription:
+          type: string
+        age:
+          type: integer
+    Place:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        address:
+          type: string
+        descriptionLocation:
+          type: string
+    Route:
+      type: object
+      properties:
+        id:
+          type: integer
+        routeNodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteNode'
+    RouteNode:
+      type: object
+      properties:
+        id:
+          type: integer
+        event:
+          $ref: '#/components/schemas/Event'
+        currentTransport:
+          $ref: '#/components/schemas/Transport'
+        movingTime:
+          type: integer
+        estimateArrivingTime:
+          type: integer
+        possibleTransport:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transport'
+    Transport:
+      type: string
+      enum:
+        - foot
+        - bus
+        - car
