@@ -269,7 +269,7 @@ components:
           type: string
         address:
           type: string
-        descriptionLocation:
+        locationDescription:
           type: string
     Route:
       type: object
