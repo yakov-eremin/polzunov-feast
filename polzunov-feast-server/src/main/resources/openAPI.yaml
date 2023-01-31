@@ -226,7 +226,7 @@ components:
       properties:
         id:
           type: integer
-        login:
+        username:
           type: string
         password:
           type: string
@@ -239,7 +239,7 @@ components:
     Credentials:
       type: object
       properties:
-        login:
+        username:
           type: string
         password:
           type: string
