@@ -2,7 +2,7 @@
 CREATE TABLE users
 (
     user_id integer NOT NULL,
-    login character varying(25) NOT NULL,
+    username character varying(25) NOT NULL,
     password character varying(25) NOT NULL,
     name character varying(15) NOT NULL,
     phone character varying(11) NOT NULL,

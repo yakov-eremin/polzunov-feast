@@ -10,4 +10,6 @@ public interface UserEntityRepository extends Repository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
 
     UserEntity save(UserEntity user);
+
+    boolean existsByUsername(String username);
 }

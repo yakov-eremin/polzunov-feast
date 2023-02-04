@@ -24,7 +24,9 @@ public class UserEntity implements UserDetails {
 
     @Column(unique = true)
     private final String username;
+
     private final String password;
+    private final String name;
     private final String phone;
     private final String email;
     private final Role role;
