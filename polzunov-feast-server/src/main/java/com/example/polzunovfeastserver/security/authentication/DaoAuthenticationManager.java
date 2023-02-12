@@ -35,8 +35,8 @@ public class DaoAuthenticationManager implements AuthenticationManager {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UserEntity user = userLoader.loadUserByUsername(authentication.getName());
 
-        String presentedPassword = authentication.getCredentials().toString();
-        if (!encoder.matches(user.getPassword(), presentedPassword))
+        String rawPresentedPassword = authentication.getCredentials().toString();
+        if (!encoder.matches(rawPresentedPassword, user.getPassword()))
             throw new BadCredentialsException("Неверный пароль пользователя " + user.getUsername());
 
         var result = UsernamePasswordAuthenticationToken.authenticated(

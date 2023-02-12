@@ -1,7 +1,9 @@
 package com.example.polzunovfeastserver.service;
 
+import com.example.polzunovfeastserver.constant.Role;
 import com.example.polzunovfeastserver.entity.UserEntity;
 import com.example.polzunovfeastserver.exception.UsernameAlreadyExistsException;
+import com.example.polzunovfeastserver.mapper.UserMapper;
 import com.example.polzunovfeastserver.repository.UserEntityRepository;
 import com.example.polzunovfeastserver.security.authentication.DaoAuthenticationManager;
 import com.example.polzunovfeastserver.security.jwt.TokenService;
@@ -16,20 +18,20 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import static com.example.polzunovfeastserver.constant.Role.ROLE_USER;
-
 @Service
 public class UserService implements UserServiceInterface {
 
     private final UserEntityRepository userEntityRepo;
     private final DaoAuthenticationManager authManager;
     private final TokenService tokenService;
+    private final UserMapper userMapper;
 
 
-    public UserService(UserEntityRepository userEntityRepo, TokenService tokenService, DaoAuthenticationManager authManager) {
+    public UserService(UserEntityRepository userEntityRepo, TokenService tokenService, DaoAuthenticationManager authManager, UserMapper userMapper) {
         this.userEntityRepo = userEntityRepo;
         this.tokenService = tokenService;
         this.authManager = authManager;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -41,7 +43,7 @@ public class UserService implements UserServiceInterface {
         if (userEntityRepo.existsByUsername(user.getUsername()))
             throw new UsernameAlreadyExistsException("Пользователь с username " + user.getUsername() + " уже существует.");
 
-        UserEntity userEntity = convertUserToUserEntity(user);
+        UserEntity userEntity = userMapper.toUserEntityWithEncodedPassword(user, Role.ROLE_USER);
         userEntityRepo.save(userEntity);
 
         Authentication auth = authManager.authenticate(
@@ -62,16 +64,5 @@ public class UserService implements UserServiceInterface {
         );
 
         return tokenService.generateToken(auth);
-    }
-
-    private UserEntity convertUserToUserEntity(User user) {
-        return new UserEntity(
-                user.getUsername(),
-                user.getPassword(),
-                user.getName(),
-                user.getPhone(),
-                user.getEmail(),
-                ROLE_USER
-        );
     }
 }
