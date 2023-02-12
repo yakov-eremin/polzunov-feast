@@ -1,6 +1,8 @@
 package com.example.polzunovfeastserver.security.jwt;
 
+import com.example.polzunovfeastserver.entity.UserEntity;
 import org.openapitools.model.Token;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -21,7 +23,7 @@ public class TokenService {
     }
 
     /**
-     * @return {@link Token} типа Bearer, действующий 1 час
+     * @return {@link Token} типа Bearer, содержащий username, authorities, действующий 1 час
      */
     public Token generateToken(Authentication authentication) {
         Instant now = Instant.now();
@@ -42,5 +44,17 @@ public class TokenService {
         token.setAccessToken(tokenValue);
         token.setTokenType("Bearer");
         return token;
+    }
+
+    /**
+     * @return {@link Token} типа Bearer, содержащий username, authorities, действующий 1 час
+     */
+    public Token generateToken(UserEntity user) {
+        Authentication auth = new  UsernamePasswordAuthenticationToken(
+                user.getUsername(),
+                user.getPassword(),
+                user.getAuthorities()
+        );
+        return generateToken(auth);
     }
 }

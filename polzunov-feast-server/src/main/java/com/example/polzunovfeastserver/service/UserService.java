@@ -2,7 +2,8 @@ package com.example.polzunovfeastserver.service;
 
 import com.example.polzunovfeastserver.constant.Role;
 import com.example.polzunovfeastserver.entity.UserEntity;
-import com.example.polzunovfeastserver.exception.UsernameAlreadyExistsException;
+import com.example.polzunovfeastserver.exception.registration.RegistrationException;
+import com.example.polzunovfeastserver.exception.registration.UsernameAlreadyTakenException;
 import com.example.polzunovfeastserver.mapper.UserMapper;
 import com.example.polzunovfeastserver.repository.UserEntityRepository;
 import com.example.polzunovfeastserver.security.authentication.DaoAuthenticationManager;
@@ -35,22 +36,17 @@ public class UserService implements UserServiceInterface {
     }
 
     /**
-     * @throws UsernameAlreadyExistsException пользователь с таким username уже существует
-     * @throws BadCredentialsException передан неверный пароль
+     * @throws UsernameAlreadyTakenException пользователь с таким username уже существует
      */
     @Override
-    public Token signUp(User user) throws AuthenticationException {
+    public Token signUp(User user) throws RegistrationException {
         if (userEntityRepo.existsByUsername(user.getUsername()))
-            throw new UsernameAlreadyExistsException("Пользователь с username " + user.getUsername() + " уже существует.");
+            throw new UsernameAlreadyTakenException("Пользователь с username " + user.getUsername() + " уже существует.");
 
         UserEntity userEntity = userMapper.toUserEntityWithEncodedPassword(user, Role.ROLE_USER);
         userEntityRepo.save(userEntity);
 
-        Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
-        );
-
-        return tokenService.generateToken(auth);
+        return tokenService.generateToken(userEntity);
     }
 
     /**

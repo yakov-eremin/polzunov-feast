@@ -67,8 +67,8 @@ paths:
                 $ref: '#/components/schemas/Token'
         '400':
           description: BAD REQUEST
-        '401':
-          description: UNAUTHORIZED
+        '409':
+          description: Пользователь с таким username уже существует
         '500':
           description: INTERNAL SERVER ERROR
 
@@ -177,7 +177,7 @@ paths:
 
   /route/update:
     post:
-      summary: Обновление сущесвтвующего маршрута.
+      summary: Обновление существующего маршрута.
       operationId: updateUserRoute
       tags:
         - route
@@ -235,7 +235,7 @@ components:
         username:
           type: string
         password:
-          type: string
+          type: string #TODO разобраться, как пересылать CharSequence вместо String
         name:
           type: string
         phone:
