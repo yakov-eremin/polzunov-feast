@@ -217,7 +217,7 @@ paths:
 components:
   securitySchemes:
     bearerAuth:
-      type: http
+      type: http #поменять на https
       scheme: bearer
       bearerFormat: JWT
   schemas:
