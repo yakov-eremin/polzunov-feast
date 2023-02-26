@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
+
     private final PasswordEncoder encoder;
 
     public UserMapper(PasswordEncoder encoder) {

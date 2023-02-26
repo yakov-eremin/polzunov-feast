@@ -221,6 +221,22 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        validationViolations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationViolation'
+    ValidationViolation:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        message:
+          type: string
     Token:
       type: object
       properties:
