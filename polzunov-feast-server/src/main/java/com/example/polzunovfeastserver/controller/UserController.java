@@ -2,6 +2,7 @@ package com.example.polzunovfeastserver.controller;
 
 import com.example.polzunovfeastserver.exception.registration.UsernameAlreadyTakenException;
 import com.example.polzunovfeastserver.service.interfaces.UserServiceInterface;
+import com.example.polzunovfeastserver.validation.validator.CredentialsValidator;
 import com.example.polzunovfeastserver.validation.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.api.UserApi;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class UserController implements UserApi {
 
     private final UserServiceInterface userService;
     private final UserValidator userValidator;
+    private final CredentialsValidator credentialsValidator;
 
     @Override
     public ResponseEntity<Token> signUpUser(@Valid User user) {
@@ -35,7 +38,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<Token> signInUser(Credentials credentials) {
+    public ResponseEntity<Token> signInUser(@Valid Credentials credentials) {
         try {
             return ResponseEntity.ok(userService.signIn(credentials));
         } catch (UsernameNotFoundException e) {
@@ -47,6 +50,12 @@ public class UserController implements UserApi {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(userValidator);
+        Optional<Object> validator = Optional.ofNullable(binder.getTarget()).
+                filter(field -> field.getClass().equals(User.class));
+
+        if (validator.isPresent())
+            binder.setValidator(userValidator);
+        else
+            binder.setValidator(credentialsValidator);
     }
 }
