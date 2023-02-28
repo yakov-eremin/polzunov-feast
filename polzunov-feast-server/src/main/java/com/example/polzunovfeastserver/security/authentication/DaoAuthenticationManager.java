@@ -1,6 +1,7 @@
 package com.example.polzunovfeastserver.security.authentication;
 
 import com.example.polzunovfeastserver.entity.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,15 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class DaoAuthenticationManager implements AuthenticationManager {
 
     private final UserEntityLoader userLoader;
     private final PasswordEncoder encoder;
-
-    public DaoAuthenticationManager(UserEntityLoader userLoader, PasswordEncoder encoder) {
-        this.userLoader = userLoader;
-        this.encoder = encoder;
-    }
 
     /**
      * Аутентифицирует объект {@link Authentication}, сравнивая переданный и действительный пароли.
@@ -37,12 +34,13 @@ public class DaoAuthenticationManager implements AuthenticationManager {
 
         String rawPresentedPassword = authentication.getCredentials().toString();
         if (!encoder.matches(rawPresentedPassword, user.getPassword()))
-            throw new BadCredentialsException("Неверный пароль пользователя " + user.getUsername());
+            throw new BadCredentialsException(String.format("Wrong password for user \"%s\"", user.getUsername()));
 
         var result = UsernamePasswordAuthenticationToken.authenticated(
                 authentication.getPrincipal(),
                 authentication.getCredentials(),
-                user.getAuthorities());
+                user.getAuthorities()
+        );
         result.setDetails(authentication.getDetails());
 
         return result;

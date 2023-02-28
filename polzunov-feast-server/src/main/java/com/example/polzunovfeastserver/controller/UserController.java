@@ -1,18 +1,14 @@
 package com.example.polzunovfeastserver.controller;
 
-import com.example.polzunovfeastserver.exception.registration.UsernameAlreadyTakenException;
 import com.example.polzunovfeastserver.service.interfaces.UserServiceInterface;
-import com.example.polzunovfeastserver.validation.validator.CredentialsValidator;
-import com.example.polzunovfeastserver.validation.validator.UserValidator;
+import com.example.polzunovfeastserver.validator.CredentialsValidator;
+import com.example.polzunovfeastserver.validator.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.api.UserApi;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
 import org.openapitools.model.User;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,26 +26,17 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<Token> signUpUser(@Valid User user) {
-        try {
-            return ResponseEntity.ok(userService.signUp(user));
-        } catch (UsernameAlreadyTakenException e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        return ResponseEntity.ok(userService.signUp(user));
     }
 
     @Override
     public ResponseEntity<Token> signInUser(@Valid Credentials credentials) {
-        try {
-            return ResponseEntity.ok(userService.signIn(credentials));
-        } catch (UsernameNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return ResponseEntity.ok(userService.signIn(credentials));
     }
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
+        //Назначаем валидатор в зависимости от класса проверяемого объекта
         Optional<Object> validator = Optional.ofNullable(binder.getTarget()).
                 filter(field -> field.getClass().equals(User.class));
 

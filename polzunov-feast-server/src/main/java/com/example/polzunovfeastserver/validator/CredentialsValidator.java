@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.validation.validator;
+package com.example.polzunovfeastserver.validator;
 
 import org.openapitools.model.Credentials;
 import org.springframework.stereotype.Component;
@@ -14,6 +14,6 @@ public class CredentialsValidator extends AbstractValidator {
     @Override
     public void validate(Object target, Errors errors) {
         rejectIfBlank(errors, "username");
-        rejectIfBlank(errors, "password");
+        rejectIfBlank(errors, "password"); //TODO усилить валидацию пароля
     }
 }
