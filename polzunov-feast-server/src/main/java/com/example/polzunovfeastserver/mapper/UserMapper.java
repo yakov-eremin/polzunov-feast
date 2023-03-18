@@ -16,7 +16,7 @@ public class UserMapper {
     }
 
     /**
-     * @return {@link UserEntity} с закодированным с помощью {@link PasswordEncoder} паролем
+     * @return {@link UserEntity} with encoded password
      */
     public UserEntity toUserEntityWithEncodedPassword(User user, Role role) {
         return new UserEntity(

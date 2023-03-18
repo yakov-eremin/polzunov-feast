@@ -1,7 +1,6 @@
 package com.example.polzunovfeastserver.security.authentication;
 
 import com.example.polzunovfeastserver.entity.UserEntity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,21 +11,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class DaoAuthenticationManager implements AuthenticationManager {
 
     private final UserEntityLoader userLoader;
     private final PasswordEncoder encoder;
 
+    public DaoAuthenticationManager(UserEntityLoader userLoader, PasswordEncoder encoder) {
+        this.userLoader = userLoader;
+        this.encoder = encoder;
+    }
+
     /**
-     * Аутентифицирует объект {@link Authentication}, сравнивая переданный и действительный пароли.
+     * Attempts to authenticate {@link Authentication} object by comparing presented and provided passwords.
      * <p>
      *
-     * @param authentication следует передавать {@link UsernamePasswordAuthenticationToken},
-     *                       как самую простую реализацию интерфейса {@link Authentication}.
-     * @return новый {@link UsernamePasswordAuthenticationToken} с добавлением authorities аутентифицированного пользователя.
-     * @throws UsernameNotFoundException пользователь не найден
-     * @throws BadCredentialsException   передан неверный пароль
+     * @param authentication only {@link UsernamePasswordAuthenticationToken} is supported.
+     * @return new {@link UsernamePasswordAuthenticationToken} with authorities of authenticated user.
+     * @throws UsernameNotFoundException username wasn't found
+     * @throws BadCredentialsException wrong password
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

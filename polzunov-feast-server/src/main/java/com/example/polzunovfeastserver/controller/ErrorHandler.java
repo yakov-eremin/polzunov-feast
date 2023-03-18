@@ -1,8 +1,7 @@
 package com.example.polzunovfeastserver.controller;
 
-import com.example.polzunovfeastserver.exception.registration.DefaultMessageNotProvidedException;
 import com.example.polzunovfeastserver.exception.registration.UsernameAlreadyTakenException;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.ErrorResponse;
 import org.openapitools.model.ValidationViolation;
 import org.springframework.context.MessageSource;
@@ -21,50 +20,52 @@ import java.util.Locale;
 
 import static org.springframework.http.HttpStatus.*;
 
+@Slf4j
 @RestControllerAdvice
-@RequiredArgsConstructor
 public class ErrorHandler {
     private final MessageSource messageSource;
+
+    public ErrorHandler(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(UNAUTHORIZED)
     public ErrorResponse onBadCredentialsException(BadCredentialsException e) {
+        String message = getErrorMessage(
+                "ErrorResponse.message.badCredentials", e, "Incorrect password");
+        log.warn(message, e);
         ErrorResponse response = new ErrorResponse();
-        response.setMessage(
-                getErrorMessage("ErrorResponse.message.badCredentials", e)
-        );
+        response.setMessage(message);
         return response;
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ErrorResponse onUsernameNotFoundException(UsernameNotFoundException e) {
+        String message = getErrorMessage(
+                "ErrorResponse.message.usernameNotFound", e, "Username not found");
+        log.warn(message, e);
         ErrorResponse response = new ErrorResponse();
-        response.setMessage(
-                getErrorMessage("ErrorResponse.message.usernameNotFound", e)
-        );
+        response.setMessage(message);
         return response;
     }
 
     @ExceptionHandler(UsernameAlreadyTakenException.class)
     @ResponseStatus(CONFLICT)
     public ErrorResponse UsernameAlreadyTakenException(UsernameAlreadyTakenException e) {
+        String message = getErrorMessage(
+                "ErrorResponse.message.usernameAlreadyTaken", e, "Username already taken");
+        log.warn(message, e);
         ErrorResponse response = new ErrorResponse();
-        response.setMessage(
-                getErrorMessage("ErrorResponse.message.usernameAlreadyTaken", e)
-        );
+        response.setMessage(message);
         return response;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(BAD_REQUEST)
     public ErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        ErrorResponse error = new ErrorResponse();
-        error.setMessage(
-                getErrorMessage("ErrorResponse.message.validation", e)
-        );
         List<ValidationViolation> violations = new ArrayList<>();
-        error.setValidationViolations(violations);
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
             ValidationViolation violation = new ValidationViolation();
             violation.setFieldName(fieldError.getField());
@@ -73,44 +74,52 @@ public class ErrorHandler {
 
             violations.add(violation);
         }
+        ErrorResponse error = new ErrorResponse();
+        String message = getErrorMessage(
+                "ErrorResponse.message.validation", e, "Validation failed");
+        error.setMessage(message);
+        error.setValidationViolations(violations);
+        log.warn("{}: {}", message, error, e);
         return error;
     }
 
     private String getViolationMessage(FieldError fieldError) {
+        String errorCode = fieldError.getCode();
+        Object[] args = fieldError.getArguments();
+        String objectName = fieldError.getObjectName();
+        String field = fieldError.getField();
+
         String message;
         try {
-            message = messageSource.getMessage(
-                    fieldError.getCode(),
-                    fieldError.getArguments(),
-                    Locale.getDefault()
-            );
+            message = messageSource.getMessage(errorCode, args, Locale.getDefault());
         } catch (NoSuchMessageException e) {
-            //TODO добавить логирование о том, что не нашлось сообщения
+            log.warn("Message for error code = \"{}\" and args = \"{}\" wasn't found. Object name = \"{}\", field = \"{}\"",
+                    errorCode, args, objectName, field);
             message = fieldError.getDefaultMessage();
         }
-        if (message == null)
-            throw new DefaultMessageNotProvidedException(
-                    String.format(
-                            "No default message provided for field \"%s\"", fieldError.getField())
-            );
+        if (message == null) {
+            log.warn("Default message for field = \"{}\" of object = \"{}\" wasn't found",
+                    field, objectName);
+            return "Unknown validation error";
+        }
 
         return message;
     }
 
-    //TODO как передавать аргументы к сообщению об ошибке?
-    private String getErrorMessage(String errorCode, Exception e) {
+    //TODO how to pass error arguments? What should carry those args? Probably, exceptions
+    private String getErrorMessage(String errorCode, Throwable e, String defaultMessage) {
         String message;
         try {
-            message = messageSource.getMessage(
-                    errorCode, null, Locale.getDefault()
-            );
+            message = messageSource.getMessage(errorCode, null, Locale.getDefault());
         } catch (NoSuchMessageException ex) {
-            //TODO добавить логирование о том, что не нашлось сообщения
+            log.warn("Message for error code = \"{}\" wasn't found", errorCode);
             message = e.getMessage();
         }
 
-        if (message == null)
-            throw new DefaultMessageNotProvidedException("No message provided for exception", e);
+        if (message == null) {
+            log.warn("Exception didn't have a message", e);
+            message = defaultMessage;
+        }
 
         return message;
     }
@@ -118,11 +127,9 @@ public class ErrorHandler {
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     public ErrorResponse onThrowable(Throwable e) {
+        log.error("Unexpected error occurred", e);
         ErrorResponse response = new ErrorResponse();
         response.setMessage("Internal server error");
-        //TODO добавить логирование с сообщением ошибки
         return response;
     }
-
-    //TODO как переопределить, что возвращается при обращении по несуществующему пути (пока что возвращает дефолтное сообщение спринга)
 }

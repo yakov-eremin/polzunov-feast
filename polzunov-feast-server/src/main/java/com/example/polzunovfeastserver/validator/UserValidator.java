@@ -16,7 +16,7 @@ public class UserValidator extends AbstractValidator {
     @Override
     public void validate(Object target, Errors errors) {
         rejectIfBlank(errors, "username");
-        rejectIfBlank(errors, "password"); //#TODO усилить валидацию пароля
+        rejectIfBlank(errors, "password");
         rejectIfBlank(errors, "name");
 
         rejectIfNull(errors,"phone");

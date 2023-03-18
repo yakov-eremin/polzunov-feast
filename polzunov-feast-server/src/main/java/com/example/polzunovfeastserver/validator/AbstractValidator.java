@@ -26,14 +26,14 @@ public abstract class AbstractValidator implements Validator {
     protected void rejectIfBadEmail(Errors errors, String field) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         String errorCode = "ValidationViolation.message.email";
-        String defaultMessage = String.format("Field \"%s\" must be a well-formatted email.", field);
+        String defaultMessage = String.format("Field \"%s\" must be a well-formed email.", field);
         rejectIfDoesntMatchPattern(errors, field, emailRegex, errorCode, defaultMessage);
     }
 
     protected void rejectIfBadPhone(Errors errors, String field) {
         String phoneRegex = "^\\+?[0-9]{1,3}[- ]?\\(?[0-9]{3}\\)?[- ]?[0-9]{3}[- ]?[0-9]{4}$";
         String errorCode = "ValidationViolation.message.phone";
-        String defaultMessage = String.format("Field \"%s\" must be a well-formatted phone number.", field);
+        String defaultMessage = String.format("Field \"%s\" must be a well-formed phone number.", field);
         rejectIfDoesntMatchPattern(errors, field, phoneRegex, errorCode, defaultMessage);
     }
 

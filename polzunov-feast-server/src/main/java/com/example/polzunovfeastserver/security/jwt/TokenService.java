@@ -23,7 +23,7 @@ public class TokenService {
     }
 
     /**
-     * @return {@link Token} типа Bearer, содержащий username, authorities, действующий 1 час
+     * @return {@link Token} of type Bearer, contains: username, authorities. Valid for one hour.
      */
     public Token generateToken(Authentication authentication) {
         Instant now = Instant.now();
@@ -47,7 +47,7 @@ public class TokenService {
     }
 
     /**
-     * @return {@link Token} типа Bearer, содержащий username, authorities, действующий 1 час
+     * @return {@link Token} of type Bearer, contains: username, authorities. Valid for one hour.
      */
     public Token generateToken(UserEntity user) {
         Authentication auth = new  UsernamePasswordAuthenticationToken(

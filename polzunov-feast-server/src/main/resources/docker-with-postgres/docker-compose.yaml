@@ -5,7 +5,7 @@ services:
     image: postgres:15.1-alpine
     environment:
       POSTGRES_DB: 'feast_db'
-      POSTGRES_USER: 'user'     #TODO нормальное имя пользователя и пароль
+      POSTGRES_USER: 'user'     #TODO change user and password before production
       POSTGRES_PASSWORD: '123'
     ports:
       - '5432:5432'

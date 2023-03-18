@@ -28,7 +28,8 @@ public class UserService implements UserServiceInterface {
     private final UserMapper userMapper;
 
 
-    public UserService(UserEntityRepository userEntityRepo, TokenService tokenService, DaoAuthenticationManager authManager, UserMapper userMapper) {
+    public UserService(UserEntityRepository userEntityRepo, TokenService tokenService,
+                       DaoAuthenticationManager authManager, UserMapper userMapper) {
         this.userEntityRepo = userEntityRepo;
         this.tokenService = tokenService;
         this.authManager = authManager;
@@ -36,12 +37,13 @@ public class UserService implements UserServiceInterface {
     }
 
     /**
-     * @throws UsernameAlreadyTakenException пользователь с таким username уже существует
+     * @throws UsernameAlreadyTakenException
      */
     @Override
     public Token signUp(User user) throws RegistrationException {
         if (userEntityRepo.existsByUsername(user.getUsername()))
-            throw new UsernameAlreadyTakenException("Пользователь с username " + user.getUsername() + " уже существует.");
+            throw new UsernameAlreadyTakenException(
+                    String.format("Username \"%s\" was already taken", user.getUsername()));
 
         UserEntity userEntity = userMapper.toUserEntityWithEncodedPassword(user, Role.ROLE_USER);
         userEntityRepo.save(userEntity);
@@ -50,8 +52,8 @@ public class UserService implements UserServiceInterface {
     }
 
     /**
-     * @throws UsernameNotFoundException пользователь не найден
-     * @throws BadCredentialsException передан неверный пароль
+     * @throws BadCredentialsException incorrect password
+     * @throws UsernameNotFoundException
      */
     @Override
     public Token signIn(Credentials credentials) throws AuthenticationException {

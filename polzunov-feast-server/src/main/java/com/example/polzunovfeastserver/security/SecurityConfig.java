@@ -17,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    //TODO configure cors before prod
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -27,6 +28,7 @@ public class SecurityConfig {
         };
     }
 
+    //TODO remove "/without_auth" before prod
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http

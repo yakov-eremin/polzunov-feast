@@ -1,4 +1,4 @@
---TODO убедиться в правильности ON UPDATE / ON DELETE
+--TODO make sure CASCADE is correct
 CREATE TABLE users
 (
     user_id integer NOT NULL,
