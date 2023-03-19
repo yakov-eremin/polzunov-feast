@@ -7,7 +7,6 @@ import org.springframework.validation.Errors;
 @Component
 public class UserValidator extends AbstractValidator {
 
-    //TODO разобраться, можно ли использовать разные валидаторы для одно модели в UserController
     @Override
     public boolean supports(Class<?> clazz) {
         return User.class.equals(clazz);
@@ -16,7 +15,11 @@ public class UserValidator extends AbstractValidator {
     @Override
     public void validate(Object target, Errors errors) {
         rejectIfBlank(errors, "username");
-        rejectIfBlank(errors, "password");
+        rejectIfContainsWhitespaces(errors, "username");
+
+        rejectIfBlank(errors, "password"); //TODO enhance password validation
+        rejectIfContainsWhitespaces(errors,"password");
+
         rejectIfBlank(errors, "name");
 
         rejectIfNull(errors,"phone");

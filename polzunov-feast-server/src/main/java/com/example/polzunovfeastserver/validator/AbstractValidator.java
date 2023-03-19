@@ -37,6 +37,13 @@ public abstract class AbstractValidator implements Validator {
         rejectIfDoesntMatchPattern(errors, field, phoneRegex, errorCode, defaultMessage);
     }
 
+    protected void rejectIfContainsWhitespaces(Errors errors, String field) {
+        String regex = "^\\S+$";
+        String errorCode = "ValidationViolation.message.notContainsWhitespaces";
+        String defaultMessage = String.format("Field \"%s\" must not contain whitespace characters", field);
+        rejectIfDoesntMatchPattern(errors, field, regex, errorCode, defaultMessage);
+    }
+
     protected void rejectIfDoesntMatchPattern(Errors errors, String field, String regex) {
         String errorCode = "ValidationViolation.message.pattern";
         String defaultMessage = String.format("Field \"%s\" must match patter \"%s\"", field, regex);

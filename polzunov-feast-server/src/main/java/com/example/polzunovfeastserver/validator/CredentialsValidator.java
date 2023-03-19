@@ -14,6 +14,9 @@ public class CredentialsValidator extends AbstractValidator {
     @Override
     public void validate(Object target, Errors errors) {
         rejectIfBlank(errors, "username");
+        rejectIfContainsWhitespaces(errors, "username");
+
         rejectIfBlank(errors, "password"); //TODO enhance password validation
+        rejectIfContainsWhitespaces(errors, "password");
     }
 }
