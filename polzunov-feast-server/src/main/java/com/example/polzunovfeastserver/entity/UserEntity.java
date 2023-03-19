@@ -15,20 +15,22 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class UserEntity implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private final Long id = null;
 
-    @Column(unique = true)
+    @Id
     private final String username;
 
     private final String password;
     private final String name;
+
+    @Column(unique = true)
     private final String phone;
+
+    @Column(unique = true)
     private final String email;
+
     private final Role role;
 
     @Override

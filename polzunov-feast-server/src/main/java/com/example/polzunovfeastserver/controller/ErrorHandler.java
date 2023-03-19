@@ -1,6 +1,8 @@
 package com.example.polzunovfeastserver.controller;
 
-import com.example.polzunovfeastserver.exception.registration.UsernameAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.EmailAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.PhoneAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.UsernameAlreadyTakenException;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.ErrorResponse;
 import org.openapitools.model.ValidationViolation;
@@ -53,9 +55,40 @@ public class ErrorHandler {
 
     @ExceptionHandler(UsernameAlreadyTakenException.class)
     @ResponseStatus(CONFLICT)
-    public ErrorResponse UsernameAlreadyTakenException(UsernameAlreadyTakenException e) {
+    public ErrorResponse onUsernameAlreadyTakenException(UsernameAlreadyTakenException e) {
         String message = getErrorMessage(
-                "ErrorResponse.message.usernameAlreadyTaken", e, "Username already taken");
+                "ErrorResponse.message.alreadyTaken.username",
+                e,
+                "Username was already taken"
+        );
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
+    }
+
+    @ExceptionHandler(EmailAlreadyTakenException.class)
+    @ResponseStatus(CONFLICT)
+    public ErrorResponse onEmailAlreadyTakenException(EmailAlreadyTakenException e) {
+        String message = getErrorMessage(
+                "ErrorResponse.message.alreadyTaken.email",
+                e,
+                "Email was already taken"
+        );
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
+    }
+
+    @ExceptionHandler(PhoneAlreadyTakenException.class)
+    @ResponseStatus(CONFLICT)
+    public ErrorResponse onPhoneAlreadyTakenException(PhoneAlreadyTakenException e) {
+        String message = getErrorMessage(
+                "ErrorResponse.message.alreadyTaken.phone",
+                e,
+                "Phone number was already taken"
+        );
         log.warn(message, e);
         ErrorResponse response = new ErrorResponse();
         response.setMessage(message);

@@ -24,9 +24,8 @@ public class DaoAuthenticationManager implements AuthenticationManager {
     /**
      * Attempts to authenticate {@link Authentication} object by comparing presented and provided passwords.
      * <p>
-     *
-     * @param authentication only {@link UsernamePasswordAuthenticationToken} is supported.
-     * @return new {@link UsernamePasswordAuthenticationToken} with authorities of authenticated user.
+     * @param authentication {@link UsernamePasswordAuthenticationToken}
+     * @return new {@link UsernamePasswordAuthenticationToken} with authorities of authenticated user
      * @throws UsernameNotFoundException username wasn't found
      * @throws BadCredentialsException wrong password
      */
