@@ -13,4 +13,6 @@ public interface UserService {
     Token signIn(Credentials credentials) throws AuthenticationException;
 
     void update(User user, long userId) throws AlreadyTakenException;
+
+    void delete(long userId);
 }

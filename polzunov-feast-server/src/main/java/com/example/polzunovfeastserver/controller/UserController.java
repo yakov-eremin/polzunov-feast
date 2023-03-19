@@ -49,6 +49,13 @@ public class UserController extends AbstractController implements UserApi {
         return new ResponseEntity<>(OK);
     }
 
+    @Override
+    public ResponseEntity<Void> deleteUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        userService.delete(retrieveUserId(auth));
+        return new ResponseEntity<>(OK);
+    }
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         //Assign a validator depending on the class of the object being checked

@@ -84,6 +84,11 @@ public class UserServiceImpl implements UserService {
         userEntityRepo.save(userForUpdate);
     }
 
+    @Override
+    public void delete(long userId) {
+        userEntityRepo.deleteById(userId);
+    }
+
     /**
      * Checks that username, email and phone number are unique.
      * <p>

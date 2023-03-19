@@ -13,6 +13,8 @@ public interface UserEntityRepository extends Repository<UserEntity, Long> {
 
     UserEntity save(UserEntity user);
 
+    void deleteById(long id);
+
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);
