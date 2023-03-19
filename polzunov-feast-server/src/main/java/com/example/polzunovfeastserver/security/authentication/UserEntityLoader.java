@@ -1,6 +1,7 @@
 package com.example.polzunovfeastserver.security.authentication;
 
 import com.example.polzunovfeastserver.entity.UserEntity;
+import com.example.polzunovfeastserver.exception.UserIdNotFoundException;
 import com.example.polzunovfeastserver.repository.UserEntityRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +23,14 @@ public class UserEntityLoader implements UserDetailsService {
         Optional<UserEntity> userEntityOpt = userRepo.findByUsername(username);
         if (userEntityOpt.isEmpty())
             throw new UsernameNotFoundException(String.format("Username \"%s\" not found", username));
+
+        return userEntityOpt.get();
+    }
+
+    public UserEntity loadById(long userId) {
+        Optional<UserEntity> userEntityOpt = userRepo.findById(userId);
+        if (userEntityOpt.isEmpty())
+            throw new UserIdNotFoundException(String.format("User with id=%d not found", userId));
 
         return userEntityOpt.get();
     }

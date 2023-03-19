@@ -18,8 +18,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class UserEntity implements UserDetails {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private final Long id;
+
+    @Column(unique = true)
     private final String username;
 
     private final String password;

@@ -1,8 +1,10 @@
 package com.example.polzunovfeastserver.controller;
 
-import com.example.polzunovfeastserver.exception.EmailAlreadyTakenException;
-import com.example.polzunovfeastserver.exception.PhoneAlreadyTakenException;
-import com.example.polzunovfeastserver.exception.UsernameAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.CorruptedTokenException;
+import com.example.polzunovfeastserver.exception.UserIdNotFoundException;
+import com.example.polzunovfeastserver.exception.already_taken.EmailAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.already_taken.PhoneAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.already_taken.UsernameAlreadyTakenException;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.ErrorResponse;
 import org.openapitools.model.ValidationViolation;
@@ -31,6 +33,18 @@ public class ErrorHandler {
         this.messageSource = messageSource;
     }
 
+    @ExceptionHandler(CorruptedTokenException.class)
+    @ResponseStatus(UNAUTHORIZED)
+    public ErrorResponse onCorruptedTokenException(CorruptedTokenException e) {
+        String message = getErrorMessage(
+                "ErrorResponse.message.corruptedToken", e, "Provided auth token is corrupted"
+        );
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(UNAUTHORIZED)
     public ErrorResponse onBadCredentialsException(BadCredentialsException e) {
@@ -47,6 +61,17 @@ public class ErrorHandler {
     public ErrorResponse onUsernameNotFoundException(UsernameNotFoundException e) {
         String message = getErrorMessage(
                 "ErrorResponse.message.usernameNotFound", e, "Username not found");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
+    }
+
+    @ExceptionHandler(UserIdNotFoundException.class)
+    @ResponseStatus(NOT_FOUND)
+    public ErrorResponse onIdNotFoundException(UserIdNotFoundException e) {
+        String message = getErrorMessage(
+                "ErrorResponse.message.userIdNotFound", e, "User id not found");
         log.warn(message, e);
         ErrorResponse response = new ErrorResponse();
         response.setMessage(message);

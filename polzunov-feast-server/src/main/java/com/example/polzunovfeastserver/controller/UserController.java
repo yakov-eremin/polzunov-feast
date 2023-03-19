@@ -20,7 +20,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-public class UserController implements UserApi {
+public class UserController extends AbstractController implements UserApi {
     private final UserService userService;
     private final UserValidator userValidator;
     private final CredentialsValidator credentialsValidator;
@@ -45,7 +45,7 @@ public class UserController implements UserApi {
     @Override
     public ResponseEntity<Void> updateUser(@Valid User user) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userService.update(user, auth);
+        userService.update(user, retrieveUserId(auth));
         return new ResponseEntity<>(OK);
     }
 

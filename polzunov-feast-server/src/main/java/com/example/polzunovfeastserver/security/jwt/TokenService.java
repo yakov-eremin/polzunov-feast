@@ -23,7 +23,8 @@ public class TokenService {
     }
 
     /**
-     * @return {@link Token} of type Bearer, containing username and authorities. Valid for one hour.
+     * @param authentication should contain user id as name
+     * @return {@link Token} of type Bearer, containing id and authorities. Valid for one hour.
      */
     public Token generateToken(Authentication authentication) {
         Instant now = Instant.now();
@@ -47,11 +48,11 @@ public class TokenService {
     }
 
     /**
-     * @return {@link Token} of type Bearer, containing username and authorities. Valid for one hour.
+     * @return {@link Token} of type Bearer, containing user id and authorities. Valid for one hour.
      */
     public Token generateToken(UserEntity user) {
         Authentication auth = new  UsernamePasswordAuthenticationToken(
-                user.getUsername(),
+                user.getId(),
                 user.getPassword(),
                 user.getAuthorities()
         );

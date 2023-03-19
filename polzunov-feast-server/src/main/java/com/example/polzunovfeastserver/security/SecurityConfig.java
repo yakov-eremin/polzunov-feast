@@ -28,7 +28,6 @@ public class SecurityConfig {
         };
     }
 
-    //TODO remove "/without_auth" before prod
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -36,7 +35,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/user/signIn", "/user/signUp", "/without_auth").permitAll()
+                        .requestMatchers("/user/signIn", "/user/signUp").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)

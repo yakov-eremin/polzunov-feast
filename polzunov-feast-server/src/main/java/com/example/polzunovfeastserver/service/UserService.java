@@ -1,10 +1,9 @@
 package com.example.polzunovfeastserver.service;
 
-import com.example.polzunovfeastserver.exception.AlreadyTakenException;
+import com.example.polzunovfeastserver.exception.already_taken.AlreadyTakenException;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
 import org.openapitools.model.User;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 public interface UserService {
@@ -13,5 +12,5 @@ public interface UserService {
 
     Token signIn(Credentials credentials) throws AuthenticationException;
 
-    void update(User user, Authentication auth) throws AlreadyTakenException;
+    void update(User user, long userId) throws AlreadyTakenException;
 }

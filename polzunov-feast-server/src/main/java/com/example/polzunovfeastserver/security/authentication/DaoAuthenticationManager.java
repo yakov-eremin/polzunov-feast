@@ -24,8 +24,9 @@ public class DaoAuthenticationManager implements AuthenticationManager {
     /**
      * Attempts to authenticate {@link Authentication} object by comparing presented and provided passwords.
      * <p>
-     * @param authentication {@link UsernamePasswordAuthenticationToken}
-     * @return new {@link UsernamePasswordAuthenticationToken} with authorities of authenticated user
+     * Pay attention! Returned authentication contains id, not username.
+     * @param authentication {@link UsernamePasswordAuthenticationToken} with user's username and password
+     * @return new {@link UsernamePasswordAuthenticationToken} with id, password and authorities of authenticated user
      * @throws UsernameNotFoundException username wasn't found
      * @throws BadCredentialsException wrong password
      */
@@ -38,7 +39,7 @@ public class DaoAuthenticationManager implements AuthenticationManager {
             throw new BadCredentialsException(String.format("Wrong password for user \"%s\"", user.getUsername()));
 
         var result = UsernamePasswordAuthenticationToken.authenticated(
-                authentication.getPrincipal(),
+                user.getId(),
                 authentication.getCredentials(),
                 user.getAuthorities()
         );

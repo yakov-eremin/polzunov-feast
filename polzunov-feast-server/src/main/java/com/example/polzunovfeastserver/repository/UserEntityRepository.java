@@ -5,9 +5,11 @@ import org.springframework.data.repository.Repository;
 
 import java.util.Optional;
 
-public interface UserEntityRepository extends Repository<UserEntity, String> {
+public interface UserEntityRepository extends Repository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsername(String username);
+
+    Optional<UserEntity> findById(long id);
 
     UserEntity save(UserEntity user);
 

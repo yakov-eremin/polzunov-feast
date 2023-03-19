@@ -1,10 +1,10 @@
 package com.example.polzunovfeastserver.service.impl;
 
 import com.example.polzunovfeastserver.entity.UserEntity;
-import com.example.polzunovfeastserver.exception.AlreadyTakenException;
-import com.example.polzunovfeastserver.exception.EmailAlreadyTakenException;
-import com.example.polzunovfeastserver.exception.PhoneAlreadyTakenException;
-import com.example.polzunovfeastserver.exception.UsernameAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.already_taken.AlreadyTakenException;
+import com.example.polzunovfeastserver.exception.already_taken.EmailAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.already_taken.PhoneAlreadyTakenException;
+import com.example.polzunovfeastserver.exception.already_taken.UsernameAlreadyTakenException;
 import com.example.polzunovfeastserver.mapper.UserMapper;
 import com.example.polzunovfeastserver.repository.UserEntityRepository;
 import com.example.polzunovfeastserver.security.authentication.DaoAuthenticationManager;
@@ -71,15 +71,16 @@ public class UserServiceImpl implements UserService {
 
     /**
      * @param user
-     * @param auth token provided by client
-     * @throws UsernameNotFoundException username retrieved from auth token wasn't found
+     * @param userId
+     * @throws com.example.polzunovfeastserver.exception.UserIdNotFoundException
+     * user id retrieved from auth token wasn't found
      */
     @Override
-    public void update(User user, Authentication auth) {
-        UserEntity loadedUser = userEntityLoader.loadUserByUsername(auth.getName());
+    public void update(User user, long userId) {
+        UserEntity loadedUser = userEntityLoader.loadById(userId);
         checkUniqueFields(user, Optional.of(loadedUser));
 
-        UserEntity userForUpdate = userMapper.toUserEntityWithEncodedPassword(user, loadedUser.getRole());
+        UserEntity userForUpdate = userMapper.toUserEntityWithEncodedPassword(user, userId, loadedUser.getRole());
         userEntityRepo.save(userForUpdate);
     }
 
@@ -87,7 +88,8 @@ public class UserServiceImpl implements UserService {
      * Checks that username, email and phone number are unique.
      * <p>
      * If userEntity is provided, and it has the same value of unique field as user, then this field would not be checked.
-     * @param user user whose fields will be checked for uniqueness
+     *
+     * @param user          user whose fields will be checked for uniqueness
      * @param userEntityOpt
      */
     private void checkUniqueFields(User user, Optional<UserEntity> userEntityOpt) {
@@ -108,7 +110,7 @@ public class UserServiceImpl implements UserService {
                 throw new UsernameAlreadyTakenException(String.format("Username \"%s\" already exists", username));
             if (!userEntity.getEmail().equals(email) && userEntityRepo.existsByEmail(email))
                 throw new EmailAlreadyTakenException(String.format("Email \"%s\" was already taken", email));
-            if (!userEntity.getPhone().equals(phone) && userEntityRepo.existsByEmail(email))
+            if (!userEntity.getPhone().equals(phone) && userEntityRepo.existsByPhone(phone))
                 throw new PhoneAlreadyTakenException(String.format("Phone number \"%s\" was already taken", phone));
         }
     }
