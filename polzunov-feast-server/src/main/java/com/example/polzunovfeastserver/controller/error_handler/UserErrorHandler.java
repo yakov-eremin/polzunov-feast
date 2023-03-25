@@ -18,54 +18,71 @@ import static org.springframework.http.HttpStatus.CONFLICT;
 
 @Slf4j
 @RestControllerAdvice(assignableTypes = UserController.class)
-public class UserErrorHandler extends AbstractErrorHandler {
+public class UserErrorHandler {
+
+    private final MessageProvider messageProvider;
 
     public UserErrorHandler(MessageProvider messageProvider) {
-        super(messageProvider);
+        this.messageProvider = messageProvider;
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(UNAUTHORIZED)
     public ErrorResponse onBadCredentialsException(BadCredentialsException e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.badCredentials",
-                "Incorrect password", e
-        );
+                "Incorrect password");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ErrorResponse onUsernameNotFoundException(UsernameNotFoundException e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.usernameNotFound",
-                "Username not found", e
-        );
+                "Username not found");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 
     @ExceptionHandler(UsernameAlreadyTakenException.class)
     @ResponseStatus(CONFLICT)
     public ErrorResponse onUsernameAlreadyTakenException(UsernameAlreadyTakenException e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.alreadyTaken.username",
-                "Username was already taken", e
-        );
+                "Username was already taken");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 
     @ExceptionHandler(EmailAlreadyTakenException.class)
     @ResponseStatus(CONFLICT)
     public ErrorResponse onEmailAlreadyTakenException(EmailAlreadyTakenException e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.alreadyTaken.email",
-                "Email was already taken", e
-        );
+                "Email was already taken");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 
     @ExceptionHandler(PhoneAlreadyTakenException.class)
     @ResponseStatus(CONFLICT)
     public ErrorResponse onPhoneAlreadyTakenException(PhoneAlreadyTakenException e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.alreadyTaken.phone",
-                "Phone number was already taken", e
-        );
+                "Phone number was already taken");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 }

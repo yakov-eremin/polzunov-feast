@@ -23,10 +23,12 @@ import static org.springframework.http.HttpStatus.*;
 @Slf4j
 @RestController
 @RestControllerAdvice
-public class GlobalErrorHandler extends AbstractErrorHandler implements ErrorController {
+public class GlobalErrorHandler implements ErrorController {
+
+    private final MessageProvider messageProvider;
 
     protected GlobalErrorHandler(MessageProvider messageProvider) {
-        super(messageProvider);
+        this.messageProvider = messageProvider;
     }
 
     @RequestMapping("${server.error.path}")
@@ -73,19 +75,25 @@ public class GlobalErrorHandler extends AbstractErrorHandler implements ErrorCon
     @ExceptionHandler(CorruptedTokenException.class)
     @ResponseStatus(UNAUTHORIZED)
     public ErrorResponse onCorruptedTokenException(CorruptedTokenException e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.tokenUnauthorized",
-                "Token authorization failed", e
-        );
+                "Token authorization failed");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 
     @ExceptionHandler(UserIdNotFoundException.class)
     @ResponseStatus(UNAUTHORIZED)
     public ErrorResponse onIdNotFoundException(UserIdNotFoundException e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.tokenUnauthorized",
-                "Token authorization failed", e
-        );
+                "Token authorization failed");
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -102,7 +110,8 @@ public class GlobalErrorHandler extends AbstractErrorHandler implements ErrorCon
         }
         ErrorResponse error = new ErrorResponse();
         String message = messageProvider.getMessage(
-                "ErrorResponse.message.validation", "Validation failed");
+                "ErrorResponse.message.validation",
+                "Validation failed");
         error.setMessage(message);
         error.setValidationViolations(violations);
         log.warn("{}: {}", message, error, e);
@@ -112,9 +121,12 @@ public class GlobalErrorHandler extends AbstractErrorHandler implements ErrorCon
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     public ErrorResponse onThrowable(Throwable e) {
-        return defaultExceptionHandling(
+        String message = messageProvider.getMessage(
                 "ErrorResponse.message.internalServerError",
-                "Internal server error", e
-        );
+                "Internal server error");
+        log.error(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
     }
 }
