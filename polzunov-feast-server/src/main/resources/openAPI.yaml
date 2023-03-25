@@ -18,49 +18,61 @@ tags:
 
 paths:
   ###################################### user ############################################################################
-  /user/signIn:
-    post:
-      summary: Аутентификация пользователя.
+  /user/signin:
+    get:
+      summary: User authentication
       operationId: signInUser
       security: []
       tags:
         - user
       requestBody:
-        description: Передается логин и пароль пользователя.
+        description: Username and password provided in the body
         content:
           'application/json':
             schema:
               $ref: '#/components/schemas/Credentials'
+        required: true
       responses:
         '200':
-          description: Пользователь аутентифицирован.
+          description: User authenticated, token of type "Bearer" passed in the body
           content:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Token'
         '400':
-          description: BAD REQUEST
+          description: Validation failed
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '401':
-          description: UNAUTHORIZED
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Username not found
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: INTERNAL SERVER ERROR
+          description: Internal server error
 
-  /user/signUp:
+  /user/signup:
     post:
-      summary: Регистрация нового пользователя.
+      summary: sign up new user
       operationId: signUpUser
       security: []
       tags:
         - user
       requestBody:
-        description: Передается объект User, которого нужно зарегистрировать.
+        description: Signs up new user
         content:
           'application/json':
             schema:
               $ref: '#/components/schemas/User'
+        required: true
       responses:
         '200':
-          description: Пользователь зарегистрирован.
+          description: User signed up, authentication token of type "Bearer" passed in the body
           content:
             'application/json':
               schema:
@@ -213,13 +225,16 @@ paths:
         '500':
           description: INTERNAL SERVER ERROR
 
-#################################### Передаваемые объекты ##############################################################
+#################################### Components ########################################################################
 components:
   securitySchemes:
     bearerAuth:
-      type: http #поменять на https
+      type: http #TODO change to https
       scheme: bearer
       bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Token authorization failed _or_ token corrupted
   schemas:
     ErrorResponse:
       type: object
@@ -245,6 +260,7 @@ components:
           format: JWT
         tokenType:
           type: string
+          example: "Bearer"
     User:
       type: object
       properties:

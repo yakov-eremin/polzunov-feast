@@ -12,7 +12,7 @@ public abstract class AbstractController {
             id = Long.parseLong(name);
         } catch (NumberFormatException e) {
             throw new CorruptedTokenException(
-                    String.format("Failed to parse id, provided name=\"%s\"", name), e);
+                    String.format("Failed to parse id provided in token, provided value=\"%s\"", name), e);
         }
 
         if (id < 0)

@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
      * <p>
      * If userEntity is provided, and it has the same value of unique field as user, then this field would not be checked.
      *
-     * @param user          user whose fields will be checked for uniqueness
+     * @param user user whose fields will be checked for uniqueness
      * @param userEntityOpt
      */
     private void checkUniqueFields(User user, Optional<UserEntity> userEntityOpt) {
