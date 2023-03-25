@@ -1,6 +1,5 @@
 package com.example.polzunovfeastserver.controller.error_handler;
 
-import com.example.polzunovfeastserver.exception.CorruptedTokenException;
 import com.example.polzunovfeastserver.exception.UserIdNotFoundException;
 import com.example.polzunovfeastserver.util.MessageProvider;
 import jakarta.servlet.RequestDispatcher;
@@ -11,6 +10,7 @@ import org.openapitools.model.ValidationViolation;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -72,28 +72,15 @@ public class GlobalErrorHandler implements ErrorController {
         return new ResponseEntity<>(httpStatus);
     }
 
-    @ExceptionHandler(CorruptedTokenException.class)
-    @ResponseStatus(UNAUTHORIZED)
-    public ErrorResponse onCorruptedTokenException(CorruptedTokenException e) {
-        String message = messageProvider.getMessage(
-                "ErrorResponse.message.tokenUnauthorized",
-                "Token authorization failed");
-        log.warn(message, e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
-        return response;
-    }
-
+    /*
+    User id is encoded in auth token,
+    that's why client doesn't need to know why authorization failed, he just needs to relogin,
+    hence we don't provide any error message.
+     */
     @ExceptionHandler(UserIdNotFoundException.class)
     @ResponseStatus(UNAUTHORIZED)
-    public ErrorResponse onIdNotFoundException(UserIdNotFoundException e) {
-        String message = messageProvider.getMessage(
-                "ErrorResponse.message.tokenUnauthorized",
-                "Token authorization failed");
-        log.warn(message, e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
-        return response;
+    public void onUserIdNotFoundException(UsernameNotFoundException e) {
+        log.error("User id wasn't found", e);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

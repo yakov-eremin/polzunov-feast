@@ -14,5 +14,7 @@ public interface UserService {
 
     void update(User user, long userId) throws AlreadyTakenException;
 
-    void delete(long userId);
+    void deleteUserById(long id);
+
+    boolean userExistsById(long id);
 }

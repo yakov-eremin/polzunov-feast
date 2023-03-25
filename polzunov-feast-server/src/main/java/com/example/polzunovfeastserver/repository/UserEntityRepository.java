@@ -15,6 +15,8 @@ public interface UserEntityRepository extends Repository<UserEntity, Long> {
 
     void deleteById(long id);
 
+    boolean existsById(long id);
+
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);

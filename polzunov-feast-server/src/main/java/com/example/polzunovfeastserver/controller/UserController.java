@@ -8,8 +8,6 @@ import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
 import org.openapitools.model.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +29,7 @@ public class UserController extends AbstractController implements UserApi {
         this.credentialsValidator = credentialsValidator;
     }
 
-    //TODO How to validate user password in sing up and sing in, but skip password in update?
+    //TODO How to validate user password in sing up and sing in, but skip password validation in update?
     @Override
     public ResponseEntity<Token> signUpUser(@Valid User user) {
         return ResponseEntity.ok(userService.signUp(user));
@@ -44,15 +42,13 @@ public class UserController extends AbstractController implements UserApi {
 
     @Override
     public ResponseEntity<Void> updateUser(@Valid User user) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userService.update(user, retrieveUserId(auth));
+        userService.update(user, getUserId());
         return new ResponseEntity<>(OK);
     }
 
     @Override
     public ResponseEntity<Void> deleteUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userService.delete(retrieveUserId(auth));
+        userService.deleteUserById(getUserId());
         return new ResponseEntity<>(OK);
     }
 
