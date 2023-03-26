@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,14 +74,14 @@ public class GlobalErrorHandler implements ErrorController {
         return new ResponseEntity<>(httpStatus);
     }
 
-    /*
-    User id is encoded in auth token,
-    that's why client doesn't need to know why authorization failed, he just needs to relogin,
-    hence we don't provide any error message.
-     */
     @ExceptionHandler(UserIdNotFoundException.class)
     @ResponseStatus(UNAUTHORIZED)
     public void onUserIdNotFoundException(UsernameNotFoundException e) {
+        /*
+        User id is encoded in auth token,
+        that's why client doesn't need to know why authorization failed, he just needs to relogin,
+        hence we don't provide any error message.
+        */
         log.error("User id wasn't found", e);
     }
 
@@ -105,15 +107,31 @@ public class GlobalErrorHandler implements ErrorController {
         return error;
     }
 
-    @ExceptionHandler(Throwable.class)
-    @ResponseStatus(INTERNAL_SERVER_ERROR)
-    public ErrorResponse onThrowable(Throwable e) {
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseStatus(UNSUPPORTED_MEDIA_TYPE)
+    public ErrorResponse onHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
         String message = messageProvider.getMessage(
-                "ErrorResponse.message.internalServerError",
-                "Internal server error");
+                "ErrorResponse.message.mediaType.notSupported",
+                "Content type is not supported");
         log.error(message, e);
         ErrorResponse response = new ErrorResponse();
         response.setMessage(message);
         return response;
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+    @ResponseStatus(UNSUPPORTED_MEDIA_TYPE)
+    public void onHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException e) {
+        /*
+        I didn't find a way to return json when 'Accept' header is not 'application/json',
+        so no payload provided.
+         */
+        log.warn("Cannot generate response with acceptable media type", e);
+    }
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public void onThrowable(Throwable e) {
+        log.error("Internal server error", e);
     }
 }

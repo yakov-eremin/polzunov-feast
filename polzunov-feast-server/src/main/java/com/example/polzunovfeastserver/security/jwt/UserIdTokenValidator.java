@@ -1,6 +1,5 @@
 package com.example.polzunovfeastserver.security.jwt;
 
-import com.example.polzunovfeastserver.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
@@ -13,12 +12,6 @@ import static org.springframework.security.oauth2.server.resource.BearerTokenErr
 @Slf4j
 @Component
 public class UserIdTokenValidator implements OAuth2TokenValidator<Jwt> {
-
-    private final UserService userService;
-
-    public UserIdTokenValidator(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public OAuth2TokenValidatorResult validate(Jwt token) {
@@ -41,15 +34,6 @@ public class UserIdTokenValidator implements OAuth2TokenValidator<Jwt> {
             error = new OAuth2Error(
                     INVALID_TOKEN,
                     String.format("provided id=%d must be positive", id),
-                    null);
-            log.warn("Invalid token: {}", error.getDescription());
-            return OAuth2TokenValidatorResult.failure(error);
-        }
-
-        if (!userService.userExistsById(id)) {
-            error = new OAuth2Error(
-                    INVALID_TOKEN,
-                    String.format("user with id=%d doesn't exist", id),
                     null);
             log.warn("Invalid token: {}", error.getDescription());
             return OAuth2TokenValidatorResult.failure(error);

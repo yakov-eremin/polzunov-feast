@@ -17,7 +17,7 @@ public class UserValidator extends AbstractValidator {
         rejectIfBlank(errors, "username");
         rejectIfContainsWhitespaces(errors, "username");
 
-        rejectIfBlank(errors, "password"); //TODO enhance password validation
+        rejectIfBlank(errors, "password");
         rejectIfContainsWhitespaces(errors,"password");
 
         rejectIfBlank(errors, "name");

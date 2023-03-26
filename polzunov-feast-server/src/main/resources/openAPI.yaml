@@ -1,26 +1,24 @@
 openapi: 3.0.3
 info:
-  title: OpenAPI Specification for Polzunov.Feast (clients)
+  title: OpenAPI Specification for Polzunov.Feast
   version: '0.1'
-  description:
-    Протокол сетевого обмена для приложения Polzunov.Feast (клиентская часть).
 servers:
-  - url: 'http://localhost:8080' #поменять на реальный адрес сервера
+  - url: 'http://localhost:8080' #TODO change to real domain
 security:
   - bearerAuth: []
 tags:
   - name: user
-    description: Операции, связанные с профилем пользователя.
+    description: Requests related to user
   - name: route
-    description: Операции, связанные с маршрутом.
+    description: Операции, связанные с маршрутом
   - name: event
-    description: Операции, связанные с событиями.
+    description: Операции, связанные с событиями
 
 paths:
   ###################################### user ############################################################################
   /user/signin:
-    get:
-      summary: User authentication
+    post:
+      summary: Authenticate user
       operationId: signInUser
       security: []
       tags:
@@ -28,7 +26,7 @@ paths:
       requestBody:
         description: Username and password provided in the body
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/Credentials'
         required: true
@@ -40,31 +38,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/Token'
         '400':
-          description: Validation failed
+          $ref: '#/components/responses/ValidationFailedBadRequest'
+        '401':
+          description: Wrong password
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+              example:
+                message: "incorrect password"
+                validationViolations: null
         '404':
           description: Username not found
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: "username wasn't found"
+                validationViolations: null
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
-          description: Internal server error
+          $ref: '#/components/responses/InternalServerError'
 
   /user/signup:
     post:
-      summary: sign up new user
+      summary: Sign up new user
       operationId: signUpUser
       security: []
       tags:
         - user
       requestBody:
-        description: Signs up new user
+        description: User to sign up
         content:
           'application/json':
             schema:
@@ -78,51 +84,99 @@ paths:
               schema:
                 $ref: '#/components/schemas/Token'
         '400':
-          description: BAD REQUEST
+          $ref: '#/components/responses/ValidationFailedBadRequest'
         '409':
-          description: Пользователь с таким username уже существует
+          description: |
+            Occurs if:
+            * Username already taken
+            * Email aready taken
+            * Phoe number already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Username already taken:
+                  value:
+                    message: "username was already taken"
+                    validationViolations: null
+                Email already taken:
+                  value:
+                    message: "email was already taken"
+                    validationViolations: null
+                Phone number already taken:
+                  value:
+                    message: "phone number was already taken"
+                    validationViolations: null
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
-          description: INTERNAL SERVER ERROR
+          $ref: '#/components/responses/InternalServerError'
 
-  /user/update:
-    post:
-      summary: Обновление профиля пользователя.
+  /user:
+    put:
+      summary: Update user profile info
       operationId: updateUser
       tags:
         - user
       requestBody:
-        description: Передается объект User с новыми данными.
+        description: User object with new data. All fields will be updated regardless of the values, that's why if some fields do not need to be updated, their previous values should be passe.
         content:
           'application/json':
             schema:
               $ref: '#/components/schemas/User'
+        required: true
       responses:
         '200':
-          description: Профиль пользователя обновлен.
+          description: User updated
         '400':
-          description: BAD REQUEST
+          $ref: '#/components/responses/ValidationFailedBadRequest'
         '401':
-          description: UNAUTHORIZED
+          $ref: '#/components/responses/TokenUnauthorized'
+        '409':
+          description: |
+            Occurs if:
+            * Username already taken
+            * Email aready taken
+            * Phoe number already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Username already taken:
+                  value:
+                    message: "username was already taken"
+                    validationViolations: null
+                Email already taken:
+                  value:
+                    message: "email was already taken"
+                    validationViolations: null
+                Phone number already taken:
+                  value:
+                    message: "phone number was already taken"
+                    validationViolations: null
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
-          description: INTERNAL SERVER ERROR
+          $ref: '#/components/responses/InternalServerError'
 
-  /user/delete:
-    get:
-      summary: Удаление профиля пользователя.
+    delete:
+      summary: Delete user
       operationId: deleteUser
       tags:
         - user
       responses:
         '200':
-          description: Пользователь удален.
-        '400':
-          description: BAD REQUEST
+          description: User deleted
         '401':
-          description: UNAUTHORIZED
+          $ref: '#/components/responses/TokenUnauthorized'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
-          description: INTERNAL SERVER ERROR
+          $ref: '#/components/responses/InternalServerError'
 
-##################################### events ###########################################################################
+  ##################################### events ###########################################################################
   /event/getAll:
     get:
       summary: Получение списка событий.
@@ -144,7 +198,7 @@ paths:
         '500':
           description: INTERNAL SERVER ERROR
 
-############################################ route #####################################################################
+  ############################################ route #####################################################################
   /route/get:
     get:
       summary: Получение маршрута пользователя.
@@ -233,8 +287,41 @@ components:
       scheme: bearer
       bearerFormat: JWT
   responses:
-    Unauthorized:
-      description: Token authorization failed _or_ token corrupted
+    InternalServerError:
+      description: Internal server error
+    ValidationFailedBadRequest:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            message: "validation failed"
+            validationViolations: [
+              {
+                fieldName: "field name (e.g., email)",
+                message: "what's wrong with this field (e.g., must not be null)"
+              },
+              {
+                fieldName: "field name",
+                message: "something is wrong"
+              }
+            ]
+    TokenUnauthorized:
+      description: Token authorization failed, relogin required
+    UnsupportedMediaType:
+      description: |
+        Occurs if:
+        * Content type, specified in _Content-Type_ header, is not supported by the server
+        * Server cannot generate response with a media type, specified in _Accept_ header. **In that case response body is empy**
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            message: "content type is not supported"
+            validationViolations: null
+
   schemas:
     ErrorResponse:
       type: object
@@ -258,6 +345,7 @@ components:
         accessToken:
           type: string
           format: JWT
+          example: eyJraWQiOiJmNmQ2YjE0NC1jMTMwLTQ5YjgtYTc1MC04ZTEzMTIzYzU4YzciLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMSIsImV4cCI6MTY3OTc2MDY1NCwiaWF0IjoxNjc5NzU3MDU0LCJzY29wZSI6IlJPTEVfVVNFUiJ9.e7uKeUlNO3pt_erR23LxplEzWA5DhTYlP5SsM4NtF2Y-GJgEJ3BSJnAKj_wh4V9H417J-ck_UiSy749gbCWGDxjXfSWeBYLCQeKd6_cS8V5l73yIYWf1YDznO8sVyX8GT1SS6LqEescE5JUIH6t0SUgsbLa9QPTNXAEkf9pQ7m4mv--9sfJ7Pgk7pjRSxgkNaVPq8OhcDjnSFHSg7SAc3FlJmDrtP6yiu4TOqsBoqPeneDFWjWSTyE0FS0Vu1fa6OYLFq0Z9gMZa4ohTKkWsKqjF4ND2vSduVni5s3hw-Loft0Wmw697us9DHxs8qVOPEsIS3231VDPbZ9QkhCjQ1w
         tokenType:
           type: string
           example: "Bearer"

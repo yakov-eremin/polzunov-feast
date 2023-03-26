@@ -29,7 +29,6 @@ public class UserController extends AbstractController implements UserApi {
         this.credentialsValidator = credentialsValidator;
     }
 
-    //TODO How to validate user password in sing up and sing in, but skip password validation in update?
     @Override
     public ResponseEntity<Token> signUpUser(@Valid User user) {
         return ResponseEntity.ok(userService.signUp(user));

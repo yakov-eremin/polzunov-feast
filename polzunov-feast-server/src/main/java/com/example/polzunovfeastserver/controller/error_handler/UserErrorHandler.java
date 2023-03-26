@@ -26,6 +26,7 @@ public class UserErrorHandler {
         this.messageProvider = messageProvider;
     }
 
+    //###########sign in responses:
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(UNAUTHORIZED)
     public ErrorResponse onBadCredentialsException(BadCredentialsException e) {
@@ -49,7 +50,10 @@ public class UserErrorHandler {
         response.setMessage(message);
         return response;
     }
+    //############################
 
+
+    //##############sign up and update responses:
     @ExceptionHandler(UsernameAlreadyTakenException.class)
     @ResponseStatus(CONFLICT)
     public ErrorResponse onUsernameAlreadyTakenException(UsernameAlreadyTakenException e) {
@@ -85,4 +89,5 @@ public class UserErrorHandler {
         response.setMessage(message);
         return response;
     }
+    //##########################
 }

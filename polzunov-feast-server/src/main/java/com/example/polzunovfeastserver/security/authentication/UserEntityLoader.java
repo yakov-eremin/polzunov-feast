@@ -27,7 +27,7 @@ public class UserEntityLoader implements UserDetailsService {
         return userEntityOpt.get();
     }
 
-    public UserEntity loadById(long userId) {
+    public UserEntity loadById(long userId) throws UserIdNotFoundException {
         Optional<UserEntity> userEntityOpt = userRepo.findById(userId);
         if (userEntityOpt.isEmpty())
             throw new UserIdNotFoundException(String.format("User with id=%d not found", userId));

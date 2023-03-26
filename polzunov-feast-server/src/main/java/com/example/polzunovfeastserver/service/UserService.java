@@ -1,5 +1,6 @@
 package com.example.polzunovfeastserver.service;
 
+import com.example.polzunovfeastserver.exception.UserIdNotFoundException;
 import com.example.polzunovfeastserver.exception.already_taken.AlreadyTakenException;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
@@ -12,9 +13,7 @@ public interface UserService {
 
     Token signIn(Credentials credentials) throws AuthenticationException;
 
-    void update(User user, long userId) throws AlreadyTakenException;
+    void update(User user, long userId) throws AlreadyTakenException, UserIdNotFoundException;
 
     void deleteUserById(long id);
-
-    boolean userExistsById(long id);
 }

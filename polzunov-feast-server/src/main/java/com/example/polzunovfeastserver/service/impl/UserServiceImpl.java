@@ -1,6 +1,7 @@
 package com.example.polzunovfeastserver.service.impl;
 
 import com.example.polzunovfeastserver.entity.UserEntity;
+import com.example.polzunovfeastserver.exception.UserIdNotFoundException;
 import com.example.polzunovfeastserver.exception.already_taken.AlreadyTakenException;
 import com.example.polzunovfeastserver.exception.already_taken.EmailAlreadyTakenException;
 import com.example.polzunovfeastserver.exception.already_taken.PhoneAlreadyTakenException;
@@ -70,13 +71,14 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     *
      * @param user
      * @param userId
-     * @throws com.example.polzunovfeastserver.exception.UserIdNotFoundException
-     * user id retrieved from auth token wasn't found
+     * @throws AlreadyTakenException updated values for unique fields were already taken
+     * @throws com.example.polzunovfeastserver.exception.UserIdNotFoundException failed to load user by id
      */
     @Override
-    public void update(User user, long userId) {
+    public void update(User user, long userId) throws AlreadyTakenException, UserIdNotFoundException {
         UserEntity loadedUser = userEntityLoader.loadById(userId);
         checkUniqueFields(user, Optional.of(loadedUser));
 
@@ -86,12 +88,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(long id) {
-        userEntityRepo.deleteById(id);
-    }
+        //Sprig will complain if user to be deleted doesn't exist, even though docs claim the opposite
+        if (!userEntityRepo.existsById(id)) return;
 
-    @Override
-    public boolean userExistsById(long id) {
-        return userEntityRepo.existsById(id);
+        userEntityRepo.deleteById(id);
     }
 
     /**
