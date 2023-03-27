@@ -1,7 +1,23 @@
+#Before making any changes in error messages examples, ensure you've changed ErrorResponseMessages.properties accordingly
+
+
 openapi: 3.0.3
 info:
   title: OpenAPI Specification for Polzunov.Feast
   version: '0.1'
+  description: |
+    <details>
+      <summary>Additional API requests info</summary>
+      If user tries to access nonexistent path, response will be the following:
+      ```
+      Code: 404
+      Body:
+      {
+        "message": "this path doesn't exist",
+        "validationViolations": null
+      }
+      ```
+    </details>
 servers:
   - url: 'http://localhost:8080' #TODO change to real domain
 security:
@@ -278,7 +294,6 @@ paths:
           description: UNAUTHORIZED
         '500':
           description: INTERNAL SERVER ERROR
-
 #################################### Components ########################################################################
 components:
   securitySchemes:
