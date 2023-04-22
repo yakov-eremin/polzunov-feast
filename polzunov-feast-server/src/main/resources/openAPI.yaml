@@ -308,6 +308,29 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '500':
           $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete event by id
+      operationId: deleteEventById
+      tags:
+        - event
+        - admin
+      parameters:
+        - in: path
+          name: id
+          description: Must be positive
+          schema:
+            type: integer
+            format: int64
+          required: true
+      responses:
+        '200':
+          description: Event deleted
+        '400':
+          $ref: '#/components/responses/ValidationFailedBadRequest'
+        '401':
+          $ref: '#/components/responses/TokenUnauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 
 
   ############################################ route #####################################################################
@@ -496,10 +519,6 @@ components:
           type: string
         place:
           $ref: '#/components/schemas/Place'
-        pathDescription:
-          type: string
-        age:
-          type: integer
     Place:
       type: object
       properties:
