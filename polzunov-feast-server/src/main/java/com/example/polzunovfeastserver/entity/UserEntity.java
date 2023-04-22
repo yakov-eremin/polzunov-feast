@@ -20,12 +20,15 @@ import java.util.List;
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private final Long id;
 
     @Column(unique = true)
     private final String username;
 
     private final String password;
+
+    @Column(name = "user_name")
     private final String name;
 
     @Column(unique = true)

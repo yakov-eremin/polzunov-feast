@@ -15,16 +15,10 @@ public class UserMapper {
         this.encoder = encoder;
     }
 
-    /**
-     * @return {@link UserEntity} with encoded password
-     */
     public UserEntity toUserEntityWithEncodedPassword(User user, Role role) {
         return toUserEntityWithEncodedPassword(user, null, role);
     }
 
-    /**
-     * @return {@link UserEntity} with encoded password
-     */
     public UserEntity toUserEntityWithEncodedPassword(User user, Long id, Role role) {
         return new UserEntity(
                 id,
