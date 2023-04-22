@@ -54,7 +54,7 @@ public class GlobalErrorHandler implements ErrorController {
         HttpStatus httpStatus = HttpStatus.resolve(code);
         if (httpStatus == null) {
             throw new RuntimeException(
-                    String.format("Error status code = '%d' in uri = '%s' request wasn't a valid http status",
+                    String.format("Invalid Error status code = '%d' in uri = '%s'",
                             code, uri)
             );
         }
