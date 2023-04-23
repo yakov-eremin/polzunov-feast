@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.mapper;
+package com.example.polzunovfeastserver.entity.mapper;
 
 import com.example.polzunovfeastserver.entity.PlaceEntity;
 import org.openapitools.model.Place;
@@ -14,5 +14,15 @@ public class PlaceMapper {
                 place.getAddress(),
                 place.getLatitude(),
                 place.getLongitude());
+    }
+
+    public Place toPlace(PlaceEntity placeEntity) {
+        Place place = new Place();
+        place.setId(placeEntity.getId());
+        place.setName(placeEntity.getName());
+        place.setAddress(placeEntity.getAddress());
+        place.setLatitude(placeEntity.getLatitude());
+        place.setLongitude(placeEntity.getLongitude());
+        return place;
     }
 }

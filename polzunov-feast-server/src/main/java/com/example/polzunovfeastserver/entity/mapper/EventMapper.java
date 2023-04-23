@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.mapper;
+package com.example.polzunovfeastserver.entity.mapper;
 
 import com.example.polzunovfeastserver.entity.EventEntity;
 import org.openapitools.model.Event;
@@ -21,5 +21,15 @@ public class EventMapper {
                 LocalDateTime.parse(event.getStartDateTime()),
                 LocalDateTime.parse(event.getEndDateTime()),
                 placeMapper.toPlaceEntity(event.getPlace()));
+    }
+
+    public Event toEvent(EventEntity eventEntity) {
+        Event event = new Event();
+        event.setId(eventEntity.getId());
+        event.setName(eventEntity.getName());
+        event.setStartDateTime(eventEntity.getStartDateTime().toString());
+        event.setEndDateTime(eventEntity.getEndDateTime().toString());
+        event.setPlace(placeMapper.toPlace(eventEntity.getPlace()));
+        return event;
     }
 }

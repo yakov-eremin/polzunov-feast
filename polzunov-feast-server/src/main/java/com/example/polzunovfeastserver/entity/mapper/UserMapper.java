@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.mapper;
+package com.example.polzunovfeastserver.entity.mapper;
 
 import com.example.polzunovfeastserver.constant.Role;
 import com.example.polzunovfeastserver.entity.UserEntity;

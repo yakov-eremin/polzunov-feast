@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.validator;
+package com.example.polzunovfeastserver.entity.validator;
 
 import org.openapitools.model.User;
 import org.springframework.stereotype.Component;

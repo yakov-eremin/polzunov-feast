@@ -1,8 +1,8 @@
 package com.example.polzunovfeastserver.controller;
 
+import com.example.polzunovfeastserver.entity.validator.CredentialsValidator;
+import com.example.polzunovfeastserver.entity.validator.UserValidator;
 import com.example.polzunovfeastserver.service.UserService;
-import com.example.polzunovfeastserver.validator.CredentialsValidator;
-import com.example.polzunovfeastserver.validator.UserValidator;
 import org.openapitools.api.UserApi;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;

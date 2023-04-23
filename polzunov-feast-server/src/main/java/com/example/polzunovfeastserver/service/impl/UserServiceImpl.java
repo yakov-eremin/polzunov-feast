@@ -6,7 +6,7 @@ import com.example.polzunovfeastserver.exception.already_taken.AlreadyTakenExcep
 import com.example.polzunovfeastserver.exception.already_taken.EmailAlreadyTakenException;
 import com.example.polzunovfeastserver.exception.already_taken.PhoneAlreadyTakenException;
 import com.example.polzunovfeastserver.exception.already_taken.UsernameAlreadyTakenException;
-import com.example.polzunovfeastserver.mapper.UserMapper;
+import com.example.polzunovfeastserver.entity.mapper.UserMapper;
 import com.example.polzunovfeastserver.repository.UserEntityRepository;
 import com.example.polzunovfeastserver.security.authentication.DaoAuthenticationManager;
 import com.example.polzunovfeastserver.security.authentication.UserEntityLoader;
