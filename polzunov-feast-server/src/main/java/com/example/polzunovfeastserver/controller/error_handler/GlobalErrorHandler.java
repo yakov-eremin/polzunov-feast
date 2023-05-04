@@ -1,5 +1,6 @@
 package com.example.polzunovfeastserver.controller.error_handler;
 
+import com.example.polzunovfeastserver.exception.InvalidHttpCodeException;
 import com.example.polzunovfeastserver.exception.UserIdNotFoundException;
 import com.example.polzunovfeastserver.util.MessageProvider;
 import jakarta.servlet.RequestDispatcher;
@@ -53,10 +54,8 @@ public class GlobalErrorHandler implements ErrorController {
         int code = Integer.parseInt(status.toString());
         HttpStatus httpStatus = HttpStatus.resolve(code);
         if (httpStatus == null) {
-            throw new RuntimeException(
-                    String.format("Invalid Error status code = '%d' in uri = '%s'",
-                            code, uri)
-            );
+            throw new InvalidHttpCodeException(
+                    String.format("Invalid Error status code = '%d' in uri = '%s'", code, uri));
         }
 
         //if client tries to access nonexistent path
