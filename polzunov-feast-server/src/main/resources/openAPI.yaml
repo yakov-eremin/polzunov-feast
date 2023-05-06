@@ -1,4 +1,4 @@
-#Before making any changes in error messages examples, ensure you've changed ErrorResponseMessages.properties accordingly
+#Before making any changes in error messages examples, ensure you've changed error_response_messages.properties accordingly
 
 
 openapi: 3.0.3
