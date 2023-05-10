@@ -1,53 +1,34 @@
-#Before making any changes in error messages examples, ensure you've changed error_response_messages.properties accordingly
+#Before making any changes in error messages examples, ensure you've changed ErrorResponseMessages.properties accordingly
 
 
 openapi: 3.0.3
 info:
-  title: OpenAPI Specification for Polzunov.Feast
+  title: Polzunov.Feast
   version: '0.1'
-  description: |
-    <details>
-      <summary>Additional API requests info</summary>
-      If user tries to access nonexistent path, response will be the following:
-      ```
-      Code: 404
-      Body:
-      {
-        "message": "this path doesn't exist",
-        "validationViolations": null
-      }
-      ```
-    </details>
 servers:
   - url: 'http://localhost:8080' #TODO change to real domain
 security:
   - bearerAuth: []
 tags:
   - name: user
-    description: Requests related to users
   - name: admin
-    description: Requests related to admins
   - name: event
-    description: Request related to events
   - name: route
-    description: Операции, связанные с маршрутом
 
 paths:
   ###################################### user ############################################################################
   /user/signin:
     post:
-      summary: Authenticate user
+      summary: Sign in new user
       operationId: signInUser
       security: []
       tags:
         - user
       requestBody:
-        description: Username and password provided in the body
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Credentials'
-        required: true
       responses:
         '200':
           description: User authenticated, token of type "Bearer" passed in the body
@@ -138,7 +119,7 @@ paths:
       tags:
         - user
       requestBody:
-        description: User object with new data. All fields will be updated regardless of the values, that's why if some fields do not need to be updated, their previous values should be passed.
+        description: User object with new data. ***Password can be null, if it doesn't need to be updated.***
         content:
           'application/json':
             schema:
@@ -146,7 +127,11 @@ paths:
         required: true
       responses:
         '200':
-          description: User updated
+          description: Updated user with password=null
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/ValidationFailedBadRequest'
         '401':
@@ -464,17 +449,29 @@ components:
       properties:
         message:
           type: string
-        validationViolations:
+        fieldValidationViolations:
           type: array
           items:
-            $ref: '#/components/schemas/ValidationViolation'
-    ValidationViolation:
+            $ref: '#/components/schemas/FieldValidationViolation'
+        httpAttributeValidationViolation:
+          type: array
+          items:
+            $ref: '#/components/schemas/HttpAttributeValidationViolation'
+    FieldValidationViolation:
       type: object
       properties:
-        fieldName:
+        field:
           type: string
         message:
           type: string
+    HttpAttributeValidationViolation:
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+
     Token:
       type: object
       properties:

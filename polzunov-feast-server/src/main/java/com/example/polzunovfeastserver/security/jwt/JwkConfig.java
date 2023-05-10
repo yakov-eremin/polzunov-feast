@@ -36,10 +36,8 @@ public class JwkConfig {
     }
 
     @Bean
-    JwtDecoder jwtDecoder(UserIdTokenValidator userIdTokenValidator) throws JOSEException {
-        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withPublicKey(rsaKey.toRSAPublicKey()).build();
-        jwtDecoder.setJwtValidator(userIdTokenValidator);
-        return jwtDecoder;
+    JwtDecoder jwtDecoder() throws JOSEException {
+        return NimbusJwtDecoder.withPublicKey(rsaKey.toRSAPublicKey()).build();
     }
 
     private static RSAKey generateRsa() {

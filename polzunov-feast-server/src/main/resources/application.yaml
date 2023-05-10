@@ -15,10 +15,3 @@ spring:
       hibernate:
         format_sql: true
     database: postgresql
-
-#Disable spring default error handling
-server:
-  error:
-    whitelabel:
-      enabled: false
-    path: /error

@@ -4,12 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.FieldError;
 
 import java.util.Locale;
 
 /**
- * Obtains messages form resource bundles. Logs if message wasn't found.
+ * Retrieves messages form resource bundles. Logs if message wasn't found.
  */
 @Slf4j
 @Component
@@ -28,34 +27,16 @@ public class MessageProvider {
         String message;
         try {
             message = messageSource.getMessage(code, args, Locale.getDefault());
+            if (message.isBlank())
+                log.warn("Message for code='{}' and args='{}' was blank", code, args);
         } catch (NoSuchMessageException ex) {
             log.warn("Message for error code = '{}' and args = '{}' wasn't found", code, args);
-            return defaultMessage;
-        }
-
-        return message;
-    }
-
-    public String getValidationViolationMessage(FieldError fieldError) {
-        String errorCode = fieldError.getCode();
-        Object[] args = fieldError.getArguments();
-        String objectName = fieldError.getObjectName();
-        String field = fieldError.getField();
-
-        String message;
-        try {
-            message = messageSource.getMessage(errorCode, args, Locale.getDefault());
-        } catch (NoSuchMessageException e) {
-            log.warn("Message for error code = '{}' and args = '{}' wasn't found. Object name = '{}', field = '{}'",
-                    errorCode, args, objectName, field);
-            message = fieldError.getDefaultMessage();
+            message = defaultMessage;
         }
         if (message == null) {
-            log.warn("Default message for field = '{}' of object = '{}' wasn't found",
-                    field, objectName);
-            return "Unknown validation error";
+            log.warn("Default message for code='{}' and args='{}' was null ", code, args);
+            message = "Unknown error";
         }
-
         return message;
     }
 }

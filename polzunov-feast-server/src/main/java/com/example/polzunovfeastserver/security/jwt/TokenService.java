@@ -1,10 +1,8 @@
 package com.example.polzunovfeastserver.security.jwt;
 
-import com.example.polzunovfeastserver.entity.UserEntity;
 import org.openapitools.model.Token;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -22,13 +20,9 @@ public class TokenService {
         this.encoder = encoder;
     }
 
-    /**
-     * @param authentication should contain user id as name
-     * @return {@link Token} of type Bearer, containing id and authorities. Valid for one hour.
-     */
-    public Token generateToken(Authentication authentication) {
+    public Token generateToken(UserDetails user) {
         Instant now = Instant.now();
-        String scope = authentication.getAuthorities().stream()
+        String scope = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
@@ -36,7 +30,7 @@ public class TokenService {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plus(1, ChronoUnit.HOURS))
-                .subject(authentication.getName())
+                .subject(user.getUsername())
                 .claim("scope", scope)
                 .build();
 
@@ -45,17 +39,5 @@ public class TokenService {
         token.setAccessToken(tokenValue);
         token.setTokenType("Bearer");
         return token;
-    }
-
-    /**
-     * @return {@link Token} of type Bearer, containing user id and authorities. Valid for one hour.
-     */
-    public Token generateToken(UserEntity user) {
-        Authentication auth = new  UsernamePasswordAuthenticationToken(
-                user.getId(),
-                user.getPassword(),
-                user.getAuthorities()
-        );
-        return generateToken(auth);
     }
 }
