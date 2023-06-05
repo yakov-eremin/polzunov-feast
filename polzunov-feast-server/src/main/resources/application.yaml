@@ -3,9 +3,9 @@ spring:
     basename: ValidationViolationMessages
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/feast_db
-    username: user
-    password: 123
+    url: jdbc:postgresql://localhost:5432/polzunov-feast-db
+    username: polzunov
+    password: feast
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

@@ -1,7 +1,5 @@
 package com.example.polzunovfeastserver.user;
 
-import com.example.polzunovfeastserver.user.entity.Role;
-import com.example.polzunovfeastserver.user.entity.UserEntity;
 import com.example.polzunovfeastserver.util.AuthenticationUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.UserApi;
@@ -38,17 +36,24 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<User> updateUser(User user) {
-        long userId = AuthenticationUtils.extractUserIdFromToken();
-        UserEntity userEntityToUpdate = UserMapper.toUserEntity(user, userId, Role.ROLE_USER);
-        UserEntity updatedUserEntity = userService.update(userEntityToUpdate);
-        User updatedUser = UserMapper.toUserWithoutPassword(updatedUserEntity);
+        long id = AuthenticationUtils.extractUserIdFromToken();
+        User updatedUser = userService.update(user, id);
+        log.info("User '{}' updated", updatedUser.getUsername());
         return new ResponseEntity<>(updatedUser, OK);
     }
 
     @Override
+    public ResponseEntity<User> getUser() {
+        long id = AuthenticationUtils.extractUserIdFromToken();
+        User user = userService.getById(id);
+        log.info("User '{}' fetched", user.getUsername());
+        return new ResponseEntity<>(user, OK);
+    }
+
+    @Override
     public ResponseEntity<Void> deleteUser() {
-        long userId = AuthenticationUtils.extractUserIdFromToken();
-        userService.deleteUserById(userId);
+        long id = AuthenticationUtils.extractUserIdFromToken();
+        userService.deleteById(id);
         return new ResponseEntity<>(OK);
     }
 }

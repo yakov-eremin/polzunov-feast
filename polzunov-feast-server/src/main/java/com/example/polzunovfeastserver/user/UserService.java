@@ -47,21 +47,35 @@ public class UserService {
 
     /**
      * If password is null, then set it to previous password
+     * @return updated user without password
      */
-    public UserEntity update(UserEntity user) {
-        Optional<UserEntity> userOpt = userEntityRepo.findById(user.getId());
-        UserEntity previousUser = userOpt.orElseThrow(() -> new UsernameNotFoundException(String.format(
-                "User with id=%d not found", user.getId()))
-        );
+    public User update(User user, long id) {
+        UserEntity previousUser = getUserEntityById(id);
         if (user.getPassword() == null) {
             user.setPassword(previousUser.getPassword());
         } else {
             user.setPassword(encoder.encode(user.getPassword()));
         }
-        return userEntityRepo.save(user);
+        return UserMapper.toUserWithoutPassword(
+                userEntityRepo.save(UserMapper.toUserEntity(user, id, previousUser.getRole()))
+        );
     }
 
-    public void deleteUserById(long id) {
+    /**
+     * @return user without password
+     */
+    public User getById(long id) {
+        UserEntity userEntity = getUserEntityById(id);
+        return UserMapper.toUserWithoutPassword(userEntity);
+    }
+    
+    public UserEntity getUserEntityById(long id) {
+        return userEntityRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException(String.format(
+                "User with id=%d not found", id))
+        );
+    }
+
+    public void deleteById(long id) {
         //Sprig will complain if user to be deleted doesn't exist, even though docs claim the opposite
         if (!userEntityRepo.existsById(id)) {
             return;

@@ -11,7 +11,7 @@ public class AuthenticationUtils {
         try {
             return Long.parseLong(idStr);
         } catch (NumberFormatException e) {
-            throw new CorruptedTokenException(String.format("Invalid user id in auth token: %s", idStr));
+            throw new CorruptedTokenException(String.format("Invalid user id='%s' in auth token", idStr));
         }
     }
 }

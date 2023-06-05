@@ -1,8 +1,8 @@
 package com.example.polzunovfeastserver.security.jwt;
 
+import com.example.polzunovfeastserver.user.entity.UserEntity;
 import org.openapitools.model.Token;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -20,7 +20,7 @@ public class TokenService {
         this.encoder = encoder;
     }
 
-    public Token generateToken(UserDetails user) {
+    public Token generateToken(UserEntity user) {
         Instant now = Instant.now();
         String scope = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -30,7 +30,7 @@ public class TokenService {
                 .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plus(1, ChronoUnit.HOURS))
-                .subject(user.getUsername())
+                .subject(user.getId().toString())
                 .claim("scope", scope)
                 .build();
 
