@@ -44,20 +44,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: "incorrect password"
-                validationViolations: null
         '404':
           description: Username not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                message: "username wasn't found"
-                validationViolations: null
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -74,7 +66,6 @@ paths:
           'application/json':
             schema:
               $ref: '#/components/schemas/User'
-        required: true
       responses:
         '200':
           description: User signed up, authentication token of type "Bearer" passed in the body
@@ -84,31 +75,7 @@ paths:
                 $ref: '#/components/schemas/Token'
         '400':
           $ref: '#/components/responses/ValidationFailedBadRequest'
-        '409':
-          description: |
-            Occurs if:
-            * Username already taken
-            * Email already taken
-            * Phone number already taken
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                Username already taken:
-                  value:
-                    message: "username was already taken"
-                    validationViolations: null
-                Email already taken:
-                  value:
-                    message: "email was already taken"
-                    validationViolations: null
-                Phone number already taken:
-                  value:
-                    message: "phone number was already taken"
-                    validationViolations: null
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
+        ##TODO'409':
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -119,15 +86,14 @@ paths:
       tags:
         - user
       requestBody:
-        description: User object with new data. ***Password can be null, if it doesn't need to be updated.***
+        description: User object with new data. *Password can be null, if it doesn't need to be updated.*
         content:
           'application/json':
             schema:
               $ref: '#/components/schemas/User'
-        required: true
       responses:
         '200':
-          description: Updated user with password=null
+          description: Updated user with *password=null*
           content:
             application/json:
               schema:
@@ -136,31 +102,7 @@ paths:
           $ref: '#/components/responses/ValidationFailedBadRequest'
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
-        '409':
-          description: |
-            Occurs if:
-            * Username already taken
-            * Email already taken
-            * Phone number already taken
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                Username already taken:
-                  value:
-                    message: "username was already taken"
-                    validationViolations: null
-                Email already taken:
-                  value:
-                    message: "email was already taken"
-                    validationViolations: null
-                Phone number already taken:
-                  value:
-                    message: "phone number was already taken"
-                    validationViolations: null
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
+        ##TODO'409':
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -174,8 +116,6 @@ paths:
           description: User deleted
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -196,8 +136,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Event'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -213,7 +151,6 @@ paths:
           'application/json':
             schema:
               $ref: '#/components/schemas/Event'
-        required: true
       responses:
         '200':
           description: Event created
@@ -225,8 +162,6 @@ paths:
           $ref: '#/components/responses/ValidationFailedBadRequest'
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -237,12 +172,11 @@ paths:
         - event
         - admin
       requestBody:
-        description: Event object with new data. All fields will be updated regardless of the values, that's why if some fields do not need to be updated, their previous values should be passed.
+        description: Event object with new data
         content:
           'application/json':
             schema:
               $ref: '#/components/schemas/Event'
-        required: true
       responses:
         '200':
           description: Event updated
@@ -256,8 +190,6 @@ paths:
           $ref: '#/components/responses/TokenUnauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -271,11 +203,9 @@ paths:
       parameters:
         - in: path
           name: id
-          description: Must be positive
+          required: true
           schema:
             type: integer
-            format: int64
-          required: true
       responses:
         '200':
           description: Event found
@@ -289,8 +219,6 @@ paths:
           $ref: '#/components/responses/TokenUnauthorized'
         '404':
           $ref: '#/components/responses/NotFound'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
         '500':
           $ref: '#/components/responses/InternalServerError'
     delete:
@@ -302,11 +230,9 @@ paths:
       parameters:
         - in: path
           name: id
-          description: Must be positive
+          required: true
           schema:
             type: integer
-            format: int64
-          required: true
       responses:
         '200':
           description: Event deleted
@@ -408,38 +334,18 @@ components:
   responses:
     InternalServerError:
       description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     ValidationFailedBadRequest:
       description: Validation failed
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-          example:
-            message: "validation failed"
-            validationViolations: [
-              {
-                fieldName: "field name (e.g., email)",
-                message: "what's wrong with this field (e.g., must not be null)"
-              },
-              {
-                fieldName: "field name",
-                message: "something is wrong"
-              }
-            ]
     TokenUnauthorized:
       description: Token authorization failed, relogin required
-    UnsupportedMediaType:
-      description: |
-        Occurs if:
-        * Content type, specified in _Content-Type_ header, is not supported by the server
-        * Server cannot generate response with a media type, specified in _Accept_ header. **In that case response body is empty**
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-          example:
-            message: "content type is not supported"
-            validationViolations: null
     NotFound:
       description: Not found
 
@@ -449,6 +355,10 @@ components:
       properties:
         message:
           type: string
+        objectValidationViolations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectValidationViolation'
         fieldValidationViolations:
           type: array
           items:
@@ -457,6 +367,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/HttpAttributeValidationViolation'
+    ObjectValidationViolation:
+      type: object
+      properties:
+        message:
+          type: string
     FieldValidationViolation:
       type: object
       properties:
@@ -467,7 +382,7 @@ components:
     HttpAttributeValidationViolation:
       type: object
       properties:
-        name:
+        attribute:
           type: string
         message:
           type: string
@@ -507,17 +422,14 @@ components:
       properties:
         id:
           type: integer
-          format: int64
         name:
           type: string
-        startDateTime:
+        startTime:
           type: string
           format: yyyy-MM-ddTHH:mm:ss
-          example: "2021-01-01T00:00:00"
-        endDateTime:
+        endTime:
           type: string
           format: yyyy-MM-ddTHH:mm:ss
-          example: "2021-01-01T00:00:00"
         place:
           $ref: '#/components/schemas/Place'
     Place:
@@ -525,7 +437,6 @@ components:
       properties:
         id:
           type: integer
-          format: int64
         name:
           type: string
         address:
@@ -536,6 +447,7 @@ components:
         longitude:
           type: number
           format: double
+
     Route:
       type: object
       properties:
@@ -552,19 +464,3 @@ components:
           type: integer
         event:
           $ref: '#/components/schemas/Event'
-        currentTransport:
-          $ref: '#/components/schemas/Transport'
-        movingTime:
-          type: integer
-        estimateArrivingTime:
-          type: integer
-        possibleTransport:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transport'
-    Transport:
-      type: string
-      enum:
-        - foot
-        - bus
-        - car

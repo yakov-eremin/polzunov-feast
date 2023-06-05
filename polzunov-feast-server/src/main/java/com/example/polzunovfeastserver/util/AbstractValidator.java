@@ -11,13 +11,16 @@ import java.util.regex.Pattern;
 
 public abstract class AbstractValidator implements Validator {
 
-    protected void rejectIfBlank(Errors errors, String field) {
+    /**
+     * Rejects null, empty or whitespace strings.
+     */
+    protected void notBlank(Errors errors, String field) {
         String errorCode = "ValidationViolation.message.notBlank";
         String defaultMessage = String.format("Field '%s' must not be blank.", field);
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, field, errorCode, defaultMessage);
     }
 
-    protected void rejectIfNull(Errors errors, String field) {
+    protected void notNull(Errors errors, String field) {
         if (valueIsNull(errors, field)) {
             String errorCode = "ValidationViolation.message.notNull";
             String defaultMessage = String.format("Field '%s' must not be null.", field);
@@ -25,28 +28,40 @@ public abstract class AbstractValidator implements Validator {
         }
     }
 
-    protected void rejectIfBadEmail(Errors errors, String field) {
+    /**
+     * Null elements are considered valid.
+     */
+    protected void email(Errors errors, String field) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         String errorCode = "ValidationViolation.message.email";
         String defaultMessage = String.format("Field '%s' must be a well-formed email.", field);
-        rejectIfDoesntMatchPattern(errors, field, emailRegex, errorCode, defaultMessage);
+        pattern(errors, field, emailRegex, errorCode, defaultMessage);
     }
 
-    protected void rejectIfBadPhone(Errors errors, String field) {
+    /**
+     * Null elements are considered valid.
+     */
+    protected void phoneNumber(Errors errors, String field) {
         String phoneRegex = "^\\+?[0-9]{1,3}[- ]?\\(?[0-9]{3}\\)?[- ]?[0-9]{3}[- ]?[0-9]{4}$";
         String errorCode = "ValidationViolation.message.phone";
         String defaultMessage = String.format("Field '%s' must be a well-formed phone number.", field);
-        rejectIfDoesntMatchPattern(errors, field, phoneRegex, errorCode, defaultMessage);
+        pattern(errors, field, phoneRegex, errorCode, defaultMessage);
     }
 
-    protected void rejectIfContainsWhitespaces(Errors errors, String field) {
+    /**
+     * Null elements are considered valid.
+     */
+    protected void noWhitespaces(Errors errors, String field) {
         String regex = "^\\S+$";
         String errorCode = "ValidationViolation.message.noWhitespaces";
         String defaultMessage = String.format("Field '%s' must not contain whitespace characters", field);
-        rejectIfDoesntMatchPattern(errors, field, regex, errorCode, defaultMessage);
+        pattern(errors, field, regex, errorCode, defaultMessage);
     }
 
-    protected void rejectIfNotDateTime(Errors errors, String field) {
+    /**
+     * Field must be a date-time of 'yyy-MM-ddTHH:mm:ss' format. Null elements are considered valid.
+     */
+    protected void dateTime(Errors errors, String field) {
         String dateTimeStr = (String) errors.getFieldValue(field);
         if (dateTimeStr == null) return;
 
@@ -54,25 +69,34 @@ public abstract class AbstractValidator implements Validator {
             LocalDateTime.parse(dateTimeStr);
         } catch (DateTimeParseException e) {
             String errorCode = "ValidationViolation.message.dateTime";
-            String defaultMessage = String.format("Field '%s' must be a date-time of 'yyy-MM-dd HH:mm:ss' format.", field);
+            String defaultMessage = String.format("Field '%s' must be a date-time of 'yyy-MM-ddTHH:mm:ss' format.", field);
             errors.rejectValue(field, errorCode, defaultMessage);
         }
     }
 
-    protected void rejectIfDoesntMatchPattern(Errors errors, String field, String regex) {
+    /**
+     * Null elements are considered valid.
+     */
+    protected void pattern(Errors errors, String field, String regex) {
         String errorCode = "ValidationViolation.message.pattern";
         String defaultMessage = String.format("Field '%s' must match patter '%s'", field, regex);
-        rejectIfDoesntMatchPattern(errors, field, regex, errorCode, new Object[]{regex}, defaultMessage);
+        pattern(errors, field, regex, errorCode, new Object[]{regex}, defaultMessage);
     }
 
-    private void rejectIfDoesntMatchPattern(
-            Errors errors, String field, String regex, String errorCode, String defaultMessage) {
-        rejectIfDoesntMatchPattern(errors, field, regex, errorCode, null, defaultMessage);
+
+    /**
+     * Null elements are considered valid.
+     */
+    private void pattern(Errors errors, String field, String regex,
+                         String errorCode, String defaultMessage) {
+        pattern(errors, field, regex, errorCode, null, defaultMessage);
     }
 
-    private void rejectIfDoesntMatchPattern(
-            Errors errors, String field, String regex,
-            String errorCode, Object[] errorArgs, String defaultMessage) {
+    /**
+     * Null elements are considered valid.
+     */
+    private void pattern(Errors errors, String field, String regex,
+                         String errorCode, Object[] errorArgs, String defaultMessage) {
         if (valueIsNull(errors, field)) return;
         String value = errors.getFieldValue(field).toString();
 

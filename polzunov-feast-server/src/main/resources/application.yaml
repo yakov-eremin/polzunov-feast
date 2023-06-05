@@ -1,6 +1,6 @@
 spring:
   messages:
-    basename: ErrorResponseMessages,ValidationViolationMessages
+    basename: ValidationViolationMessages
 
   datasource:
     url: jdbc:postgresql://localhost:5432/feast_db

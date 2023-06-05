@@ -1,9 +1,9 @@
-package com.example.polzunovfeastserver.user.entity;
+package com.example.polzunovfeastserver.user;
 
+import com.example.polzunovfeastserver.user.entity.Role;
+import com.example.polzunovfeastserver.user.entity.UserEntity;
 import org.openapitools.model.User;
-import org.springframework.stereotype.Component;
 
-@Component
 public class UserMapper {
 
     public static UserEntity toUserEntity(User user, Long id, Role role) {
