@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/user/signin", "/user/signup").permitAll()
                         .requestMatchers(HttpMethod.GET, "/event/{id}", "/event").permitAll()
-                        //TODO remove permissions below, when admin will be added
+                        //TODO remove permissions below, when admin added
                         .requestMatchers(HttpMethod.POST, "/event").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/event").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/event{id}").permitAll()

@@ -1,10 +1,10 @@
 package com.example.polzunovfeastserver.util;
 
-import com.example.polzunovfeastserver.global_error.CorruptedTokenException;
+import com.example.polzunovfeastserver.exception.CorruptedTokenException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public class AuthenticationUtils {
+public class AuthenticationUtil {
     public static long extractUserIdFromToken() throws CorruptedTokenException{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String idStr = authentication.getName();

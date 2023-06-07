@@ -1,6 +1,6 @@
 package com.example.polzunovfeastserver.user;
 
-import com.example.polzunovfeastserver.util.AuthenticationUtils;
+import com.example.polzunovfeastserver.util.AuthenticationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.UserApi;
 import org.openapitools.model.Credentials;
@@ -36,7 +36,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<User> updateUser(User user) {
-        long id = AuthenticationUtils.extractUserIdFromToken();
+        long id = AuthenticationUtil.extractUserIdFromToken();
         User updatedUser = userService.update(user, id);
         log.info("User '{}' updated", updatedUser.getUsername());
         return new ResponseEntity<>(updatedUser, OK);
@@ -44,7 +44,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<User> getUser() {
-        long id = AuthenticationUtils.extractUserIdFromToken();
+        long id = AuthenticationUtil.extractUserIdFromToken();
         User user = userService.getById(id);
         log.info("User '{}' fetched", user.getUsername());
         return new ResponseEntity<>(user, OK);
@@ -52,7 +52,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<Void> deleteUser() {
-        long id = AuthenticationUtils.extractUserIdFromToken();
+        long id = AuthenticationUtil.extractUserIdFromToken();
         userService.deleteById(id);
         return new ResponseEntity<>(OK);
     }

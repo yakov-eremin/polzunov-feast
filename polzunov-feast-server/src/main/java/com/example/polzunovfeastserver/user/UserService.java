@@ -3,11 +3,11 @@ package com.example.polzunovfeastserver.user;
 import com.example.polzunovfeastserver.security.jwt.TokenService;
 import com.example.polzunovfeastserver.user.entity.Role;
 import com.example.polzunovfeastserver.user.entity.UserEntity;
-import com.example.polzunovfeastserver.user.exception.WrongPasswordException;
+import com.example.polzunovfeastserver.user.exception.UserNotFoundException;
+import com.example.polzunovfeastserver.user.exception.WrongUserPasswordException;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
 import org.openapitools.model.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,20 +27,19 @@ public class UserService {
     }
 
     public Token signUp(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         UserEntity userEntity = UserMapper.toUserEntity(user, null, Role.ROLE_USER);
-        userEntity.setPassword(encoder.encode(user.getPassword()));
-        UserEntity savedUser = userEntityRepo.save(userEntity);
-        return tokenService.generateToken(savedUser);
+        return tokenService.generateToken(userEntityRepo.save(userEntity));
     }
 
     public Token signIn(Credentials credentials) {
         Optional<UserEntity> userOpt = userEntityRepo.findByUsername(credentials.getUsername());
-        UserEntity user = userOpt.orElseThrow(() -> new UsernameNotFoundException(
-                String.format("User '%s' not found", credentials.getUsername()))
+        UserEntity user = userOpt.orElseThrow(() ->
+                new UserNotFoundException(String.format("Cannot sign in: user '%s' not found", credentials.getUsername()))
         );
 
         if (!encoder.matches(credentials.getPassword(), user.getPassword())) {
-            throw new WrongPasswordException(String.format("Wrong password for user '%s'", user.getUsername()));
+            throw new WrongUserPasswordException(String.format("Wrong password for user '%s'", user.getUsername()));
         }
         return tokenService.generateToken(user);
     }
@@ -70,8 +69,8 @@ public class UserService {
     }
     
     public UserEntity getUserEntityById(long id) {
-        return userEntityRepo.findById(id).orElseThrow(() -> new UsernameNotFoundException(String.format(
-                "User with id=%d not found", id))
+        return userEntityRepo.findById(id).orElseThrow(() ->
+                new UserNotFoundException(String.format("User with id=%d not found", id))
         );
     }
 

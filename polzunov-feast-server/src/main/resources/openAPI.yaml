@@ -13,7 +13,7 @@ tags:
   - name: route
 
 paths:
-  ###################################### user ############################################################################
+  ###################################### user ##########################################################################
   /user/signin:
     post:
       summary: Sign in new user
@@ -72,7 +72,12 @@ paths:
                 $ref: '#/components/schemas/Token'
         '400':
           $ref: '#/components/responses/BadRequest'
-        ##TODO'409':
+        '409':
+          description: Username, email or phone number already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -99,7 +104,12 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
-        ##TODO'409':
+        '409':
+          description: Username, email or phone number already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -137,7 +147,7 @@ paths:
 
 
 
-  ##################################### event ###########################################################################
+  ##################################### event ##########################################################################
   /event:
     get:
       summary: Get all events
@@ -262,7 +272,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 
 
-  ############################################ route #####################################################################
+  ############################################ route ###################################################################
   /route/get:
     get:
       summary: Получение маршрута пользователя.

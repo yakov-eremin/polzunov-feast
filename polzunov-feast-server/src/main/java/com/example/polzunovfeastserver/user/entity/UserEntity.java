@@ -1,10 +1,10 @@
 package com.example.polzunovfeastserver.user.entity;
 
+import com.example.polzunovfeastserver.user.uitl.UserUniqueKey;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,35 +12,35 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = UserUniqueKey.USERNAME, columnNames = "username"),
+                @UniqueConstraint(name = UserUniqueKey.EMAIL, columnNames = "email"),
+                @UniqueConstraint(name = UserUniqueKey.PHONE, columnNames = "phone")
+        }
+)
 @Entity
-@Table(name = "users")
 @Data
 @AllArgsConstructor
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private final Long id;
+    private Long id;
 
-
-    @Column(unique = true)
-    private final String username;
-
+    private String username;
     private String password;
 
     @Column(name = "user_name")
-    private final String name;
+    private String name;
 
-    @Column(unique = true)
-    private final String phone;
-
-    @Column(unique = true)
-    private final String email;
+    private String phone;
+    private String email;
 
     @Enumerated(EnumType.STRING)
-    private final Role role;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

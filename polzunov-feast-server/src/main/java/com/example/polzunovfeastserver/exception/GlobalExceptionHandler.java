@@ -1,5 +1,6 @@
-package com.example.polzunovfeastserver.global_error;
+package com.example.polzunovfeastserver.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.ErrorResponse;
 import org.openapitools.model.FieldValidationViolation;
@@ -13,28 +14,23 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import javax.validation.ConstraintViolationException;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
-@RestController
 @RestControllerAdvice
-public class GlobalErrorHandler implements ErrorController {
+public class GlobalExceptionHandler implements ErrorController {
 
     @ExceptionHandler(CorruptedTokenException.class)
     @ResponseStatus(UNAUTHORIZED)
     public void onCorruptedTokenException(CorruptedTokenException e) {
         log.warn("Authentication token corrupted", e);
     }
-
 
     //May be thrown when request body required, but not found
     @ExceptionHandler(HttpMessageNotReadableException.class)
