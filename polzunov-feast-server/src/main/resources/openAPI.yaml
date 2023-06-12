@@ -145,9 +145,157 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+  ##################################### place ##########################################################################
+  /place:
+    post:
+      summary: Create new place
+      operationId: addPlace
+      tags:
+        - place
+        - admin
+      requestBody:
+        description: Place to create
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Place'
+      responses:
+        '200':
+          description: Place created
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Place'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/TokenUnauthorized'
+        '404':
+          description: Admin not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 
+    put:
+      summary: Update place by id
+      operationId: updatePlaceById
+      tags:
+        - place
+        - admin
+      requestBody:
+        description: Place to update
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Place'
+      responses:
+        '200':
+          description: Place updated
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Place'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/TokenUnauthorized'
+        '404':
+          description: Admin or place not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 
-  ##################################### event ##########################################################################
+    get:
+      summary: Get all places
+      operationId: getAllPlaces
+      security: [ ]
+      tags:
+        - place
+      parameters:
+        - in: query
+          name: page
+          description: Index of first page to return
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: size
+          description: Page size
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+      responses:
+        '200':
+          description: Places sent
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/TokenUnauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /place/{id}:
+    parameters:
+      - in: path
+        name: id
+        description: Place id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Get place by id
+      operationId: getPlaceById
+      security: [ ]
+      tags:
+        - place
+      responses:
+        '200':
+          description: Place sent
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Place'
+        '404':
+          description: Place not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      summary: Delete place by id
+      operationId: deletePlaceById
+      tags:
+        - place
+        - admin
+      responses:
+        '200':
+          description: Place deleted
+        '401':
+          $ref: '#/components/responses/TokenUnauthorized'
+        '404':
+          description: Place not found
+
+    ##################################### event ##########################################################################
   /event:
     get:
       summary: Get all events
@@ -272,7 +420,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 
 
-  ############################################ route ###################################################################
+    ############################################ route ###################################################################
   /route/get:
     get:
       summary: Получение маршрута пользователя.
@@ -466,16 +614,11 @@ components:
       properties:
         id:
           type: integer
+          format: int64
         name:
           type: string
         address:
           type: string
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double
 
     Route:
       type: object

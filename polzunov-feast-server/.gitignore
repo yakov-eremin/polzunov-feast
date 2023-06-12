@@ -1,5 +1,4 @@
 HELP.md
-http-request-log.http
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -32,3 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
+!/.idea/httpRequests/http-requests-log.http

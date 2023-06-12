@@ -37,11 +37,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/user/signin", "/user/signup").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/event/{id}", "/event").permitAll()
-                        //TODO remove permissions below, when admin added
-                        .requestMatchers(HttpMethod.POST, "/event").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/event").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/event{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/place", "/place/{id}").permitAll()
+                        //TODO remove below permissions when admins added
+                        .requestMatchers(HttpMethod.POST, "/place").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/place").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/place/{id}").permitAll()
 
                         .anyRequest().authenticated()
                 )
