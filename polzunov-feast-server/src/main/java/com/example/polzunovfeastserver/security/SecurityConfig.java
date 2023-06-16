@@ -2,7 +2,6 @@ package com.example.polzunovfeastserver.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -13,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -37,11 +38,15 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/user/signin", "/user/signup").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/place", "/place/{id}").permitAll()
+                        .requestMatchers(GET, "/place", "/place/{id}").permitAll()
+                        .requestMatchers(GET, "/event", "/event/{id}").permitAll()
                         //TODO remove below permissions when admins added
-                        .requestMatchers(HttpMethod.POST, "/place").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/place").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/place/{id}").permitAll()
+                        .requestMatchers(POST, "/place").permitAll()
+                        .requestMatchers(PUT, "/place").permitAll()
+                        .requestMatchers(DELETE, "/place/{id}").permitAll()
+                        .requestMatchers(POST, "/event").permitAll()
+                        .requestMatchers(PUT, "/event").permitAll()
+                        .requestMatchers(DELETE, "/event/{id}").permitAll()
 
                         .anyRequest().authenticated()
                 )

@@ -114,7 +114,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 
     get:
-      summary: Get user info *without password*
+      summary: Get user info without password
       operationId: getUser
       tags:
         - user
@@ -125,8 +125,6 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/User'
-        '400':
-          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
         '500':
@@ -238,15 +236,13 @@ paths:
         '200':
           description: Places sent
           content:
-            'application/json':
+            application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Place'
         '400':
           $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/TokenUnauthorized'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -293,31 +289,19 @@ paths:
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
         '404':
-          description: Place not found
-
-    ##################################### event ##########################################################################
-  /event:
-    get:
-      summary: Get all events
-      operationId: getAllEvents
-      security: [ ] #Events can be obtained by any user, including unauthorized one
-      tags:
-        - event
-      responses:
-        '200':
-          description: Events sent
+          description: Admin not found
           content:
-            'application/json':
+            application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
+    ##################################### event ##########################################################################
+  /event:
     post:
       summary: Create new event
-      operationId: createEvent
+      operationId: addEvent
       tags:
         - event
         - admin
@@ -333,11 +317,17 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/EventWithPlaceResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
+        '404':
+          description: Admin or place not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -359,40 +349,74 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Event'
+                $ref: '#/components/schemas/EventWithPlaceResponse'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
         '404':
-          $ref: '#/components/responses/NotFound'
+          description: Admin, place or event not found
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      summary: Get all events
+      operationId: getAllEvents
+      security: [ ]
+      tags:
+        - event
+      parameters:
+        - in: query
+          name: page
+          description: Index of first page to return
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: size
+          description: Page size
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+      responses:
+        '200':
+          description: Events sent
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventWithPlaceResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
   /event/{id}:
+    parameters:
+      - in: path
+        name: id
+        description: Place id
+        required: true
+        schema:
+          type: integer
+          format: int64
     get:
       summary: Get event by id
       operationId: getEventById
-      security: [ ] #Event can be obtained by any user, including unauthorized one
+      security: [ ]
       tags:
         - event
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           description: Event found
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Event'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/TokenUnauthorized'
+                $ref: '#/components/schemas/EventWithPlaceResponse'
         '404':
           $ref: '#/components/responses/NotFound'
         '500':
@@ -403,24 +427,28 @@ paths:
       tags:
         - event
         - admin
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           description: Event deleted
-        '400':
-          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
+        '404':
+          description: Admin not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Cannot delete place, because there are events associated with it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
 
-    ############################################ route ###################################################################
+  ############################################ route ###################################################################
   /route/get:
     get:
       summary: Получение маршрута пользователя.
@@ -594,21 +622,49 @@ components:
           type: string
         password:
           type: string
+
     Event:
       type: object
       properties:
         id:
           type: integer
+          format: int64
         name:
+          type: string
+        description:
           type: string
         startTime:
           type: string
-          format: yyyy-MM-ddTHH:mm:ss
+          format: date-time
+          example: 2019-01-01T00:00:00+3:00
         endTime:
           type: string
-          format: yyyy-MM-ddTHH:mm:ss
+          format: date-time
+          example: 2019-01-01T01:00:00+3:00
+        placeId:
+          type: integer
+          format: int64
+    EventWithPlaceResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+          example: 2019-01-01T00:00:00+3:00
+        endTime:
+          type: string
+          format: date-time
+          example: 2019-01-01T01:00:00+3:00
         place:
           $ref: '#/components/schemas/Place'
+
     Place:
       type: object
       properties:
