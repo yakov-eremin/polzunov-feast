@@ -1,7 +1,7 @@
 # to create container run 'docker-compose up -d' in this directory
 version: "3.9"
 services:
-  postgres:
+  polzunov-feast-db:
     container_name: polzunov-feast-db
     image: postgres:15.1-alpine
     environment:
@@ -11,11 +11,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      #initial scripts (e.g. schema.sql) will be read from ./init directory
-      - ./init:/docker-entrypoint-initdb.d
-      #data will be stored in '../../../../../polzunov-feat-data' directory (in the same folder as this project)
-      - ../../../../../polzunov-feat-data:/var/lib/postgresql/data
-
+      - polzunov-feast-data:/var/lib/postgresql/data
 volumes:
-  data:
+  polzunov-feast-data:
     name: polzunov-feast-data

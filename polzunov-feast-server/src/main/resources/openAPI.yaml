@@ -447,87 +447,64 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-
   ############################################ route ###################################################################
-  /route/get:
-    get:
-      summary: Получение маршрута пользователя.
-      operationId: getUserRoute
+  /route:
+    put:
+      summary: Update user's route. If there is no route, it will be created and updated.
+      operationId: updateRouteByUserId
       tags:
         - route
+      requestBody:
+        description: Route object
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Route'
       responses:
         '200':
-          description: Маршрут отправлен.
+          description: Route updated
           content:
-            'application/json':
+            application/json:
               schema:
-                $ref: '#/components/schemas/Route'
+                $ref: '#/components/schemas/RouteWithEventResponse'
         '400':
-          description: BAD REQUEST
+          $ref: '#/components/responses/BadRequest'
         '401':
-          description: UNAUTHORIZED
+          $ref: '#/components/responses/TokenUnauthorized'
+        '404':
+          description: User, event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: The time of one event overlaps the time of another (e.g., two events with the same start time)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
-          description: INTERNAL SERVER ERROR
-
-  /route/createNew:
-    post:
-      summary: Сохранение нового маршрута.
-      operationId: createNewUserRoute
-      tags:
-        - route
-      requestBody:
-        description: Передается новый объект Route.
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/Route'
-      responses:
-        '200':
-          description: Маршрут сохранен.
-        '400':
-          description: BAD REQUEST
-        '401':
-          description: UNAUTHORIZED
-        '500':
-          description: INTERNAL SERVER ERROR
-
-  /route/update:
-    post:
-      summary: Обновление существующего маршрута.
-      operationId: updateUserRoute
-      tags:
-        - route
-      requestBody:
-        description: Передается объект Route с новыми данными.
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/Route'
-      responses:
-        '200':
-          description: Изменения маршрута сохранены.
-        '400':
-          description: BAD REQUEST
-        '401':
-          description: UNAUTHORIZED
-        '500':
-          description: INTERNAL SERVER ERROR
-
-  /route/delete:
+          $ref: '#/components/responses/InternalServerError'
     get:
-      summary: Удаление маршрута пользователя.
-      operationId: deleteUserRoute
+      summary: Get user's route. If there is no route, it will be created and sent.
+      description: Route's nodes will be ordered by events' start time from earliest to latest
+      operationId: getRouteByUserId
       tags:
         - route
       responses:
         '200':
-          description: Маршрут удален.
-        '400':
-          description: BAD REQUEST
+          description: Route sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteWithEventResponse'
         '401':
-          description: UNAUTHORIZED
+          $ref: '#/components/responses/TokenUnauthorized'
+        '404':
+          description: User not found
         '500':
-          description: INTERNAL SERVER ERROR
+          $ref: '#/components/responses/InternalServerError'
+
 #################################### Components ########################################################################
 components:
   securitySchemes:
@@ -679,16 +656,26 @@ components:
     Route:
       type: object
       properties:
-        id:
-          type: integer
-        routeNodes:
+        nodes:
           type: array
           items:
             $ref: '#/components/schemas/RouteNode'
+    RouteWithEventResponse:
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteNodeWithEventResponse'
+
     RouteNode:
       type: object
       properties:
-        id:
+        eventId:
           type: integer
+          format: int64
+    RouteNodeWithEventResponse:
+      type: object
+      properties:
         event:
-          $ref: '#/components/schemas/Event'
+          $ref: '#/components/schemas/EventWithPlaceResponse'

@@ -36,7 +36,7 @@ public class GlobalExceptionHandler implements ErrorController {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(BAD_REQUEST)
     public ErrorResponse onHttpMessageNotReadableException(final HttpMessageNotReadableException e) {
-        String message = "Http request is corrupted: " + e.getHttpInputMessage();
+        String message = "Http request is corrupted: " + e.getMessage();
         log.warn(message, e);
         ErrorResponse error = new ErrorResponse();
         error.setMessage(message);
