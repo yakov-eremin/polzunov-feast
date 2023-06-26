@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:FeastMobile.ViewModel"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:Class="FeastMobile.View.FeastDetailsPage"
+             x:DataType="viewmodel:FeastDetailsViewModel">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource White}" StatusBarStyle="DarkContent" />
+    </ContentPage.Behaviors>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="6.8*"/>
+            <RowDefinition Height="27.8*"/>
+            <RowDefinition Height="5.6*"/>
+            <RowDefinition Height="7.6*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+
+
+        <Image Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Source="{Binding Feast.Image}"
+               Aspect="AspectFill"
+               
+               HorizontalOptions="Center">
+        </Image>
+
+        <VerticalStackLayout Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Padding="12,16,12,16">
+            <Label Text="{Binding Feast.Name}"
+               FontFamily="RobotoBold"
+               FontSize="14"    
+               TextColor="{StaticResource Gray950}"
+               FontAutoScalingEnabled="True">
+                </Label>
+            <Label FontFamily="RobotoRegular"
+               FontSize="12"    
+               TextColor="{StaticResource Gray950}"               
+               FontAutoScalingEnabled="True">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0:M} - {1:M} * {2} мероприятий">
+                        <Binding Path="Feast.StartDate" />
+                        <Binding Path="Feast.EndDate" />
+                        <Binding Path="Feast.ActivitiesNumber" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+        </VerticalStackLayout>
+
+        <ContentView Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Padding="15">
+            <Editor 
+                x:Name="DescriptionEditor"
+                IsReadOnly="True"
+                TextColor="#616161"
+                FontFamily="RobotoRegular"
+                FontSize="12"
+                Text="{Binding Description}"/>
+        </ContentView>
+
+        <Button Grid.Row="3"
+                Grid.Column="0"
+                Text="{Binding EditorExpandedText}"
+                FontSize="12"
+                WidthRequest="80"
+                HorizontalOptions="Start"
+                TextColor="{StaticResource Gray900}"
+                FontFamily="RobotoMedium"
+                BackgroundColor="#EEEEEE"
+                CornerRadius="16"
+                Padding="0,0,0,0"
+                Margin="10,10,10,10"
+                Command="{Binding ExpandEditorCommand}">
+        </Button>
+
+        <Button Grid.Row="4"
+                Grid.Column="0"
+                Text="Закрыть"
+                FontSize="12"
+                TextColor="{StaticResource Gray900}"
+                FontFamily="RobotoMedium"
+                BackgroundColor="{StaticResource LightBlue}"
+                CornerRadius="16"
+                Padding="0,0,0,0"
+                Margin="10,10,10,10"
+                Command="{Binding GoBackCommand}">
+        </Button>
+
+        <Button Grid.Row="4"
+                Grid.Column="1"
+                Text="Перейти"
+                FontSize="12"
+                TextColor="{StaticResource White}"
+                FontFamily="RobotoMedium"
+                BackgroundColor="{StaticResource MainAccent}"
+                CornerRadius="16"
+                Padding="0,0,0,0"
+                Margin="10,10,10,10">
+        </Button>
+    </Grid>
+</ContentPage>

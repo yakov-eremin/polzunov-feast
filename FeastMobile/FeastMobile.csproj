@@ -39,7 +39,6 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
 
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -49,7 +48,55 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Новая папка\**" />
+	  <Compile Remove="Новая папка\**" />
+	  <EmbeddedResource Remove="Новая папка\**" />
+	  <MauiCss Remove="Новая папка\**" />
+	  <MauiXaml Remove="Новая папка\**" />
+	  <None Remove="Новая папка\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="View\TabbedPage.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Resources\Fonts\Roboto-Bold.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
+	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
+	  <None Remove="Resources\Images\account_circle.svg" />
+	  <None Remove="Resources\Images\flag.svg" />
+	  <None Remove="Resources\Images\list_alt.svg" />
+	  <None Remove="Resources\Images\place.svg" />
+	  <None Remove="Resources\Raw\activitydata.csv" />
+	  <None Remove="Resources\Raw\feastdata.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="View\FeastDetailsPage.xaml.cs">
+	    <DependentUpon>FeastDetailsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\FeastListPage.xaml.cs">
+	    <DependentUpon>FeastListPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="View\BlanckPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\FeastDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\FeastListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

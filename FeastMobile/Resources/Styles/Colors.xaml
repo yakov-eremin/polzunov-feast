@@ -41,4 +41,10 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
+    
+    <!--Свои цвета-->
+    <Color x:Key="MainAccent">#1E78F0</Color>
+    <Color x:Key="Gray50">#FAFAFA</Color>
+    <Color x:Key="Gray700">#616161</Color>
+    <Color x:Key="LightBlue">#ddebfd</Color>
 </ResourceDictionary>
