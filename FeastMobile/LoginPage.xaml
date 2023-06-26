@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FeastMobile.LoginPage"
+             Title="LoginPage">
+    <VerticalStackLayout
+        Spacing="20"
+        Padding="20">
+        
+        <Image
+            Source="house.png"
+            SemanticProperties.Description="Happy people!"
+            HeightRequest="200"
+            HorizontalOptions="Center" />
+        <Label 
+            Text="Авторизация"
+            FontSize="25"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <StackLayout>
+            <Label
+                FontSize="18"
+                Text="E-mail"/>
+            <Entry 
+                FontSize="22"
+                Placeholder="Введите E-mail" Keyboard="Email" />
+        </StackLayout>
+
+        <StackLayout>
+            <Label
+                FontSize="18"
+                Text="Пароль"/>
+            <Entry 
+                FontSize="22"
+                Placeholder="Введите пароль" Keyboard="Email" />
+
+        </StackLayout>
+
+        <Button Text="Войти" BackgroundColor="#1E78F0">
+            
+        </Button>
+
+        <FlexLayout
+            JustifyContent="SpaceAround">
+            
+            <!--VK Button-->
+            <Button ImageSource="vk.png" Text="VK" MinimumWidthRequest="140"></Button>
+            <Button ImageSource="telegram.png" Text="Telegram" MinimumWidthRequest="140"></Button>
+            
+            <!--Telegram Button-->
+            <!--<StackLayout
+                Orientation="Horizontal"
+                BackgroundColor="#DDEBFD" 
+                MinimumWidthRequest="150">
+                <Image
+                    Source="telegram.png"
+                    SemanticProperties.Description="Happy people!"
+                    HeightRequest="25"
+                    HorizontalOptions="Center" />
+                <Button
+                    Text="Telegram" 
+                    BackgroundColor="#00C36767"
+                    TextColor="Black"
+                    />
+            </StackLayout>-->
+
+        </FlexLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

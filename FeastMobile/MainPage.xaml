@@ -115,15 +115,18 @@
             <HorizontalStackLayout
                 HorizontalOptions="Center">
                 <Button 
-                    Text="Позже" BackgroundColor="#D91E78F0" FontSize="16" HorizontalOptions="Start" Margin="0,0,25,0">
+                    Text="Позже" BackgroundColor="#ddebfd" TextColor="Black" FontSize="16" HorizontalOptions="Start" Margin="0,0,25,0">
                 </Button>
                 <Button 
                     Text="Зарегистрироваться" BackgroundColor="#1E78F0" FontSize="16" HorizontalOptions="End" Margin="25,0,0,0">
                 </Button>
             </HorizontalStackLayout>
 
-            <Button Text="У меня уже есть аккаунт" BackgroundColor="#FFFFFF" TextColor="#1E78F0">
-                
+            <Button 
+                Text="У меня уже есть аккаунт" 
+                BackgroundColor="#FFFFFF" 
+                TextColor="#1E78F0"
+                Clicked="LoginClick">
             </Button>
             
         </VerticalStackLayout>

@@ -7,6 +7,9 @@
             InitializeComponent();
 
             MainPage = new AppShell();
+
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+
         }
     }
 }
