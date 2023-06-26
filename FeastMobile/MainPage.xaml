@@ -114,7 +114,7 @@
                 HorizontalOptions="Center">
                 
                 <Button 
-                    Text="Позже" Margin="0,0,20,0" BackgroundColor="#D91E78F0" FontSize="16>
+                    Text="Позже" Margin="0,0,20,0" BackgroundColor="#D91E78F0" FontSize="16">
                     
                 </Button>
                 
