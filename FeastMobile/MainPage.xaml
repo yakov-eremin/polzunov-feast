@@ -2,39 +2,128 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeastMobile.MainPage">
-
     <ScrollView>
         <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            VerticalOptions="Center"
+            Spacing="5">
 
             <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
+                Source="main_image.png"
+                SemanticProperties.Description="Happy people!"
                 HeightRequest="200"
                 HorizontalOptions="Center" />
-
             <Label
-                Text="Hello, World!"
+                Text="Регистрируйтесь и получайте больше возможностей"
                 SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+                FontSize="24"
+                HorizontalOptions="Fill" HorizontalTextAlignment="Center"/>
+            
+            <!--First-->
+            <StackLayout 
+                Orientation="Horizontal"
+                Padding="15"
+                Spacing="10">
+                <StackLayout>
+                    <Image
+                        Source="img1.png"
+                        SemanticProperties.Description="desc1!"
+                        HeightRequest="45"/>
+                </StackLayout>
+                <StackLayout 
+                    MaximumWidthRequest="290"
+                    Spacing="3">
+                    <Label
+                        Text="Составляйте свой маршрут"
+                        FontSize="20"/>
+                    <Label
+                        Text="Подбирайте удобные мероприятия для себя и сохраняйте их в список"
+                        FontSize="15"/>
+                </StackLayout>
+            </StackLayout>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+            <!--Second-->
+            <StackLayout 
+                Orientation="Horizontal"
+                Padding="15"
+                Spacing="10">
+                <StackLayout>
+                    <Image
+                        Source="img2.png"
+                        SemanticProperties.Description="desc1!"
+                        HeightRequest="45"/>
+                </StackLayout>
+                <StackLayout 
+                    MaximumWidthRequest="290"
+                    Spacing="3">
+                    <Label
+                        Text="Сохраняйте программу"
+                        FontSize="20"/>
+                    <Label
+                        Text="Сохранить свою программу событий можно в формате PDF на ваше устройство или на электронную почту"
+                        FontSize="15"/>
+                </StackLayout>
+            </StackLayout>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+            <!--Third-->
+            <StackLayout 
+                Orientation="Horizontal"
+                Padding="15"
+                Spacing="10">
+                <StackLayout>
+                    <Image
+                        Source="img3.png"
+                        SemanticProperties.Description="desc1!"
+                        HeightRequest="45"/>
+                </StackLayout>
+                <StackLayout 
+                    MaximumWidthRequest="290"
+                    Spacing="3">
+                    <Label
+                        Text="Делитесь маршрутом с друзьями"
+                        FontSize="20"/>
+                    <Label
+                        Text="Отправляйтесь на мероприятие вместе"
+                        FontSize="15"/>
+                </StackLayout>
+            </StackLayout>
 
+            <!--Fourth-->
+            <StackLayout 
+                Orientation="Horizontal"
+                Padding="15"
+                Spacing="10">
+                <StackLayout>
+                    <Image
+                        Source="img4.png"
+                        SemanticProperties.Description="desc1!"
+                        HeightRequest="45"/>
+                </StackLayout>
+                <StackLayout 
+                    MaximumWidthRequest="290"
+                    Spacing="3">
+                    <Label
+                        Text="Синхронизация"
+                        FontSize="20"/>
+                    <Label
+                        Text="Всё что вы сохранили в приложении, автоматически отправляется на сервер"
+                        FontSize="15"/>
+                </StackLayout>
+            </StackLayout>
+
+            <HorizontalStackLayout 
+                HorizontalOptions="Center">
+                
+                <Button 
+                    Text="Позже" Margin="0,0,20,0" BackgroundColor="#D91E78F0" FontSize="16>
+                    
+                </Button>
+                
+                <Button 
+                    Text="Зарегистрироваться" Margin="20,0,0,0" BackgroundColor="#1E78F0" FontSize="16">
+
+                </Button>
+            </HorizontalStackLayout>
+            
         </VerticalStackLayout>
     </ScrollView>
 
