@@ -9,6 +9,8 @@ namespace FeastMobile
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(FeastDetailsPage), typeof(FeastDetailsPage));
+            Routing.RegisterRoute(nameof(EventListPage), typeof(EventListPage));
+            Routing.RegisterRoute(nameof(FiltersPage), typeof(FiltersPage));
         }
     }
 }

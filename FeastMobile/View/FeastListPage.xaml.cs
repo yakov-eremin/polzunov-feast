@@ -6,6 +6,5 @@ public partial class FeastListPage : ContentPage
 	{
 		InitializeComponent();
 		this.BindingContext = feastVM;
-
     }
 }

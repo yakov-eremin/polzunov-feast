@@ -13,7 +13,31 @@
         <member name="P:FeastMobile.ViewModel.BaseViewModel.Title">
             <inheritdoc cref="F:FeastMobile.ViewModel.BaseViewModel.title"/>
         </member>
+        <member name="T:FeastMobile.ViewModel.EventViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:FeastMobile.ViewModel.EventViewModel.Feast">
+            <inheritdoc cref="F:FeastMobile.ViewModel.EventViewModel.feast"/>
+        </member>
+        <member name="F:FeastMobile.ViewModel.EventViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.EventViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.EventViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.EventViewModel.GoBackAsync"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.EventViewModel.goToFiltersCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.EventViewModel.GoToFiltersCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.EventViewModel.GoToFiltersCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.EventViewModel.GoToFiltersAsync"/>.</summary>
+        </member>
         <member name="T:FeastMobile.ViewModel.FeastDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
@@ -27,11 +51,32 @@
         <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.EditorExpandedText">
             <inheritdoc cref="F:FeastMobile.ViewModel.FeastDetailsViewModel.editorExpandedText"/>
         </member>
+        <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.CurrentImage">
+            <inheritdoc cref="F:FeastMobile.ViewModel.FeastDetailsViewModel.currentImage"/>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.CurrentImageIndex">
+            <inheritdoc cref="F:FeastMobile.ViewModel.FeastDetailsViewModel.currentImageIndex"/>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.NumOfImages">
+            <inheritdoc cref="F:FeastMobile.ViewModel.FeastDetailsViewModel.numOfImages"/>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FeastDetailsViewModel.initializeDataCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FeastDetailsViewModel.InitializeDataCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.InitializeDataCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastDetailsViewModel.InitializeData"/>.</summary>
+        </member>
         <member name="F:FeastMobile.ViewModel.FeastDetailsViewModel.goBackCommand">
             <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FeastDetailsViewModel.GoBackCommand"/>.</summary>
         </member>
         <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.GoBackCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastDetailsViewModel.GoBackAsync"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FeastDetailsViewModel.goToEventsCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FeastDetailsViewModel.GoToEventsCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.GoToEventsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastDetailsViewModel.GoToEventsAsync"/>.</summary>
         </member>
         <member name="F:FeastMobile.ViewModel.FeastDetailsViewModel.expandEditorCommand">
             <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FeastDetailsViewModel.ExpandEditorCommand"/>.</summary>
@@ -39,7 +84,20 @@
         <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.ExpandEditorCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastDetailsViewModel.ExpandEditor"/>.</summary>
         </member>
+        <member name="F:FeastMobile.ViewModel.FeastDetailsViewModel.forwardImageCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FeastDetailsViewModel.ForwardImageCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.ForwardImageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastDetailsViewModel.ForwardImage"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FeastDetailsViewModel.backImageCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FeastDetailsViewModel.BackImageCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FeastDetailsViewModel.BackImageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastDetailsViewModel.BackImage"/>.</summary>
+        </member>
         <member name="T:FeastMobile.ViewModel.FeastViewModel">
+            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
@@ -58,6 +116,12 @@
         </member>
         <member name="P:FeastMobile.ViewModel.FeastViewModel.GoToDetailsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastViewModel.GoToDetailsAsync(FeastMobile.Model.Feast)"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FeastViewModel.goToEventsCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FeastViewModel.GoToEventsCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FeastViewModel.GoToEventsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastViewModel.GoToEventsAsync(FeastMobile.Model.Feast)"/>.</summary>
         </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
             <summary>
@@ -179,6 +243,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EditorExpandedText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EditorExpandedText" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentImage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentImage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentImageIndex">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentImageIndex" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NumOfImages">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NumOfImages" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsRefreshing">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsRefreshing" generated properties.</summary>
         </member>
@@ -205,6 +278,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EditorExpandedText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EditorExpandedText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentImage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentImage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentImageIndex">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentImageIndex" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NumOfImages">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NumOfImages" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsRefreshing">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsRefreshing" generated properties.</summary>

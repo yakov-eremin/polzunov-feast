@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Devices.Sensors;
-
-namespace FeastMobile.Services;
+﻿namespace FeastMobile.Services;
 
 public class FeastService
 {

@@ -13,8 +13,9 @@
         <mct:StatusBarBehavior StatusBarColor="{StaticResource MainAccent}" StatusBarStyle="LightContent" />
     </ContentPage.Behaviors>
 
-    <RefreshView Command="{Binding GetFeastsCommand}"
-                 IsRefreshing="{Binding IsRefreshing}">
+    <RefreshView 
+        Command="{Binding GetFeastsCommand}"
+        IsRefreshing="{Binding IsRefreshing}">
         <CollectionView 
             x:Name="EventsCollectionView"
             SelectionMode="None"
@@ -22,17 +23,19 @@
             
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Feast">
-                    <Frame CornerRadius="16"
+                    <Frame 
+                       CornerRadius="16"
                        BackgroundColor="Gray"
                        BorderColor="Black"
-                       Margin="16,12,16,6"
+                       Margin="16,12,16,0"
                        Padding="0">
                         <Grid>
-                            <Image HorizontalOptions="Start"
+                            <Image 
+                               HorizontalOptions="Start"
                                Aspect="AspectFill"
-                               Source="{Binding Image}">
+                               Source="{Binding Images[0]}">
                             </Image>
-                            <Grid Padding="10" ColumnSpacing="10">
+                            <Grid Padding="13" ColumnSpacing="12">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.4*"/>
                                     <RowDefinition Height="6*"/>
@@ -46,62 +49,64 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.Background>
-                                    <LinearGradientBrush StartPoint="0,0"
-                                                     EndPoint="0,1">
+                                    <LinearGradientBrush 
+                                        StartPoint="0,0"
+                                        EndPoint="0,1">
                                         <GradientStop Color="#00000000" Offset="0" />
                                         <GradientStop Color="#80000000" Offset="0.9" />
                                     </LinearGradientBrush>
                                 </Grid.Background>
 
-                                <Label Text="{Binding Name}"
+                                <Label 
+                                   Text="{Binding Name}"
                                    FontFamily="RobotoBold"
-                                   FontSize="14"    
-                                   FontAutoScalingEnabled="True"
+                                   FontSize="18"    
                                    VerticalTextAlignment="End"
                                    Grid.Row="2"
                                    Grid.Column="0"
                                    Grid.ColumnSpan="2"
                                    >
                                 </Label>
-                                <Label FontFamily="RobotoMedium"
-                                   FontSize="11"    
-                                   FontAutoScalingEnabled="True"
+                                <Label 
+                                   FontFamily="RobotoMedium"
+                                   FontSize="14"    
                                    Grid.Row="3"
                                    Grid.Column="0"
                                    Grid.ColumnSpan="2"
                                    VerticalTextAlignment="Center">
                                     <Label.Text>
-                                        <MultiBinding StringFormat="{}{0:M} - {1:M} * {2} мероприятий">
+                                        <MultiBinding StringFormat="{}{0:M} • {1} мероприятий">
                                             <Binding Path="StartDate" />
-                                            <Binding Path="EndDate" />
                                             <Binding Path="ActivitiesNumber" />
                                         </MultiBinding>
                                     </Label.Text>
                                 </Label>
-                                <Button Text="Подробнее"
+                                <Button 
+                                    Text="Подробнее"
                                     FontFamily="RobotoMedium"
-                                    FontSize="10"
-                                    FontAutoScalingEnabled="True"
+                                    FontSize="14"
                                     TextColor="White"                                    
                                     BackgroundColor="#00FFFFFF"
-                                    BorderColor="{StaticResource Gray400}"
+                                    BorderColor="{StaticResource Gray300}"
                                     BorderWidth="1"
-                                    CornerRadius="16"
+                                    CornerRadius="13"
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     Padding="0,0,0,0"
                                     CommandParameter="{Binding .}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToDetailsCommand}">
                                 </Button>
-                                <Button Text="Перейти"
+                                <Button 
+                                    Text="Перейти"
                                     FontFamily="RobotoMedium"
-                                    FontSize="10"
-                                    FontAutoScalingEnabled="True"
+                                    FontSize="14"
                                     BackgroundColor="{StaticResource MainAccent}"
-                                    CornerRadius="16"
+                                    CornerRadius="13"
                                     Grid.Row="4"
                                     Grid.Column="1"
-                                    Padding="0,0,0,0">
+                                    Padding="0,0,0,0"
+                                    CommandParameter="{Binding .}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToEventsCommand}">
                                 </Button>
                             </Grid>
                         </Grid>
@@ -110,12 +115,11 @@
             </CollectionView.ItemTemplate>
 
             <CollectionView.ItemsLayout >
-                <GridItemsLayout Orientation="Vertical"
-                             Span="1"
-                             HorizontalItemSpacing="8"/>
+                <GridItemsLayout 
+                    Orientation="Vertical"
+                    Span="1"
+                    HorizontalItemSpacing="8"/>
             </CollectionView.ItemsLayout>
-
-
         </CollectionView>
     </RefreshView>
 

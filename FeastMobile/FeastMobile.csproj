@@ -65,10 +65,19 @@
 	  <None Remove="Resources\Fonts\Roboto-Medium.ttf" />
 	  <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
 	  <None Remove="Resources\Images\account_circle.svg" />
+	  <None Remove="Resources\Images\arrow_back.svg" />
+	  <None Remove="Resources\Images\arrow_forward.svg" />
+	  <None Remove="Resources\Images\check.svg" />
+	  <None Remove="Resources\Images\festival.svg" />
+	  <None Remove="Resources\Images\filters.svg" />
 	  <None Remove="Resources\Images\flag.svg" />
 	  <None Remove="Resources\Images\list_alt.svg" />
 	  <None Remove="Resources\Images\place.svg" />
+	  <None Remove="Resources\Images\quit.svg" />
+	  <None Remove="Resources\Images\room.svg" />
+	  <None Remove="Resources\Images\save_alt.svg" />
 	  <None Remove="Resources\Raw\activitydata.csv" />
+	  <None Remove="Resources\Raw\eventsData.json" />
 	  <None Remove="Resources\Raw\feastdata.json" />
 	</ItemGroup>
 
@@ -76,6 +85,7 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.86" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -91,10 +101,16 @@
 	  <MauiXaml Update="View\BlanckPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\EventListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\FeastDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\FeastListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\FiltersPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

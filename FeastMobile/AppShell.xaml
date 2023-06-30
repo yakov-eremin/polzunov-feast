@@ -18,34 +18,42 @@
 
 
     <TabBar>
-        <Tab Title="События"
-             Icon="flag.svg">
-            <ShellContent Title="Ближайшие"
-                      ContentTemplate="{DataTemplate view:FeastListPage}"
-                      Route="EventListPage" />
-            <ShellContent Title="Завершенные"
-                          ContentTemplate="{DataTemplate view:BlanckPage}"/>
+        <Tab 
+            Title="События"
+            Icon="flag.svg">
+            <ShellContent 
+                Title="Ближайшие"
+                ContentTemplate="{DataTemplate view:FeastListPage}"/>
+            <ShellContent 
+                Title="Завершенные"
+                ContentTemplate="{DataTemplate view:BlanckPage}"/>
         </Tab>
         
-        <Tab Title="Места"
-             Icon="place.svg">
-            <ShellContent Title="Места" 
-                      Icon="place.svg"
-                      ContentTemplate="{DataTemplate view:BlanckPage}"/>
+        <Tab 
+            Title="Места"
+            Icon="place.svg">
+            <ShellContent 
+                Title="Места" 
+                Icon="place.svg"
+                ContentTemplate="{DataTemplate view:BlanckPage}"/>
         </Tab>
 
-        <Tab Title="Мой список"
-             Icon="list_alt.svg">
-            <ShellContent Title="Мой список" 
-                      Icon="list_alt.svg"
-                      ContentTemplate="{DataTemplate view:BlanckPage}"/>
+        <Tab 
+            Title="Мой список"
+            Icon="list_alt.svg">
+            <ShellContent 
+                Title="Мой список" 
+                Icon="list_alt.svg"
+                ContentTemplate="{DataTemplate view:BlanckPage}"/>
         </Tab>
 
-        <Tab Title="Профиль"
-             Icon="account_circle.svg">
-            <ShellContent Title="Профиль" 
-                      Icon="account_circle.svg"
-                      ContentTemplate="{DataTemplate view:BlanckPage}"/>
+        <Tab 
+            Title="Профиль"
+            Icon="account_circle.svg">
+            <ShellContent 
+                Title="Профиль" 
+                Icon="account_circle.svg"
+                ContentTemplate="{DataTemplate view:BlanckPage}"/>
         </Tab>
     </TabBar>
 </Shell>

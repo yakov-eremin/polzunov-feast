@@ -1,2 +1,2 @@
-AdbTarget=-s R58NA3X70ZR
+AdbTarget=-s emulator-5554
 AdbOptions=

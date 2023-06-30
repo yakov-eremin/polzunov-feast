@@ -64,10 +64,23 @@ public partial class FeastViewModel : BaseViewModel
         if (feast is null)
             return;
 
-        await Shell.Current.GoToAsync($"{nameof(FeastDetailsPage)}", true, 
+        await Shell.Current.GoToAsync($"{nameof(FeastDetailsPage)}",
             new Dictionary<string, object>
             {
-                {"Feast", feast}
+                ["Feast"] = feast
+            });
+    }
+
+    [RelayCommand]
+    async Task GoToEventsAsync(Feast feast)
+    {
+        if (feast is null)
+            return;
+
+        await Shell.Current.GoToAsync($"{nameof(EventListPage)}",
+            new Dictionary<string, object>
+            {
+                ["Feast"] = feast
             });
     }
 }

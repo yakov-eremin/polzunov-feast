@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:view="clr-namespace:FeastMobile.View"             
+             xmlns:model="clr-namespace:FeastMobile.Model"
+             xmlns:viewmodel="clr-namespace:FeastMobile.ViewModel"
+             xmlns:local="clr-namespace:FeastMobile.Services"
+             x:Class="FeastMobile.View.EventListPage"
+             x:DataType="viewmodel:EventViewModel"
+             Shell.TabBarIsVisible="True"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <local:DateTimeToLocalDateConverter x:Key="Converter" />
+    </ContentPage.Resources>
+
+
+    <VerticalStackLayout>
+        <VerticalStackLayout>
+            <StackLayout
+                Spacing="10"
+                Orientation="Horizontal"
+                BackgroundColor="{StaticResource MainAccent}">
+                <Button
+                    ImageSource="festival.svg"
+                    BackgroundColor="{StaticResource MainAccent}"
+                    Command="{Binding GoBackCommand}">
+                </Button>
+                <Label
+                    Text="{Binding Feast.Name}"
+                    FontSize="16"
+                    TextColor="White"
+                    FontFamily="RobotoMedium"
+                    VerticalOptions="Center">
+                </Label>
+                <Button 
+                    x:Name="ProblemButton"
+                    Text="Сохранить"
+                    ImageSource="save_alt.svg"
+                    TextColor="White"
+                    FontFamily="RobotoMedium"
+                    BackgroundColor="{StaticResource MainAccent}"
+                    HorizontalOptions="EndAndExpand">
+                </Button>
+            </StackLayout>
+                <Frame 
+                    BackgroundColor="#FAFAFA" 
+                    BorderColor="#CACACA" 
+                    Padding="5" 
+                    Margin="10,10,10,10">
+                <StackLayout
+                    Orientation="Horizontal">
+                    <SearchBar 
+                        Placeholder="Найти мероприятие" 
+                        WidthRequest="250" 
+                        Margin="0"/>
+                    <Button 
+                        ImageSource="filters.svg"
+                        BackgroundColor="Transparent"
+                        Command="{Binding GoToFiltersCommand}"
+                        HorizontalOptions="EndAndExpand">
+                    </Button>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+        
+        <ScrollView>
+            <StackLayout>
+                <Label
+                    FontFamily="RobotoRegular"
+                    TextColor="{StaticResource Gray900}"
+                    FontSize="12"
+                    Text="{Binding Path=Feast.ActivitiesNumber, StringFormat='{0} мероприятий'}"
+                    Margin="10,10,10,0">
+                </Label>
+
+                <CollectionView ItemsSource="{Binding Events}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Event">
+                            <Frame BackgroundColor="#FAFAFA" BorderColor="#CACACA" Padding="10" Margin="10,10,10,10">
+                                <StackLayout>
+                                    <Label 
+                                    FontSize="18" 
+                                    FontFamily="RobotoRegular"
+                                    Margin="0,5,0,5"
+                                    TextColor="{StaticResource Gray900}">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0:t} – {1:t}">
+                                                <Binding Path="StartTime" Converter="{StaticResource Converter}" />
+                                                <Binding Path="EndTime" Converter="{StaticResource Converter}" />
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                    <Label 
+                                        Text="{Binding Name}" 
+                                        FontSize="14" 
+                                        FontFamily="RobotoRegular" 
+                                        TextColor="{StaticResource Gray900}"
+                                        Margin="0,0,0,5"/>
+
+                                    <HorizontalStackLayout>
+                                        <Image Source="room" HeightRequest="16" WidthRequest="16" Margin="0,0,0,5"/>
+                                        <Label 
+                                        Text="{Binding Address}" 
+                                        FontSize="13" 
+                                        FontFamily="RobotoRegular"
+                                        TextColor="{StaticResource Gray400}"
+                                        Margin="0,0,0,5"
+                                        />
+                                    </HorizontalStackLayout>
+                                    <Button 
+                                    Text="Добавить в список" 
+                                    BackgroundColor="{StaticResource MainAccent}" 
+                                    ImageSource="check.svg"
+                                    Margin="5" 
+                                    Padding="10"
+                                    CornerRadius="12"/>
+                                </StackLayout>
+                            </Frame>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </StackLayout>
+        </ScrollView>
+    </VerticalStackLayout>
+
+
+</ContentPage>

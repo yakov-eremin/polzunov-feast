@@ -4,7 +4,9 @@
              xmlns:viewmodel="clr-namespace:FeastMobile.ViewModel"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:Class="FeastMobile.View.FeastDetailsPage"
-             x:DataType="viewmodel:FeastDetailsViewModel">
+             x:DataType="viewmodel:FeastDetailsViewModel"
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False">
 
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource White}" StatusBarStyle="DarkContent" />
@@ -23,28 +25,90 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <Grid  
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
+
+            <Image 
+                Source="{Binding CurrentImage}"
+                Aspect="AspectFill">
+            </Image>
 
 
-        <Image Grid.Row="0"
-               Grid.Column="0"
-               Grid.ColumnSpan="2"
-               Source="{Binding Feast.Image}"
-               Aspect="AspectFill"
-               
-               HorizontalOptions="Center">
-        </Image>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <VerticalStackLayout Grid.Row="1"
+                <Button
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    ImageSource="quit.svg"
+                    BackgroundColor="Transparent"
+                    Command="{Binding GoBackCommand}">
+                </Button>
+
+                <Button
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    ImageSource="arrow_back.svg"
+                    BackgroundColor="Transparent"
+                    Command="{Binding BackImageCommand}">
+                </Button>
+
+                <Button
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    ImageSource="arrow_forward.svg"
+                    BackgroundColor="Transparent"
+                    Command="{Binding ForwardImageCommand}">
+                </Button>
+
+                <Frame
+                    Grid.Column="2"
+                    Grid.Row="2"
+                    CornerRadius="12"
+                    BackgroundColor="#CC000000"
+                    BorderColor="Transparent"
+                    Padding="0,0,0,0">
+                     <Label
+                    TextColor="White"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0}/{1}">
+                                <Binding Path="CurrentImageIndex" />
+                                <Binding Path="NumOfImages" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <VerticalStackLayout 
+            Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Padding="12,16,12,16">
-            <Label Text="{Binding Feast.Name}"
+            Padding="16,16,16,16"
+            >
+            <Label 
+               Text="{Binding Feast.Name}"
                FontFamily="RobotoBold"
                FontSize="14"    
                TextColor="{StaticResource Gray950}"
                FontAutoScalingEnabled="True">
                 </Label>
-            <Label FontFamily="RobotoRegular"
+            <Label 
+               FontFamily="RobotoRegular"
                FontSize="12"    
                TextColor="{StaticResource Gray950}"               
                FontAutoScalingEnabled="True">
@@ -58,17 +122,19 @@
             </Label>
         </VerticalStackLayout>
 
-        <ContentView Grid.Row="2"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Padding="15">
+        <ContentView 
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Padding="15">
             <Editor 
                 x:Name="DescriptionEditor"
                 IsReadOnly="True"
                 TextColor="#616161"
                 FontFamily="RobotoRegular"
                 FontSize="12"
-                Text="{Binding Description}"/>
+                Text="{Binding Description}"
+                />
         </ContentView>
 
         <Button Grid.Row="3"
@@ -82,7 +148,7 @@
                 BackgroundColor="#EEEEEE"
                 CornerRadius="16"
                 Padding="0,0,0,0"
-                Margin="10,10,10,10"
+                Margin="10,10,10,0"
                 Command="{Binding ExpandEditorCommand}">
         </Button>
 
@@ -108,7 +174,8 @@
                 BackgroundColor="{StaticResource MainAccent}"
                 CornerRadius="16"
                 Padding="0,0,0,0"
-                Margin="10,10,10,10">
+                Margin="10,10,10,10"
+                Command="{Binding GoToEventsCommand}">
         </Button>
     </Grid>
 </ContentPage>

@@ -718,8 +718,11 @@
     <AppxPackagedFile Include="D:\Programms\try\FeastMobile\Resources\Raw\activitydata.csv">
       <PackagePath>activitydata.csv</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\Resources\Raw\eventdata.json">
-      <PackagePath>eventdata.json</PackagePath>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\Resources\Raw\eventsData.json">
+      <PackagePath>eventsData.json</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\Resources\Raw\feastdata.json">
+      <PackagePath>feastdata.json</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>
@@ -904,20 +907,80 @@
     <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
       <PackagePath>appiconWideTile.scale-400.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-100.png">
-      <PackagePath>dotnet_bot.scale-100.png</PackagePath>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_back.scale-100.png">
+      <PackagePath>arrow_back.scale-100.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
-      <PackagePath>dotnet_bot.scale-125.png</PackagePath>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_back.scale-125.png">
+      <PackagePath>arrow_back.scale-125.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
-      <PackagePath>dotnet_bot.scale-150.png</PackagePath>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_back.scale-150.png">
+      <PackagePath>arrow_back.scale-150.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
-      <PackagePath>dotnet_bot.scale-200.png</PackagePath>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_back.scale-200.png">
+      <PackagePath>arrow_back.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
-      <PackagePath>dotnet_bot.scale-400.png</PackagePath>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_back.scale-400.png">
+      <PackagePath>arrow_back.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_forward.scale-100.png">
+      <PackagePath>arrow_forward.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_forward.scale-125.png">
+      <PackagePath>arrow_forward.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_forward.scale-150.png">
+      <PackagePath>arrow_forward.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_forward.scale-200.png">
+      <PackagePath>arrow_forward.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\arrow_forward.scale-400.png">
+      <PackagePath>arrow_forward.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\check.scale-100.png">
+      <PackagePath>check.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\check.scale-125.png">
+      <PackagePath>check.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\check.scale-150.png">
+      <PackagePath>check.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\check.scale-200.png">
+      <PackagePath>check.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\check.scale-400.png">
+      <PackagePath>check.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\festival.scale-100.png">
+      <PackagePath>festival.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\festival.scale-125.png">
+      <PackagePath>festival.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\festival.scale-150.png">
+      <PackagePath>festival.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\festival.scale-200.png">
+      <PackagePath>festival.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\festival.scale-400.png">
+      <PackagePath>festival.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\filters.scale-100.png">
+      <PackagePath>filters.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\filters.scale-125.png">
+      <PackagePath>filters.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\filters.scale-150.png">
+      <PackagePath>filters.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\filters.scale-200.png">
+      <PackagePath>filters.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\filters.scale-400.png">
+      <PackagePath>filters.scale-400.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\flag.scale-100.png">
       <PackagePath>flag.scale-100.png</PackagePath>
@@ -963,6 +1026,51 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\place.scale-400.png">
       <PackagePath>place.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\quit.scale-100.png">
+      <PackagePath>quit.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\quit.scale-125.png">
+      <PackagePath>quit.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\quit.scale-150.png">
+      <PackagePath>quit.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\quit.scale-200.png">
+      <PackagePath>quit.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\quit.scale-400.png">
+      <PackagePath>quit.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\room.scale-100.png">
+      <PackagePath>room.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\room.scale-125.png">
+      <PackagePath>room.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\room.scale-150.png">
+      <PackagePath>room.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\room.scale-200.png">
+      <PackagePath>room.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\room.scale-400.png">
+      <PackagePath>room.scale-400.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\save_alt.scale-100.png">
+      <PackagePath>save_alt.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\save_alt.scale-125.png">
+      <PackagePath>save_alt.scale-125.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\save_alt.scale-150.png">
+      <PackagePath>save_alt.scale-150.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\save_alt.scale-200.png">
+      <PackagePath>save_alt.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Programms\try\FeastMobile\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\save_alt.scale-400.png">
+      <PackagePath>save_alt.scale-400.png</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
