@@ -49,7 +49,51 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	  <None Remove="Platforms\Android\google-services %284%29.json" />
+	  <None Remove="Resources\Raw\feast-cd00c-firebase-adminsdk-blbam-0e8aef73a7.json" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <GoogleServicesJson Include="Platforms\Android\google-services (4).json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="FirebaseAdmin" Version="2.3.0" />
+		<PackageReference Include="FirebaseDatabase.net" Version="4.2.0" />
+		<PackageReference Include="Google.Cloud.Firestore" Version="3.3.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls.Compatibility" Version="2.88.3" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.7.7" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android'">
+		<PackageReference Include="Xamarin.AndroidX.Activity" Version="1.7.2" />
+		<PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.7.2" />
+	  <PackageReference Include="Xamarin.AndroidX.Annotation">
+	    <Version>1.6.0.3</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common">
+	    <Version>2.6.1.2</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.Firebase.Messaging">
+	    <Version>123.1.2.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.Google.Dagger">
+	    <Version>2.46.1.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.GooglePlayServices.Base">
+	    <Version>118.2.0.1</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.Kotlin.StdLib">
+	    <Version>1.8.22</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.KotlinX.Coroutines.Android">
+	    <Version>1.7.1.1</Version>
+	  </PackageReference>
+	</ItemGroup>
+	<PropertyGroup>
+		<RestorePackagesPath>C:\Test</RestorePackagesPath>
+	</PropertyGroup>
 </Project>

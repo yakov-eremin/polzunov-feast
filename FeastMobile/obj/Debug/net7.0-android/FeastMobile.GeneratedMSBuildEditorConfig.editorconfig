@@ -12,33 +12,33 @@ build_property.EnableSingleFileAnalyzer = true
 build_property.EnableTrimAnalyzer = false
 build_property.IncludeAllContentForSelfExtract = 
 build_property.RootNamespace = FeastMobile
-build_property.ProjectDir = C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\
+build_property.ProjectDir = C:\polzunov-feast\FeastMobile\
 
-[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/App.xaml]
+[C:/polzunov-feast/FeastMobile/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/AppShell.xaml]
+[C:/polzunov-feast/FeastMobile/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/MainPage.xaml]
+[C:/polzunov-feast/FeastMobile/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
-[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/Resources/Styles/Colors.xaml]
+[C:/polzunov-feast/FeastMobile/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/Resources/Styles/Styles.xaml]
+[C:/polzunov-feast/FeastMobile/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml

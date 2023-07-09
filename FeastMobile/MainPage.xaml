@@ -28,9 +28,18 @@
                 FontSize="18"
                 HorizontalOptions="Center" />
 
+            <StackLayout>
+                <CheckBox 
+                    x:Name="checkBox"  
+                     HorizontalOptions="Center"/>
+                <Label 
+                    Text="Флажок" 
+                     HorizontalOptions="Center"/>
+            </StackLayout>
+
             <Button
                 x:Name="CounterBtn"
-                Text="Click me"
+                Text="Отправить токен"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "739247246158",
+    "project_id": "feast-cd00c",
+    "storage_bucket": "feast-cd00c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739247246158:android:d00365c915a5bf2f2bac1f",
+        "android_client_info": {
+          "package_name": "com.companyname.feastmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739247246158-h03vte8jrlm3g6tbgtqor501mkfb0n69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF0nkJw-IOrY797wV356kXh0Ol9i4cLaQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739247246158-h03vte8jrlm3g6tbgtqor501mkfb0n69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
