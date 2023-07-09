@@ -1,4 +1,5 @@
 ﻿obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\dotnet_bot.png
+obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\final_house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\img1.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\img2.png
@@ -9,6 +10,7 @@ obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\splash.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\telegram.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-hdpi\vk.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\dotnet_bot.png
+obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\final_house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\img1.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\img2.png
@@ -19,6 +21,7 @@ obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\splash.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\telegram.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-mdpi\vk.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\dotnet_bot.png
+obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\final_house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\img1.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\img2.png
@@ -29,6 +32,7 @@ obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\splash.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\telegram.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xhdpi\vk.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\dotnet_bot.png
+obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\final_house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\img1.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\img2.png
@@ -39,6 +43,7 @@ obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\splash.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\telegram.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\vk.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxxhdpi\dotnet_bot.png
+obj\Debug\net7.0-android\resizetizer\r\drawable-xxxhdpi\final_house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxxhdpi\house.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxxhdpi\img1.png
 obj\Debug\net7.0-android\resizetizer\r\drawable-xxxhdpi\img2.png

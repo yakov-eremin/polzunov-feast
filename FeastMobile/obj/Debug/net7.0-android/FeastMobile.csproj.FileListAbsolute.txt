@@ -1011,3 +1011,9 @@ C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-andro
 C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\resizetizer\r\drawable-xxhdpi\vk.png
 C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\resizetizer\r\drawable-xxxhdpi\telegram.png
 C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\resizetizer\r\drawable-xxxhdpi\vk.png
+C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\android\assets\BouncyCastle.Cryptography.dll
+C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\android\assets\MailKit.dll
+C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\android\assets\MailKit.pdb
+C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\android\assets\MimeKit.dll
+C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\android\assets\MimeKit.pdb
+C:\Users\TipaNick\Source\Repos\polzunov-feast\FeastMobile\obj\Debug\net7.0-android\android\assets\System.Security.Cryptography.Pkcs.dll

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeastMobile.LoginPage"
-             Title="LoginPage">
+             Title="LoginPage"
+             Shell.NavBarIsVisible="False">
     <VerticalStackLayout
         Spacing="20"
         Padding="20">
@@ -20,52 +21,60 @@
 
         <StackLayout>
             <Label
-                FontSize="18"
+                FontSize="16"
                 Text="E-mail"/>
             <Entry 
-                FontSize="22"
+                FontSize="18"
                 Placeholder="Введите E-mail" Keyboard="Email" />
         </StackLayout>
 
         <StackLayout>
             <Label
-                FontSize="18"
+                FontSize="16"
                 Text="Пароль"/>
             <Entry 
-                FontSize="22"
+                FontSize="18"
                 Placeholder="Введите пароль" Keyboard="Email" />
 
         </StackLayout>
 
-        <Button Text="Войти" BackgroundColor="#1E78F0">
-            
-        </Button>
+        <Button 
+            Text="Войти" 
+            BackgroundColor="#1E78F0" 
+            FontAttributes="Bold"/>
 
-        <FlexLayout
-            JustifyContent="SpaceAround">
-            
-            <!--VK Button-->
-            <Button ImageSource="vk.png" Text="VK" MinimumWidthRequest="140"></Button>
-            <Button ImageSource="telegram.png" Text="Telegram" MinimumWidthRequest="140"></Button>
-            
-            <!--Telegram Button-->
-            <!--<StackLayout
-                Orientation="Horizontal"
-                BackgroundColor="#DDEBFD" 
-                MinimumWidthRequest="150">
-                <Image
-                    Source="telegram.png"
-                    SemanticProperties.Description="Happy people!"
-                    HeightRequest="25"
-                    HorizontalOptions="Center" />
-                <Button
-                    Text="Telegram" 
-                    BackgroundColor="#00C36767"
-                    TextColor="Black"
-                    />
-            </StackLayout>-->
+        <FlexLayout JustifyContent="SpaceBetween">
+
+            <Button 
+                ImageSource="vk.png" 
+                Text="VK" 
+                MinimumWidthRequest="160" 
+                BackgroundColor="#ddebfd" 
+                TextColor="Black" 
+                FontAttributes="Bold"/>
+            <Button 
+                ImageSource="telegram.png" 
+                Text="Telegram" 
+                MinimumWidthRequest="160" 
+                BackgroundColor="#ddebfd" 
+                TextColor="Black" 
+                FontAttributes="Bold"/>
 
         </FlexLayout>
+
+        <StackLayout 
+            Orientation="Horizontal"
+            HorizontalOptions="Center">
+            
+            <Label 
+                Text="Нет аккаунта?" 
+                VerticalOptions="Center"/>
+            <Button 
+                Text="Зарегистрироваться" 
+                BackgroundColor="White" 
+                TextColor="Blue"/>
+            
+        </StackLayout>
 
     </VerticalStackLayout>
 </ContentPage>

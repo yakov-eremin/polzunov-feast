@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FeastMobile.VerifyPage"
+             Title="Подтверждение">
+
+    <StackLayout
+        Padding="30"
+        Spacing="10"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Label 
+            Text="Введите код из почты"
+            FontAttributes="Bold"
+            FontSize="23"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Label 
+            Text="Мы выслали вам специальный код на @example.com. Если код не пришел, проверьте раздел Спам"
+            VerticalOptions="Center" 
+            HorizontalOptions="Fill"
+            HorizontalTextAlignment="Center"/>
+
+        <Label
+            Text="Код"
+            FontAttributes="Bold" />
+
+        <FlexLayout JustifyContent="SpaceAround">
+            <Entry x:Name="FirstNum" Keyboard="Numeric" MaxLength="1" HorizontalTextAlignment="Center" HorizontalOptions="Fill" FontSize="30" TextChanged="FirstNum_TextChanged" />
+            <Entry x:Name="SecondNum" Keyboard="Numeric" MaxLength="1" HorizontalTextAlignment="Center" HorizontalOptions="Fill" FontSize="30" TextChanged="SecondNum_TextChanged"/>
+            <Entry x:Name="ThirdNum" Keyboard="Numeric" MaxLength="1" HorizontalTextAlignment="Center" HorizontalOptions="Fill" FontSize="30" TextChanged="ThirdNum_TextChanged"/>
+            <Entry x:Name="FourthNum" Keyboard="Numeric" MaxLength="1" HorizontalTextAlignment="Center" HorizontalOptions="Fill" FontSize="30" TextChanged="FourthNum_TextChanged"/>
+        </FlexLayout>
+
+        <Button Text="Отправить код еще раз" BackgroundColor="#FFFFFF" TextColor="#1E78F0" />
+
+        <Button Text="Отправить" BackgroundColor="#1E78F0" Clicked="Button_Clicked"/>
+
+    </StackLayout>
+</ContentPage>

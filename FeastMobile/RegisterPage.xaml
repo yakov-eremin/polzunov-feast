@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FeastMobile.RegisterPage"
+             Title="RegisterPage"
+             Shell.NavBarIsVisible="False">
+
+    <VerticalStackLayout
+        Spacing="20"
+        Padding="20">
+
+        <Image
+            Source="house.png"
+            SemanticProperties.Description="Happy people!"
+            HeightRequest="200"
+            HorizontalOptions="Center" />
+        
+        <!--Register label-->
+        <Label
+            Text="Регистрация"
+            FontSize="25"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        
+        <!--Email textbox-->
+        <StackLayout>
+            <Label
+                FontSize="16"
+                Text="E-mail"/>
+            <Entry 
+                x:Name="EmailTextBox"
+                FontSize="18"
+                Placeholder="Введите E-mail" 
+                Keyboard="Email"
+                TextChanged="EmailTextBox_TextChanged">
+                
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="ValidStates">
+                        <VisualState x:Name="Valid">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="Green" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Invalid">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor" Value="Red" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Entry>
+        </StackLayout>
+        
+        <!--Password textbox-->
+        <StackLayout>
+            <Label
+                FontSize="16"
+                Text="Пароль"/>
+            <Entry 
+                x:Name="PassTextBox"
+                FontSize="18"
+                Placeholder="Введите пароль" 
+                Keyboard="Plain" 
+                IsPassword="True" />
+
+        </StackLayout>
+
+        <!--Register Button-->
+        <Button 
+            Text="Зарегистрироваться" 
+            BackgroundColor="#1E78F0" 
+            FontAttributes="Bold"
+            Clicked="RegisterClick"/>
+
+        <FlexLayout JustifyContent="SpaceBetween">
+            <!--VK Button-->
+            <Button 
+                ImageSource="vk.png" 
+                Text="VK" 
+                MinimumWidthRequest="160" 
+                BackgroundColor="#ddebfd" 
+                TextColor="Black" 
+                FontAttributes="Bold"/>
+            
+            <!--Telegram Button-->
+            <Button 
+                ImageSource="telegram.png" 
+                Text="Telegram" 
+                MinimumWidthRequest="160" 
+                BackgroundColor="#ddebfd" 
+                TextColor="Black" 
+                FontAttributes="Bold"/>
+
+        </FlexLayout>
+        
+        <!--Login button-->
+        <StackLayout 
+            Orientation="Horizontal"
+            HorizontalOptions="Center">
+            
+            <Button 
+                Text="У меня уже есть аккаунт" 
+                BackgroundColor="White" 
+                TextColor="Blue"
+                Clicked="LoginClick"/>
+
+        </StackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>

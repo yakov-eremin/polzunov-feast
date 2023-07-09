@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeastMobile.MainPage"
              Shell.NavBarIsVisible="False">
-    
+
     <ScrollView>
         <VerticalStackLayout
             VerticalOptions="Center"
@@ -19,7 +19,7 @@
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="24"
                 HorizontalOptions="Fill" HorizontalTextAlignment="Center"/>
-            
+
             <!--First-->
             <StackLayout 
                 Orientation="Horizontal"
@@ -114,22 +114,39 @@
 
             <HorizontalStackLayout
                 HorizontalOptions="Center">
+
+                <!--Later button-->
                 <Button 
-                    Text="Позже" BackgroundColor="#ddebfd" TextColor="Black" FontSize="16" HorizontalOptions="Start" Margin="0,0,25,0">
+                    Text="Позже" 
+                    BackgroundColor="#ddebfd" 
+                    TextColor="Black" 
+                    FontSize="16" 
+                    HorizontalOptions="Start" 
+                    Margin="0,0,25,0" 
+                    FontAttributes="Bold">
                 </Button>
+
+                <!--Register button-->
                 <Button 
-                    Text="Зарегистрироваться" BackgroundColor="#1E78F0" FontSize="16" HorizontalOptions="End" Margin="25,0,0,0">
+                    Text="Зарегистрироваться" 
+                    BackgroundColor="#1E78F0" 
+                    FontSize="16" 
+                    HorizontalOptions="End" 
+                    Margin="25,0,0,0" 
+                    FontAttributes="Bold"
+                    Clicked="RegisterClick">
                 </Button>
             </HorizontalStackLayout>
 
+            <!--Login button-->
             <Button 
                 Text="У меня уже есть аккаунт" 
                 BackgroundColor="#FFFFFF" 
                 TextColor="#1E78F0"
+                FontAttributes="Bold"
                 Clicked="LoginClick">
             </Button>
-            
+
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

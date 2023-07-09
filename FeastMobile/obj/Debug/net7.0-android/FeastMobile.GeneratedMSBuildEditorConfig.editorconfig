@@ -26,6 +26,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
+[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/FinalRegister.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.FinalRegister.xaml
+build_metadata.AdditionalFiles.TargetPath = FinalRegister.xaml
+build_metadata.AdditionalFiles.RelativePath = FinalRegister.xaml
+
 [C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.LoginPage.xaml
@@ -38,6 +44,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
+[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/RegisterPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.RegisterPage.xaml
+build_metadata.AdditionalFiles.TargetPath = RegisterPage.xaml
+build_metadata.AdditionalFiles.RelativePath = RegisterPage.xaml
+
 [C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.Resources.Styles.Colors.xaml
@@ -49,3 +61,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/TipaNick/Source/Repos/polzunov-feast/FeastMobile/VerifyPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.VerifyPage.xaml
+build_metadata.AdditionalFiles.TargetPath = VerifyPage.xaml
+build_metadata.AdditionalFiles.RelativePath = VerifyPage.xaml
