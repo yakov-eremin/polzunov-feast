@@ -428,4 +428,63 @@
         <Setter Property="TextColor" Value="White"/>
     </Style>
 
+    <ControlTemplate
+        x:Key="FeastListRadioButtonTemplate">
+        <Grid 
+            RowDefinitions="*,2"
+            WidthRequest="200">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter
+                                    TargetName="TextLabel"
+                                    Property="Label.TextColor"
+                                    Value="{StaticResource MainAccent}"/>
+                                <Setter
+                                    TargetName="Underline"
+                                    Property="BoxView.Color"
+                                    Value="{StaticResource MainAccent}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Unchecked">
+                            <VisualState.Setters>
+                                <Setter
+                                    TargetName="TextLabel"
+                                    Property="Label.TextColor"
+                                    Value="{StaticResource Gray700}"/>
+                                <Setter
+                                    TargetName="Underline"
+                                    Property="BoxView.Color"
+                                    Value="{StaticResource Gray100}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+
+            <Label 
+                x:Name="TextLabel"
+                Text="{TemplateBinding Content}" 
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                FontSize="14"
+                FontFamily="RobotoMedium"/>
+            <BoxView 
+                x:Name="Underline" 
+                Grid.Row="1" 
+                Color="Transparent"/>
+        </Grid>
+    </ControlTemplate>
+
+    <Style 
+        x:Key="FeastListRadioButtonStyle"
+        TargetType="RadioButton" 
+        ApplyToDerivedTypes="False">
+        <Setter Property="ControlTemplate" Value="{StaticResource FeastListRadioButtonTemplate}" />
+        <Setter Property="Margin" Value="0,0,0,0"/>
+    </Style>
+
 </ResourceDictionary>

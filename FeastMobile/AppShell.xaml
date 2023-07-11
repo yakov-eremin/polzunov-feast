@@ -22,11 +22,9 @@
             Title="События"
             Icon="flag.svg">
             <ShellContent 
-                Title="Ближайшие"
+                Title="События"
+                Icon="flag.svg"
                 ContentTemplate="{DataTemplate view:FeastListPage}"/>
-            <ShellContent 
-                Title="Завершенные"
-                ContentTemplate="{DataTemplate view:BlanckPage}"/>
         </Tab>
         
         <Tab 

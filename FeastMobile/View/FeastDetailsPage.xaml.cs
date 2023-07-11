@@ -1,3 +1,6 @@
+using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+
 namespace FeastMobile.View;
 
 public partial class FeastDetailsPage : ContentPage
@@ -6,14 +9,20 @@ public partial class FeastDetailsPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+    }
 
-	protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Проверка совместимости платформы", Justification = "<Ожидание>")]
+    protected override void OnAppearing()
 	{
+        base.OnAppearing();
+
         FeastDetailsViewModel viewModel = (FeastDetailsViewModel)BindingContext;
-		viewModel.InitializeDataCommand.Execute(null);
-  //      CommunityToolkit.Maui.Core.Platform.StatusBar.SetColor(Microsoft.Maui.Graphics.Color.FromHex("FFFFFF"));
-		//CommunityToolkit.Maui.Core.Platform.StatusBar.SetStyle(CommunityToolkit.Maui.Core.StatusBarStyle.DarkContent);
-        base.OnNavigatedTo(args);
+        viewModel.InitParamRelatedDataCommand.Execute(viewModel);
+
+        this.Behaviors.Add(new StatusBarBehavior
+        {
+            StatusBarColor = Colors.White,
+            StatusBarStyle = StatusBarStyle.DarkContent
+        });
     }
 }

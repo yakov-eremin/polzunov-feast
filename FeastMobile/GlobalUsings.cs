@@ -1,7 +1,10 @@
 ﻿global using CommunityToolkit.Mvvm.ComponentModel;
 global using CommunityToolkit.Mvvm.Input;
+global using CommunityToolkit.Maui;
 global using FeastMobile.Model;
 global using FeastMobile.ViewModel;
+global using FeastMobile.View;
+global using FeastMobile.Services;
 global using System.Collections.ObjectModel;
 global using System.ComponentModel;
 global using System.Diagnostics;

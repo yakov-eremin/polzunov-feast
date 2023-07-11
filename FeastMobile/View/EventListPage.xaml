@@ -15,8 +15,13 @@
     </ContentPage.Resources>
 
 
-    <VerticalStackLayout>
-        <VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout
+            Grid.Row="0">
             <StackLayout
                 Spacing="10"
                 Orientation="Horizontal"
@@ -27,7 +32,7 @@
                     Command="{Binding GoBackCommand}">
                 </Button>
                 <Label
-                    Text="{Binding Feast.Name}"
+                    Text="{Binding FeastNameLabelText}"
                     FontSize="16"
                     TextColor="White"
                     FontFamily="RobotoMedium"
@@ -62,22 +67,32 @@
                     </Button>
                 </StackLayout>
             </Frame>
+
+            <Label
+                FontFamily="RobotoRegular"
+                TextColor="{StaticResource Gray900}"
+                FontSize="12"
+                Text="{Binding Path=ActivitiensNumberLabelText, StringFormat='{0} мероприятий'}"
+                Margin="10,10,10,0">
+            </Label>
         </VerticalStackLayout>
         
-        <ScrollView>
+        <ScrollView
+            Grid.Row="1">
             <StackLayout>
-                <Label
-                    FontFamily="RobotoRegular"
-                    TextColor="{StaticResource Gray900}"
-                    FontSize="12"
-                    Text="{Binding Path=Feast.ActivitiesNumber, StringFormat='{0} мероприятий'}"
-                    Margin="10,10,10,0">
-                </Label>
-
                 <CollectionView ItemsSource="{Binding Events}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Event">
-                            <Frame BackgroundColor="#FAFAFA" BorderColor="#CACACA" Padding="10" Margin="10,10,10,10">
+                            <Frame 
+                                BackgroundColor="#FAFAFA" 
+                                BorderColor="#CACACA" 
+                                Padding="10" 
+                                Margin="10,10,10,10">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EventViewModel}}, Path=GoToDetailsCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
                                 <StackLayout>
                                     <Label 
                                     FontSize="18" 
@@ -124,7 +139,7 @@
 
             </StackLayout>
         </ScrollView>
-    </VerticalStackLayout>
+    </Grid>
 
 
 </ContentPage>

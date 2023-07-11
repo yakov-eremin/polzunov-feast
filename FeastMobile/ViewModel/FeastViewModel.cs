@@ -6,27 +6,34 @@ namespace FeastMobile.ViewModel;
 public partial class FeastViewModel : BaseViewModel
 {
     private FeastService feastService;
-    public ObservableCollection<Feast> Feasts { get; set; }
+    public ObservableCollection<Feast> ActualFeasts { get; set; }
+    public ObservableCollection<Feast> NotActualFeasts { get; set; }
+
+    [ObservableProperty]
+    private bool isRefreshing;
 
     public FeastViewModel(FeastService feastService)
     {
         this.feastService = feastService;
-        InitializeData();
+        InitParamUnrelatedData();
     }
 
-    async void InitializeData()
+    async void InitParamUnrelatedData()
     {
         var tmpFeasts = await feastService.GetFeastsAsync();
 
-        Feasts = new ObservableCollection<Feast>();
+        NotActualFeasts = new ObservableCollection<Feast>();
+        ActualFeasts = new ObservableCollection<Feast>();
         foreach (var feast in tmpFeasts)
-            Feasts.Add(feast);
-
-        OnPropertyChanged(nameof(Feasts));
+        { 
+            if (feast.Date < DateTime.Today)
+                NotActualFeasts.Add(feast);
+            else
+                ActualFeasts.Add(feast);
+        }
+        OnPropertyChanged(nameof(NotActualFeasts));
+        OnPropertyChanged(nameof(ActualFeasts));
     }
-
-    [ObservableProperty]
-    bool isRefreshing;
 
     [RelayCommand]
     async Task GetFeastsAsync()
@@ -37,13 +44,17 @@ public partial class FeastViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            var feasts = await feastService.GetFeastsAsync();
+            var tmpFeasts = await feastService.GetFeastsAsync();
 
-            if (Feasts.Count != 0)
-                Feasts.Clear();
-
-            foreach (var feast in feasts)
-                Feasts.Add(feast);
+            NotActualFeasts = new ObservableCollection<Feast>();
+            ActualFeasts = new ObservableCollection<Feast>();
+            foreach (var feast in tmpFeasts)
+            {
+                if (feast.Date > DateTime.Today)
+                    NotActualFeasts.Add(feast);
+                else
+                    ActualFeasts.Add(feast);
+            }
 
         }
         catch (Exception ex)
@@ -67,7 +78,7 @@ public partial class FeastViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"{nameof(FeastDetailsPage)}",
             new Dictionary<string, object>
             {
-                ["Feast"] = feast
+                ["CurrentFeast"] = feast
             });
     }
 
@@ -80,7 +91,7 @@ public partial class FeastViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"{nameof(EventListPage)}",
             new Dictionary<string, object>
             {
-                ["Feast"] = feast
+                ["CurrentFeast"] = feast
             });
     }
 }

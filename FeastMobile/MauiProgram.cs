@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using CommunityToolkit.Maui;
-using FeastMobile.View;
-using FeastMobile.Services;
 
 namespace FeastMobile
 {
@@ -32,10 +29,12 @@ namespace FeastMobile
             builder.Services.AddSingleton<FeastViewModel>();
             builder.Services.AddSingleton<FeastDetailsViewModel>();
             builder.Services.AddSingleton<EventViewModel>();
+            builder.Services.AddSingleton<EventDetailsViewModel>();
 
             builder.Services.AddTransient<FeastListPage>();
             builder.Services.AddTransient<FeastDetailsPage>();
             builder.Services.AddTransient<EventListPage>();
+            builder.Services.AddTransient<EventDetailsPage>();
             builder.Services.AddTransient<FiltersPage>();
 
             return builder.Build();

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:FeastMobile.ViewModel"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:local="clr-namespace:FeastMobile.Services"
+             x:Class="FeastMobile.View.EventDetailsPage"
+             x:DataType="viewmodel:EventDetailsViewModel"
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <local:DateTimeToLocalDateConverter x:Key="DateTimeConverter" />
+        <local:AddressConverter x:Key="AddressConverter" />
+    </ContentPage.Resources>
+
+    <Grid
+        Padding="15,0,15,10"
+        RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="125*"/>
+            <RowDefinition Height="110*"/>
+            <RowDefinition Height="23*"/>
+            <RowDefinition Height="170*"/>
+            <RowDefinition Height="42*"/>
+        </Grid.RowDefinitions>
+
+        <HorizontalStackLayout
+            Grid.Row="0">
+            <Button
+                ImageSource="long_arrow_back.svg"
+                BackgroundColor="Transparent"
+                Command="{Binding GoBackCommand}">
+            </Button>
+            <Label
+                FontSize="18"
+                FontFamily="RobotoMedium"
+                TextColor="{StaticResource Gray900}"
+                Text="О мероприятии"
+                FontAutoScalingEnabled="False"
+                VerticalTextAlignment="Center">
+            </Label>
+        </HorizontalStackLayout>
+        
+        <Label 
+            Grid.Row="1"
+            FontSize="18"
+            FontFamily="RobotoMedium"
+            TextColor="{StaticResource Gray900}"
+            Text="{Binding CurrentEvent.Name}"
+            FontAutoScalingEnabled="False"
+            VerticalTextAlignment="Center">
+        </Label>
+        
+        <Grid
+            Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ScrollView
+                HorizontalScrollBarVisibility="Never"
+                VerticalScrollBarVisibility="Never"
+                Grid.Row="0">
+                <Label
+                    x:Name="DescriptionEditor"
+                    Padding="0"
+                    Grid.Row="0"
+                    TextColor="#616161"
+                    FontFamily="RobotoRegular"
+                    FontSize="16"
+                    FontAutoScalingEnabled="False"
+                    Text="{Binding Description}"
+                />
+            </ScrollView>
+            <Button 
+                WidthRequest="50"
+                Grid.Row="1"
+                Text="{Binding LabelText}"
+                FontSize="12"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                TextColor="{StaticResource Gray900}"
+                FontFamily="RobotoMedium"
+                FontAutoScalingEnabled="False"
+                BackgroundColor="#EEEEEE"
+                CornerRadius="16"
+                Padding="0,0,0,0"
+                Margin="0,5,0,25"
+                Command="{Binding ExpandLabelCommand}">
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="3"
+              ColumnSpacing="15"
+              Padding="0,0,0,10"
+              Margin="0,-20,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="13*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image 
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Source="clock.svg"/>
+            <Label 
+                Grid.Column="1"
+                Grid.Row="0"
+                Text="Время"
+                TextColor="{StaticResource Gray900}"
+                FontAutoScalingEnabled="False"
+                FontFamily="RobotoMedium"
+                FontSize="16"
+                VerticalTextAlignment="End"/>
+            <Label 
+                Grid.Column="1"
+                Grid.Row="1"
+                TextColor="{StaticResource Gray400}"
+                FontAutoScalingEnabled="False"
+                FontFamily="RobotoRegular"
+                FontSize="16"              
+                VerticalTextAlignment="Start">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0:t} – {1:t}">
+                        <Binding Path="CurrentEvent.StartTime" Converter="{StaticResource DateTimeConverter}" />
+                        <Binding Path="CurrentEvent.EndTime" Converter="{StaticResource DateTimeConverter}" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
+            <Image 
+                Grid.Column="0"
+                Grid.Row="2"
+                Grid.RowSpan="2"
+                Source="room"/>
+            <Label 
+                Grid.Column="1"
+                Grid.Row="2"
+                Text="Адрес"    
+                FontAutoScalingEnabled="False"
+                FontFamily="RobotoMedium"
+                FontSize="16"                
+                TextColor="{StaticResource Gray900}"
+                VerticalTextAlignment="Center"/>
+            <Label 
+                Grid.Column="1"
+                Grid.Row="3"
+                TextColor="{StaticResource Gray400}"
+                FontAutoScalingEnabled="False"
+                FontFamily="RobotoRegular"
+                FontSize="16"                
+                Text="{Binding Path=CurrentEvent.Address}"
+                VerticalTextAlignment="Start">
+            </Label>
+
+            <Image 
+                Grid.Column="0"
+                Grid.Row="4"
+                Grid.RowSpan="2"
+                Source="academic_cap.svg"/>
+            <Label 
+                Grid.Column="1"
+                Grid.Row="4"
+                Text="Категории"
+                FontAutoScalingEnabled="False"
+                FontFamily="RobotoMedium"
+                FontSize="16"              
+                TextColor="{StaticResource Gray900}"
+                VerticalTextAlignment="Center"/>
+            <Label 
+                Grid.Column="1"
+                Grid.Row="5"
+                TextColor="{StaticResource Gray400}"
+                Text="{Binding Path=CurrentEvent.Categories, Converter={StaticResource AddressConverter}}"
+                FontAutoScalingEnabled="False"
+                FontFamily="RobotoRegular"
+                FontSize="16"                 
+                VerticalTextAlignment="Start">
+            </Label>
+        </Grid>
+
+        <Label
+            Grid.Row="4"
+            Text="Фотографии"
+            TextColor="{StaticResource Gray900}"
+            FontFamily="RobotoMedium"
+            FontAutoScalingEnabled="False"            
+            FontSize="18">
+        </Label>
+
+        <ScrollView
+            Grid.Row="5"
+            HorizontalScrollBarVisibility="Never"
+            VerticalScrollBarVisibility="Never">
+            <CollectionView
+                ItemsSource="{Binding Images}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout                        
+                        Span="3"
+                        Orientation="Vertical"
+                        HorizontalItemSpacing="10"
+                        VerticalItemSpacing="10"                       
+                    />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Frame
+                            CornerRadius="16"
+                            Padding="0"
+                            >
+                            <Image
+                                Source="{Binding .}"
+                                Aspect="AspectFill">
+                            </Image>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+
+        <Button 
+            Grid.Row="6"
+            Text="Пойду"
+            FontSize="14"
+            FontAutoScalingEnabled="False"
+            BackgroundColor="{StaticResource MainAccent}" 
+            ImageSource="check.svg"
+            Margin="8" 
+            Padding="10"
+            CornerRadius="12">
+        </Button>
+    </Grid>
+</ContentPage>

@@ -1,31 +1,53 @@
-﻿using FeastMobile.Services;
-using FeastMobile.View;
+﻿using FeastMobile.View;
 
 namespace FeastMobile.ViewModel;
 
-[QueryProperty(nameof(Feast), nameof(Feast))]
+[QueryProperty(nameof(CurrentFeast), nameof(CurrentFeast))]
 public partial class FeastDetailsViewModel : BaseViewModel
 {
     [ObservableProperty]
-    Feast feast;
+    private Feast currentFeast;
+
+    [ObservableProperty]
+    private string description;
+
+    [ObservableProperty]
+    private string labelText;
+
+    [ObservableProperty]
+    private string currentImage;
+
+    [ObservableProperty]
+    private int currentImageIndex;
+
+    [ObservableProperty]
+    private int numOfImages;
+
+    public bool IsLabelExpanded { get; set; }
 
     public FeastDetailsViewModel()
     {
-        IsEditorExpanded = false;
+        IsLabelExpanded = false;
+        InitParamUnrelatedData();
     }
 
-    [RelayCommand]
-    async Task InitializeData()
+    private void InitParamUnrelatedData()
     {
-        Description = Feast.Description[..350];
-        CurrentImage = Feast.Images[0];
         CurrentImageIndex = 1;
-        EditorExpandedText = "...";
-        NumOfImages = Feast.Images.Count;
+        LabelText = "•••";
     }
 
     [RelayCommand]
-    async Task GoBackAsync()
+    private Task InitParamRelatedData()
+    {
+        Description = CurrentFeast.Description[..700];
+        CurrentImage = CurrentFeast.Images[0];
+        NumOfImages = CurrentFeast.Images.Count;
+        return Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    static async Task GoBackAsync()
     {
         await Shell.Current.GoToAsync("..");
     }
@@ -33,69 +55,50 @@ public partial class FeastDetailsViewModel : BaseViewModel
     [RelayCommand]
     async Task GoToEventsAsync()
     {
-
-
         await Shell.Current.GoToAsync($"../{nameof(EventListPage)}",
             new Dictionary<string, object>
             {
-                ["Feast"] = Feast
+                ["CurrentFeast"] = CurrentFeast
             });
     }
 
-    [ObservableProperty]
-    public string description;
-
-    [ObservableProperty]
-    public string editorExpandedText;
-
-    [ObservableProperty]
-    public string currentImage;
-
-    [ObservableProperty]
-    public int currentImageIndex;
-
-    [ObservableProperty]
-    public int numOfImages;
-
-    public bool IsEditorExpanded { get; set; }
-
     [RelayCommand]
-    async Task ExpandEditor()
+    void ExpandLabel()
     {
-        if (Feast.Description.Length >= 400)
+        if (CurrentFeast.Description.Length >= 750)
         {
-            if (IsEditorExpanded)
+            if (IsLabelExpanded)
             {
-                EditorExpandedText = "...";
-                Description = Feast.Description[..400];
-                IsEditorExpanded = false;
+                LabelText = "•••";
+                Description = CurrentFeast.Description[..700];
+                IsLabelExpanded = false;
             }
             else
             {
-                EditorExpandedText = " ^ ";
-                Description = Feast.Description[..];
-                IsEditorExpanded = true;
+                LabelText = "▲";
+                Description = CurrentFeast.Description[..];
+                IsLabelExpanded = true;
             }
         }
     }
 
     [RelayCommand]
-    async Task ForwardImage()
+    private void ForwardImage()
     {
-        if (CurrentImageIndex == Feast.Images.Count)
+        if (CurrentImageIndex == CurrentFeast.Images.Count)
             CurrentImageIndex = 1;
         else
             CurrentImageIndex++;
-        CurrentImage = Feast.Images[CurrentImageIndex-1];
+        CurrentImage = CurrentFeast.Images[CurrentImageIndex - 1];
     }
 
     [RelayCommand]
-    async Task BackImage()
+    void BackImage()
     {
         if (CurrentImageIndex <= 1)
-            CurrentImageIndex = Feast.Images.Count;
+            CurrentImageIndex = CurrentFeast.Images.Count;
         else
             CurrentImageIndex--;
-        CurrentImage = Feast.Images[CurrentImageIndex-1];
+        CurrentImage = CurrentFeast.Images[CurrentImageIndex - 1];
     }
 }

@@ -7,120 +7,183 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              x:Class="FeastMobile.View.FeastListPage"
              x:DataType="viewmodel:FeastViewModel"
-             Title="События и мероприятия">
+             BackgroundColor="{StaticResource MainAccent}"
+             Shell.NavBarIsVisible="False">
     
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainAccent}" StatusBarStyle="LightContent" />
+        <mct:StatusBarBehavior x:Name="statusBar" />
     </ContentPage.Behaviors>
 
-    <RefreshView 
-        Command="{Binding GetFeastsCommand}"
-        IsRefreshing="{Binding IsRefreshing}">
-        <CollectionView 
-            x:Name="EventsCollectionView"
-            SelectionMode="None"
-            ItemsSource="{Binding Feasts}">
+    <ContentPage.Background>
+
+        <LinearGradientBrush 
+            StartPoint="0,0"
+            EndPoint="0,1">
+            <GradientStop Color="{StaticResource MainAccent}"
+                          Offset="0.1" />
+            <GradientStop Color="White"
+                          Offset="0.6" />
+        </LinearGradientBrush>
+
+    </ContentPage.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8.9*"/>            
+        </Grid.RowDefinitions>
+        
+        <Label
+            VerticalOptions="Center"
+            Grid.Row="0"
+            Text="События и мероприятия"
+            FontFamily="RobotoMedium"
+            FontSize="16"
+            Padding="15">
             
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Feast">
-                    <Frame 
-                       CornerRadius="16"
-                       BackgroundColor="Gray"
-                       BorderColor="Black"
-                       Margin="16,12,16,0"
-                       Padding="0">
-                        <Grid>
-                            <Image 
-                               HorizontalOptions="Start"
-                               Aspect="AspectFill"
-                               Source="{Binding Images[0]}">
-                            </Image>
-                            <Grid Padding="13" ColumnSpacing="12">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.4*"/>
-                                    <RowDefinition Height="6*"/>
-                                    <RowDefinition Height="1.5*"/>
-                                    <RowDefinition Height="2*"/>
-                                    <RowDefinition Height="2*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions >
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+        </Label>
+        <Border
+            Grid.Row="1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="15,15,0,0" />
+            </Border.StrokeShape>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="14.2*"/>
+                </Grid.RowDefinitions>
 
-                                <Grid.Background>
-                                    <LinearGradientBrush 
-                                        StartPoint="0,0"
-                                        EndPoint="0,1">
-                                        <GradientStop Color="#00000000" Offset="0" />
-                                        <GradientStop Color="#80000000" Offset="0.9" />
-                                    </LinearGradientBrush>
-                                </Grid.Background>
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="Center"
+                    Grid.Row="0"           
+                    RadioButtonGroup.GroupName="FeastCategories">
 
-                                <Label 
-                                   Text="{Binding Name}"
-                                   FontFamily="RobotoBold"
-                                   FontSize="18"    
-                                   VerticalTextAlignment="End"
-                                   Grid.Row="2"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="2"
-                                   >
-                                </Label>
-                                <Label 
-                                   FontFamily="RobotoMedium"
-                                   FontSize="14"    
-                                   Grid.Row="3"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="2"
-                                   VerticalTextAlignment="Center">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}{0:M} • {1} мероприятий">
-                                            <Binding Path="StartDate" />
-                                            <Binding Path="ActivitiesNumber" />
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                                <Button 
-                                    Text="Подробнее"
-                                    FontFamily="RobotoMedium"
-                                    FontSize="14"
-                                    TextColor="White"                                    
-                                    BackgroundColor="#00FFFFFF"
-                                    BorderColor="{StaticResource Gray300}"
-                                    BorderWidth="1"
-                                    CornerRadius="13"
-                                    Grid.Row="4"
-                                    Grid.Column="0"
-                                    Padding="0,0,0,0"
-                                    CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToDetailsCommand}">
-                                </Button>
-                                <Button 
-                                    Text="Перейти"
-                                    FontFamily="RobotoMedium"
-                                    FontSize="14"
-                                    BackgroundColor="{StaticResource MainAccent}"
-                                    CornerRadius="13"
-                                    Grid.Row="4"
-                                    Grid.Column="1"
-                                    Padding="0,0,0,0"
-                                    CommandParameter="{Binding .}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToEventsCommand}">
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                    <RadioButton
+                        x:Name="UpcomingFeastsRadioButton"
+                        Content="Ближайшие"
+                        Style="{StaticResource FeastListRadioButtonStyle}"
+                        CheckedChanged="OnRadioButtonCheckedChanged">
+                    </RadioButton>
 
-            <CollectionView.ItemsLayout >
-                <GridItemsLayout 
-                    Orientation="Vertical"
-                    Span="1"
-                    HorizontalItemSpacing="8"/>
-            </CollectionView.ItemsLayout>
-        </CollectionView>
-    </RefreshView>
+                    <RadioButton
+                        x:Name="PastFeastsRadioButton"
+                        Content="Завершённые"
+                        Style="{StaticResource FeastListRadioButtonStyle}"
+                        CheckedChanged="OnRadioButtonCheckedChanged">
+                    </RadioButton>
+                </StackLayout>
+                
+                <CollectionView 
+                    Grid.Row="1"
+                    x:Name="EventsCollectionView"
+                    SelectionMode="None">
 
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Feast">
+                            <Frame 
+                               CornerRadius="16"
+                               BackgroundColor="Gray"
+                               BorderColor="Black"
+                               Margin="16,12,16,0"
+                               Padding="0">
+                                <Grid>
+                                    <Image 
+                                       HorizontalOptions="Start"
+                                       Aspect="AspectFill"
+                                       Source="{Binding Images[0]}">
+                                    </Image>
+                                    <Grid Padding="13" ColumnSpacing="12">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="0.4*"/>
+                                            <RowDefinition Height="4.5*"/>
+                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="2*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.Background>
+                                            <LinearGradientBrush 
+                                                StartPoint="0,0"
+                                                EndPoint="0,1">
+                                                <GradientStop Color="#00000000" Offset="0" />
+                                                <GradientStop Color="#80000000" Offset="0.9" />
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+
+                                        <Label 
+                                            FontAutoScalingEnabled="False"
+                                           Text="{Binding Name}"
+                                           FontFamily="RobotoBold"
+                                           FontSize="22"    
+                                           VerticalTextAlignment="End"
+                                           Grid.Row="2"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           >
+                                        </Label>
+                                        <Label 
+                                           FontAutoScalingEnabled="False"
+                                           FontFamily="RobotoMedium"
+                                           FontSize="18"    
+                                           Grid.Row="3"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="2"
+                                           VerticalTextAlignment="Center">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0:M} • {1} мероприятий">
+                                                    <Binding Path="Date" />
+                                                    <Binding Path="ActivitiesNumber" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                        <Button 
+                                            FontAutoScalingEnabled="False"
+                                            Text="Подробнее"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="14"
+                                            TextColor="White"                                    
+                                            BackgroundColor="#00FFFFFF"
+                                            BorderColor="{StaticResource Gray300}"
+                                            BorderWidth="1"
+                                            CornerRadius="13"
+                                            Grid.Row="4"
+                                            Grid.Column="0"
+                                            Padding="0,0,0,0"
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToDetailsCommand}">
+                                        </Button>
+                                        <Button 
+                                            FontAutoScalingEnabled="False"
+                                            Text="Перейти"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="14"
+                                            BackgroundColor="{StaticResource MainAccent}"
+                                            CornerRadius="13"
+                                            Grid.Row="4"
+                                            Grid.Column="1"
+                                            Padding="0,0,0,0"
+                                            CommandParameter="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToEventsCommand}">
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.ItemsLayout >
+                        <GridItemsLayout 
+                            Orientation="Vertical"
+                            Span="1"
+                            HorizontalItemSpacing="8"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </Grid>
+        </Border>
+    </Grid>
 </ContentPage>
