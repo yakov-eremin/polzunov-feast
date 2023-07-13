@@ -64,4 +64,10 @@ public partial class EventDetailsViewModel : BaseViewModel
         }
         OnPropertyChanged(nameof(Description));
     }
+
+    [RelayCommand]
+    async Task GoToRouteSelection()
+    {
+        await Shell.Current.GoToAsync($"../{nameof(RouteSelectionPage)}");
+    }
 }

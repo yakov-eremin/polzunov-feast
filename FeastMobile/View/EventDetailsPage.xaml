@@ -240,7 +240,9 @@
             ImageSource="check.svg"
             Margin="8" 
             Padding="10"
-            CornerRadius="12">
+            CornerRadius="12"
+            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EventDetailsViewModel}}, Path=GoToRouteSelectionCommand}"
+            CommandParameter="{Binding .}">
         </Button>
     </Grid>
 </ContentPage>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FeastMobile.ViewModel
+namespace FeastMobile.ViewModel;
+
+public partial class RouteSelectionViewModel : BaseViewModel
 {
-    internal class RouteSelectionViewModel
-    {
-    }
+
 }

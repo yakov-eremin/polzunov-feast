@@ -18,6 +18,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:FeastMobile.ViewModel.EventDetailsViewModel.CurrentEvent">
             <inheritdoc cref="F:FeastMobile.ViewModel.EventDetailsViewModel.currentEvent"/>
@@ -46,7 +47,14 @@
         <member name="P:FeastMobile.ViewModel.EventDetailsViewModel.ExpandLabelCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.EventDetailsViewModel.ExpandLabel"/>.</summary>
         </member>
+        <member name="F:FeastMobile.ViewModel.EventDetailsViewModel.goToRouteSelectionCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.EventDetailsViewModel.GoToRouteSelectionCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.EventDetailsViewModel.GoToRouteSelectionCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.EventDetailsViewModel.GoToRouteSelection"/>.</summary>
+        </member>
         <member name="T:FeastMobile.ViewModel.EventViewModel">
+            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
@@ -85,6 +93,12 @@
         </member>
         <member name="P:FeastMobile.ViewModel.EventViewModel.GoToFiltersCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.EventViewModel.GoToFiltersAsync"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.EventViewModel.goToRouteSelectionCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.EventViewModel.GoToRouteSelectionCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.EventViewModel.GoToRouteSelectionCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.EventViewModel.GoToRouteSelection"/>.</summary>
         </member>
         <member name="T:FeastMobile.ViewModel.FeastDetailsViewModel">
             <inheritdoc/>

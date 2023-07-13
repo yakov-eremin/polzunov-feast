@@ -12,6 +12,7 @@ namespace FeastMobile
             Routing.RegisterRoute(nameof(EventListPage), typeof(EventListPage));
             Routing.RegisterRoute(nameof(FiltersPage), typeof(FiltersPage));
             Routing.RegisterRoute(nameof(EventDetailsPage), typeof(EventDetailsPage));
+            Routing.RegisterRoute(nameof(RouteSelectionPage), typeof(RouteSelectionPage));
         }
     }
 }

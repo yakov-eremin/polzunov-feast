@@ -65,4 +65,10 @@ public partial class EventViewModel : BaseViewModel
     {
         await Shell.Current.GoToAsync(nameof(FiltersPage));
     }
+
+    [RelayCommand]
+    async Task GoToRouteSelection()
+    {
+        await Shell.Current.GoToAsync(nameof(RouteSelectionPage));
+    }
 }

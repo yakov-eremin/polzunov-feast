@@ -561,7 +561,6 @@ D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\assets\Xamarin.Kot
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\assets\Xamarin.Kotlin.StdLib.Jdk8.dll
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\assets\Xamarin.KotlinX.Coroutines.Android.dll
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\assets\Xamarin.KotlinX.Coroutines.Core.Jvm.dll
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\typemaps.arm64-v8a.ll
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\AndroidManifest.xml
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\AndroidManifest.xml
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\__environment__.txt
@@ -570,7 +569,6 @@ D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\assets\machine.con
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\bin\mono.android.jar
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\static.flag
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\buildid.txt
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\environment.arm64-v8a.ll
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\src\androidx\activity\ktx\R.java
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\src\androidx\activity\R.java
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\src\androidx\annotation\experimental\R.java
@@ -1103,12 +1101,6 @@ D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\src\mono\com\googl
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\src\mono\MonoPackageManager_Resources.java
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\bin\packaged_resources
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\src\com\companyname\feastmobile\R.java
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\compressed_assemblies.arm64-v8a.ll
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\typemaps.arm64-v8a.o
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\environment.arm64-v8a.o
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\compressed_assemblies.arm64-v8a.o
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\jni_remap.arm64-v8a.o
-D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\app_shared_libraries\arm64-v8a\libxamarin-app.so
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\bin\classes.dex
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\bin\classes2.dex
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\stamp\_CleanIntermediateIfNeeded.stamp
@@ -1119,3 +1111,11 @@ D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\stamp\_ConvertResourcesCas
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\stamp\_GenerateJavaStubs.stamp
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\stamp\_GeneratePackageManagerJava.stamp
 D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\stamp\_ResolveLibraryProjectImports.stamp
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\typemaps.arm64-v8a.ll
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\environment.arm64-v8a.ll
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\compressed_assemblies.arm64-v8a.ll
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\typemaps.arm64-v8a.o
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\environment.arm64-v8a.o
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\compressed_assemblies.arm64-v8a.o
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\android\jni_remap.arm64-v8a.o
+D:\Programms\try\FeastMobile\obj\Debug\net7.0-android\app_shared_libraries\arm64-v8a\libxamarin-app.so

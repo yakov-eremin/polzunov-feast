@@ -30,12 +30,14 @@ namespace FeastMobile
             builder.Services.AddSingleton<FeastDetailsViewModel>();
             builder.Services.AddSingleton<EventViewModel>();
             builder.Services.AddSingleton<EventDetailsViewModel>();
+            builder.Services.AddSingleton<RouteSelectionPage>();
 
             builder.Services.AddTransient<FeastListPage>();
             builder.Services.AddTransient<FeastDetailsPage>();
             builder.Services.AddTransient<EventListPage>();
             builder.Services.AddTransient<EventDetailsPage>();
             builder.Services.AddTransient<FiltersPage>();
+            builder.Services.AddTransient<RouteSelectionPage>();
 
             return builder.Build();
         }
