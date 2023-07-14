@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qdLDsRMAI+LbWVBBIrgZSFxEdoJb2nZxDoS7S2VIi+f0hzWpBseEI5jIMhnFKBLc0PNbGJywArV9kj/MCUpoOA==",
+  "dgSpecHash": "opy2gcbEw1kuDYnwgV02tpTspQy1Y4KcTCzFCYr00SiHM0JYbzLEZl+Uptiwo48hhE5vX2hlxpMeRr5XaZxdrA==",
   "success": true,
   "projectFilePath": "D:\\Programms\\try\\FeastMobile\\FeastMobile.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,7 @@
     "C:\\Users\\matve\\.nuget\\packages\\microsoft.maui.maps\\7.0.86\\microsoft.maui.maps.7.0.86.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\microsoft.windows.sdk.buildtools\\10.0.22621.755\\microsoft.windows.sdk.buildtools.10.0.22621.755.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\microsoft.windowsappsdk\\1.2.221209.1\\microsoft.windowsappsdk.1.2.221209.1.nupkg.sha512",
+    "C:\\Users\\matve\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\system.speech\\7.0.0\\system.speech.7.0.0.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\xamarin.android.glide\\4.13.2.2\\xamarin.android.glide.4.13.2.2.nupkg.sha512",
     "C:\\Users\\matve\\.nuget\\packages\\xamarin.android.glide.annotations\\4.13.2.2\\xamarin.android.glide.annotations.4.13.2.2.nupkg.sha512",

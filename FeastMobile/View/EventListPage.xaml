@@ -116,7 +116,7 @@
                                     <HorizontalStackLayout>
                                         <Image Source="room" HeightRequest="16" WidthRequest="16" Margin="0,0,0,5"/>
                                         <Label 
-                                        Text="{Binding Address}" 
+                                        Text="{Binding Location.Address}" 
                                         FontSize="13" 
                                         FontFamily="RobotoRegular"
                                         TextColor="{StaticResource Gray400}"

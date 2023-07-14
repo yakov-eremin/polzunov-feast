@@ -1,14 +1,19 @@
-﻿namespace FeastMobile.Model;
+﻿using Newtonsoft.Json;
+
+namespace FeastMobile.Model;
 
 public class Event
 {
-    public string Organizer { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
-    public string Address { get; set; }
-    public uint AgeRestriction { get; set; }
-    public List<string> Categories { get; set; }
-    public List<string> Images { get; set; }
+    [JsonProperty("place")]
+    public Place Location { get; set; }
+
+    //necessary, but not realized in DB
+    //public uint AgeRestriction { get; set; }
+    //public List<string> Categories { get; set; }
+    //public List<string> Images { get; set; }
 }

@@ -24,7 +24,6 @@ namespace FeastMobile
 		builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<FeastService>();
-            builder.Services.AddSingleton<EventLoader>();
 
             builder.Services.AddSingleton<FeastViewModel>();
             builder.Services.AddSingleton<FeastDetailsViewModel>();

@@ -15,18 +15,16 @@ public partial class EventViewModel : BaseViewModel
     [ObservableProperty]
     private string feastNameLabelText;
 
-    private EventLoader eventLoader;
     public ObservableCollection<Event> Events { get; set; }
 
-    public EventViewModel(EventLoader eventLoader)
+    public EventViewModel()
     {
-        this.eventLoader = eventLoader;
         InitParamUnrelatedData();
     }
 
     async void InitParamUnrelatedData()
     {
-        var tmpEvents = await eventLoader.LoadEventsAsync();
+        var tmpEvents = await EventService.LoadEventsLocalyAsync();
         Events = new ObservableCollection<Event>();
         foreach (var events in tmpEvents)
             Events.Add(events);

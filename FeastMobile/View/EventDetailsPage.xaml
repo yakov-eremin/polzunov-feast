@@ -161,7 +161,7 @@
                 FontAutoScalingEnabled="False"
                 FontFamily="RobotoRegular"
                 FontSize="16"                
-                Text="{Binding Path=CurrentEvent.Address}"
+                Text="{Binding Path=CurrentEvent.Location.Address}"
                 VerticalTextAlignment="Start">
             </Label>
 
@@ -183,14 +183,14 @@
                 Grid.Column="1"
                 Grid.Row="5"
                 TextColor="{StaticResource Gray400}"
-                Text="{Binding Path=CurrentEvent.Categories, Converter={StaticResource AddressConverter}}"
+                Text=""
                 FontAutoScalingEnabled="False"
                 FontFamily="RobotoRegular"
                 FontSize="16"                 
                 VerticalTextAlignment="Start">
+                <!--Text="{Binding Path=CurrentEvent.Categories, Converter={StaticResource AddressConverter}}"-->
             </Label>
         </Grid>
-
         <Label
             Grid.Row="4"
             Text="Фотографии"

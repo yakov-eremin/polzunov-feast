@@ -1,4 +1,6 @@
-﻿namespace FeastMobile.Services;
+﻿using Newtonsoft.Json;
+
+namespace FeastMobile.Services;
 
 public class FeastService
 {
@@ -11,7 +13,7 @@ public class FeastService
         using var stream = await FileSystem.OpenAppPackageFileAsync("feastdata.json");
         using var reader = new StreamReader(stream);
         var contents = await reader.ReadToEndAsync();
-        feastData = JsonSerializer.Deserialize<List<Feast>>(contents);
+        feastData = JsonConvert.DeserializeObject<List<Feast>>(contents);
 
         return feastData;
     }
