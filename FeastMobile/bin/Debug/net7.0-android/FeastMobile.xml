@@ -190,6 +190,36 @@
         <member name="P:FeastMobile.ViewModel.FeastViewModel.GoToEventsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FeastViewModel.GoToEventsAsync(FeastMobile.Model.Feast)"/>.</summary>
         </member>
+        <member name="T:FeastMobile.ViewModel.FiltersPageViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FiltersPageViewModel.initParamRelatedDataCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FiltersPageViewModel.InitParamRelatedDataCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FiltersPageViewModel.InitParamRelatedDataCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FiltersPageViewModel.InitParamRelatedData"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FiltersPageViewModel.findEventsCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FiltersPageViewModel.FindEventsCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FiltersPageViewModel.FindEventsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FiltersPageViewModel.FindEventsAsync"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FiltersPageViewModel.removeSelectedCategoryCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FiltersPageViewModel.RemoveSelectedCategoryCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FiltersPageViewModel.RemoveSelectedCategoryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FiltersPageViewModel.RemoveSelectedCategory(FeastMobile.Model.Category)"/>.</summary>
+        </member>
+        <member name="F:FeastMobile.ViewModel.FiltersPageViewModel.goToTimeCommand">
+            <summary>The backing field for <see cref="P:FeastMobile.ViewModel.FiltersPageViewModel.GoToTimeCommand"/>.</summary>
+        </member>
+        <member name="P:FeastMobile.ViewModel.FiltersPageViewModel.GoToTimeCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:FeastMobile.ViewModel.FiltersPageViewModel.GoToTimeAsync"/>.</summary>
+        </member>
         <member name="M:Microsoft.Maui.Controls.ColorAnimationExtensions_Button.TextColorTo(Microsoft.Maui.Controls.Button,Microsoft.Maui.Graphics.Color,System.UInt32,System.UInt32,Microsoft.Maui.Easing)">
             <summary>
             Animates the TextColor of an <see cref = "T:Microsoft.Maui.ITextStyle"/> to the given color

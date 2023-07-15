@@ -27,5 +27,7 @@ public partial class EventListPage : ContentPage
             StatusBarColor = Color.FromArgb("#1E78F0"),
             StatusBarStyle = StatusBarStyle.LightContent
         });
+
+
     }
 }

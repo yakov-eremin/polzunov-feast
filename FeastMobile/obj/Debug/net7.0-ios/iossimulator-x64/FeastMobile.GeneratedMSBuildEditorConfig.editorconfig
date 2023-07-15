@@ -8,75 +8,81 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = FeastMobile
-build_property.ProjectDir = D:\Programms\try\FeastMobile\
+build_property.ProjectDir = F:\polzunov_feast\FeastMobile\
 
-[D:/Programms/try/FeastMobile/App.xaml]
+[F:/polzunov_feast/FeastMobile/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[D:/Programms/try/FeastMobile/AppShell.xaml]
+[F:/polzunov_feast/FeastMobile/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[D:/Programms/try/FeastMobile/Resources/Styles/Colors.xaml]
+[F:/polzunov_feast/FeastMobile/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[D:/Programms/try/FeastMobile/Resources/Styles/Styles.xaml]
+[F:/polzunov_feast/FeastMobile/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[D:/Programms/try/FeastMobile/View/BlanckPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/BlanckPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.BlanckPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\BlanckPage.xaml
 build_metadata.AdditionalFiles.RelativePath = View\BlanckPage.xaml
 
-[D:/Programms/try/FeastMobile/View/EventDetailsPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/EventDetailsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.EventDetailsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\EventDetailsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = View\EventDetailsPage.xaml
 
-[D:/Programms/try/FeastMobile/View/EventListPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/EventListPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.EventListPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\EventListPage.xaml
 build_metadata.AdditionalFiles.RelativePath = View\EventListPage.xaml
 
-[D:/Programms/try/FeastMobile/View/FeastDetailsPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/EventTimeFilter.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.EventTimeFilter.xaml
+build_metadata.AdditionalFiles.TargetPath = View\EventTimeFilter.xaml
+build_metadata.AdditionalFiles.RelativePath = View\EventTimeFilter.xaml
+
+[F:/polzunov_feast/FeastMobile/View/FeastDetailsPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.FeastDetailsPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\FeastDetailsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = View\FeastDetailsPage.xaml
 
-[D:/Programms/try/FeastMobile/View/FeastListPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/FeastListPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.FeastListPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\FeastListPage.xaml
 build_metadata.AdditionalFiles.RelativePath = View\FeastListPage.xaml
 
-[D:/Programms/try/FeastMobile/View/FiltersPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/FiltersPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.FiltersPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\FiltersPage.xaml
 build_metadata.AdditionalFiles.RelativePath = View\FiltersPage.xaml
 
-[D:/Programms/try/FeastMobile/View/MainPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = View\MainPage.xaml
 
-[D:/Programms/try/FeastMobile/View/RouteSelectionPage.xaml]
+[F:/polzunov_feast/FeastMobile/View/RouteSelectionPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = FeastMobile.View.RouteSelectionPage.xaml
 build_metadata.AdditionalFiles.TargetPath = View\RouteSelectionPage.xaml

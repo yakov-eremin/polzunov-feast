@@ -1,6 +1,117 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:view="clr-namespace:FeastMobile.View"             
+             xmlns:model="clr-namespace:FeastMobile.Model"
+             xmlns:viewmodel="clr-namespace:FeastMobile.ViewModel"
+             xmlns:local="clr-namespace:FeastMobile.Services"
              x:Class="FeastMobile.View.FiltersPage"
-             Title="FiltersPage">
+             x:DataType="viewmodel:FiltersPageViewModel"
+             Title="Выберите фильтры: "
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="True">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="FrameBackgroundColorNormal">#FFFFFF</Color>
+            <Color x:Key="FrameBackgroundColorPressed">#F2F7FE</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <viewmodel:FiltersPageViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <ScrollView>
+
+            <VerticalStackLayout Spacing="10" Padding="10">
+
+                <Label
+                    Text="Категории" 
+                    TextColor="#212121"
+                    FontSize="14" 
+                    HorizontalOptions="Start" 
+                    />
+
+                <CollectionView ItemsSource="{Binding Categories}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Category">
+                            <Button Padding="8,12,8,8" Margin="7,3,7,3" WidthRequest="104" HeightRequest="76" ImageSource="{Binding Image}"
+                                BackgroundColor="#FFFFFF"                               
+                                BorderColor="#C5C5C5"                               
+                                CornerRadius="12" BorderWidth="1"
+                                Clicked="CategoryButton_Clicked" TextColor="BLACK"
+                                Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" FontSize="13"
+                                    ContentLayout="Top,3"
+                                    LineBreakMode="CharacterWrap">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="#F2F7FE" />
+                                        <Setter Property="BorderColor" Value="#1E78F0" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="3" Orientation="Vertical" VerticalItemSpacing="5" HorizontalItemSpacing="1" />
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+                <Frame HeightRequest="56" Margin="10" Padding="10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToTimeCommand}" />
+                    </Frame.GestureRecognizers>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image
+                            Margin="6,0,12,0"
+                            HorizontalOptions="Center"
+                            HeightRequest="24"
+                            WidthRequest="24"
+                            Source="clock"
+                            Grid.Column="0">
+                        </Image>
+
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label
+                                Padding="0,0,0,0"
+                                Text="Время"
+                                TextColor="#212121"
+                                FontSize="14"
+                                HorizontalOptions="Start" />
+                            <Label
+                                Padding="0,0,0,0"
+                                Text="Время"
+                                TextColor="#616161"
+                                FontSize="12"
+                                HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+
+                        <Image
+                            Margin="6,0,12,0"
+                            HorizontalOptions="End"
+                            HeightRequest="5"
+                            WidthRequest="10"
+                            Source="arrow_down"
+                            Grid.Column="2">
+                        </Image>
+                    </Grid>
+                </Frame>
+
+                <Button Text="Время" Command="{Binding GoToTimeCommand}"/>
+                
+                <StackLayout>
+                    <Button Text="Показать {0} мероприятий" VerticalOptions="EndAndExpand" Command="{Binding FindEventsCommand}"/>
+                </StackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+    </ContentPage.Content>
+    
 </ContentPage>

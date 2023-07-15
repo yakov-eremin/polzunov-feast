@@ -4,6 +4,8 @@ using FeastMobile.View;
 namespace FeastMobile.ViewModel;
 
 [QueryProperty(nameof(CurrentFeast), nameof(CurrentFeast))]
+
+[QueryProperty(nameof(Categories), nameof(Categories))]
 public partial class EventViewModel : BaseViewModel
 {
     [ObservableProperty]
@@ -14,14 +16,20 @@ public partial class EventViewModel : BaseViewModel
 
     [ObservableProperty]
     private string feastNameLabelText;
+    
 
     private EventLoader eventLoader;
     public ObservableCollection<Event> Events { get; set; }
+
+    public ObservableCollection<Category> Categories { get; set; }
+
 
     public EventViewModel(EventLoader eventLoader)
     {
         this.eventLoader = eventLoader;
         InitParamUnrelatedData();
+
+        
     }
 
     async void InitParamUnrelatedData()
@@ -38,6 +46,18 @@ public partial class EventViewModel : BaseViewModel
     { 
         ActivitiensNumberLabelText = CurrentFeast.ActivitiesNumber;
         FeastNameLabelText = CurrentFeast.Name;
+        
+        
+        //!!!! Сюда нужно добавить обновление всего при применении фильтров
+        if (Categories != null)
+        {
+            Console.WriteLine("Selected Categories1222222222:");
+            foreach (var category in Categories)
+            {
+                Console.WriteLine(category.Name);
+            }
+        }
+
         return Task.CompletedTask;
     }
 
@@ -62,8 +82,13 @@ public partial class EventViewModel : BaseViewModel
 
     [RelayCommand]
     async Task GoToFiltersAsync()
-    {
-        await Shell.Current.GoToAsync(nameof(FiltersPage));
+    {       
+        await Shell.Current.GoToAsync($"{nameof(FiltersPage)}",
+            new Dictionary<string, object>
+            {
+                ["SelectedCategories"] = Categories,
+
+            });
     }
 
     [RelayCommand]
@@ -71,4 +96,6 @@ public partial class EventViewModel : BaseViewModel
     {
         await Shell.Current.GoToAsync(nameof(RouteSelectionPage));
     }
+
+
 }

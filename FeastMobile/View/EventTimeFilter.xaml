@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup 
+        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
+        xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"            
+        x:Class="FeastMobile.View.EventTimeFilter"
+        CanBeDismissedByTappingOutsideOfPopup="False" 
+        Color="Transparent">
+    
+    <Frame WidthRequest="340" HeightRequest="180" BackgroundColor="WhiteSmoke"   
+                
+               CornerRadius="16">
+        <VerticalStackLayout>
+            <Label Text="Установите период" HorizontalOptions="Start" TextColor="#212121" FontSize="18" Margin="0,0,0,0"/>
+
+            <HorizontalStackLayout>
+
+                <Frame BorderColor="#D2D2D2" Margin="0,15,10,15" HeightRequest="56" WidthRequest="140" Padding="0" HorizontalOptions="Start">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="timeFromFrame_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <VerticalStackLayout Grid.Column="0">
+                            <controls:TimePicker x:Name="timePickerFrom" IsVisible="False" HeightRequest="1" WidthRequest="1" PropertyChanged="TimePickerFrom_PropertyChanged" Format="HH:mm" />
+                            <Label Text="От" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#212121" Margin="12,12,8,0"/>
+                            <Label 
+                                x:Name="TimeFromLabel" 
+                                Text="00:00" 
+                                TextColor="#616161"
+                                FontSize="12"
+                                Margin="12,0,8,0"/>
+
+                        </VerticalStackLayout>
+                        <Image 
+                            Grid.Column="1" 
+                            Margin="6,0,12,0"
+                            HorizontalOptions="End"
+                            HeightRequest="5"
+                            WidthRequest="10"
+                            Source="arrow_down"
+                            />
+                    </Grid>
+                </Frame>
+
+                <Frame BorderColor="#D2D2D2" Margin="10,15,0,15" HeightRequest="56" WidthRequest="140" Padding="0" HorizontalOptions="Start">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="timeToFrame_Tapped" />
+                    </Frame.GestureRecognizers>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <VerticalStackLayout Grid.Column="0">
+                            <controls:TimePicker x:Name="timePickerTo" IsVisible="False" HeightRequest="1" WidthRequest="1" PropertyChanged="TimePickerTo_PropertyChanged" Format="HH:mm" />
+                            <Label Text="До" VerticalOptions="Center" HorizontalOptions="Start" TextColor="#212121" Margin="12,12,8,0"/>
+                            <Label 
+                                x:Name="TimeToLabel" 
+                                Text="00:00" 
+                                TextColor="#616161"
+                                FontSize="12"
+                                Margin="12,0,8,0"/>
+
+                        </VerticalStackLayout>
+                        <Image 
+                            Grid.Column="1" 
+                            Margin="6,0,12,0"
+                            HorizontalOptions="End"
+                            HeightRequest="5"
+                            WidthRequest="10"
+                            Source="arrow_down"
+                            />
+                    </Grid>
+                </Frame>
+
+                <!--<Frame BorderColor="Black" Margin="5">
+                    <HorizontalStackLayout>
+                        <Label Text="До" HorizontalOptions="Start" />
+                        <controls:TimePicker x:Name="timePickerTo" Format="HH:mm" PropertyChanged="TimePickerTo_PropertyChanged"/>
+                    </HorizontalStackLayout>
+                </Frame>-->
+                
+
+
+            </HorizontalStackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                <Button Text="Отмена" Clicked="ClosePopupButton_Clicked" Padding="0" CornerRadius="0" HeightRequest="20" FontAttributes="Bold" TextColor="#1E78F0" BackgroundColor="Transparent" Margin="0,5,10,5"/>
+                <Button Text="Сохранить" Clicked="SavePopupButton_Clicked" Padding="0" CornerRadius="0" HeightRequest="20" FontAttributes="Bold" TextColor="#1E78F0" BackgroundColor="Transparent" Margin="25,5,15,5"/>
+            </StackLayout>
+
+
+
+        </VerticalStackLayout>
+    </Frame>
+</toolkit:Popup>
