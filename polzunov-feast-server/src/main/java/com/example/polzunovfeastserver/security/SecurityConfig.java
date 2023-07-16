@@ -1,15 +1,22 @@
 package com.example.polzunovfeastserver.security;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
+import org.springframework.lang.NonNull;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,14 +24,20 @@ import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final Environment env;
+
+    @Value("${spring.h2.console.path:null}")
+    private String h2ConsolePath;
 
     //TODO configure cors before prod
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**");
             }
         };
@@ -32,9 +45,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
+        http
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/user/signin", "/user/signup").permitAll()
@@ -47,11 +63,22 @@ public class SecurityConfig {
                         .requestMatchers(POST, "/event").permitAll()
                         .requestMatchers(PUT, "/event").permitAll()
                         .requestMatchers(DELETE, "/event/{id}").permitAll()
-
-                        .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .build();
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+
+        //configuration for h2 console
+        if (env.acceptsProfiles(Profiles.of("dev"))) {
+            http
+                    .headers(headers -> headers
+                            .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                    )
+                    .authorizeHttpRequests(requests -> requests
+                            .requestMatchers(new AntPathRequestMatcher(h2ConsolePath + "/**")).permitAll()
+                    );
+        }
+
+        http.authorizeHttpRequests(requests -> requests.anyRequest().authenticated());
+        return http.build();
     }
 
     @Bean

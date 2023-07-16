@@ -3,15 +3,34 @@
 ## Requirements
 `java 17+`, `docker 24.0.2+`, `docker-compose 1.29.2+`
 
+If you only use `dev` mode, docker and docker-compose are not required.
+
 ## How to run
-Go in the project directory and run the following:
-1. To create a docker-container with database:`docker-compose up`
-      - POSTGRES_DB: 'polzunov-feast-db'
-      -  POSTGRES_USER: 'polzunov'
-      - POSTGRES_PASSWORD: 'feast'
-      - port: 5432 
-2. To stop created container: `docker-compose stop polzunov-feast-db`
-3. To start: `docker-compose start polzunov-feast-db`
-4. Create .jar file: `mvn clean install -DskipTests`
-5. Execute .jar (will not work if database is down): `java -jar target/polzunov-feast-server-0.0.1-SNAPSHOT.jar`
-6. Send http requests on port 8080, e.g. `http://localhost:8080/user/signup`
+### Dev mode
+This mode uses in-memory database, hence you won't need docker and the data will be lost when you restart the app.
+
+Go to the project directory and do the following:
+1. Create .jar file: `./mvnw clean install -DskipTests`
+2. Execute .jar: `java -Dspring.profiles.active=dev -jar target/polzunov-feast-server-0.0.1-SNAPSHOT.jar`
+
+Now you can send requests on port 8080, e.g. http://localhost:8080/event.
+To access the database console go to the http://localhost:8080/h2-console.
+- JDBC URL: `jdbc:h2:mem:polzunov-feast-db`
+- User name: `polzunov`
+- Password: `feast`
+
+### Default mode
+This mode uses postgresql database stored in docker container, the data will be present after the app restarts.
+
+**Note:** access tokens will become invalid after the app restarts.
+
+Go to the project directory and do the following:
+1. Create a docker container with the database: `docker-compose up`
+2. Create .jar file: `./mvnw clean install -DskipTests`
+3. Execute .jar (will not work if the database is down): `java -jar target/polzunov-feast-server-0.0.1-SNAPSHOT.jar`
+
+Container properties:
+- POSTGRES_DB: `polzunov-feast-db`
+- POSTGRES_USER: `polzunov`
+- POSTGRES_PASSWORD: `feast`
+- port: `5432`
