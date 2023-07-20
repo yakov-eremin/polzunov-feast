@@ -294,6 +294,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Cannot delete place, because there are events associated with it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           $ref: '#/components/responses/InternalServerError'
 
@@ -439,7 +445,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '409':
-          description: Cannot delete place, because there are events associated with it
+          description: Cannot delete event, because there are routes associated with it
           content:
             application/json:
               schema:
@@ -452,9 +458,9 @@ paths:
     put:
       summary: Update user's route. If there is no route, it will be created and updated.
       description: |
-       Route's nodes will be ordered by events' start time from earliest to latest.
+        Route's nodes will be ordered by events' start time from earliest to latest.
         
-        **Note:** if nodes contains duplicated event ids, duplicates will be ignored
+         **Note:** if nodes contains duplicated event ids, duplicates will be ignored
       operationId: updateRouteByUserId
       tags:
         - route
