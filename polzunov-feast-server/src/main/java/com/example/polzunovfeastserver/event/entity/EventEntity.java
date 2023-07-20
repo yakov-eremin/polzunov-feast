@@ -1,17 +1,17 @@
 package com.example.polzunovfeastserver.event.entity;
 
-import com.example.polzunovfeastserver.event.util.EventForeignKey;
+import com.example.polzunovfeastserver.event.util.EventTableKeys;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.OffsetDateTime;
 
 @Table(name = "events")
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventEntity {
@@ -34,7 +34,7 @@ public class EventEntity {
     @ManyToOne
     @JoinColumn(
             name = "place_id",
-            foreignKey = @ForeignKey(name = EventForeignKey.PLACE, value = ConstraintMode.CONSTRAINT)
+            foreignKey = @ForeignKey(name = EventTableKeys.FOREIGN_PLACE, value = ConstraintMode.CONSTRAINT)
     )
     private PlaceEntity place;
 }

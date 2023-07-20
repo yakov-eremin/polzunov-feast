@@ -2,7 +2,7 @@ package com.example.polzunovfeastserver.user;
 
 import com.example.polzunovfeastserver.user.exception.UserNotFoundException;
 import com.example.polzunovfeastserver.user.exception.WrongUserPasswordException;
-import com.example.polzunovfeastserver.user.uitl.UserUniqueKey;
+import com.example.polzunovfeastserver.user.uitl.UserTableKeys;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.openapitools.model.ErrorResponse;
@@ -55,9 +55,9 @@ public class UserExceptionHandler {
 
         //Unique key constraints violation
         switch (cause.getConstraintName()) {
-            case UserUniqueKey.USERNAME -> message = "Username is not unique";
-            case UserUniqueKey.EMAIL -> message = "Email is not unique";
-            case UserUniqueKey.PHONE -> message = "Phone is not unique";
+            case UserTableKeys.UNIQUE_USERNAME -> message = "Username is not unique";
+            case UserTableKeys.UNIQUE_EMAIL -> message = "Email is not unique";
+            case UserTableKeys.UNIQUE_PHONE -> message = "Phone is not unique";
             default -> message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
         }
         log.warn(message, e);

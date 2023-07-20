@@ -6,7 +6,11 @@ import org.openapitools.model.Event;
 import org.openapitools.model.EventWithPlaceResponse;
 import org.openapitools.model.Place;
 
-public class EventMapper {
+public final class EventMapper {
+    private EventMapper() {
+        throw new UnsupportedOperationException("This is an utility class");
+    }
+
     public static Event toEvent(EventEntity eventEntity) {
         Event event = new Event();
         event.setId(eventEntity.getId());

@@ -1,6 +1,6 @@
 package com.example.polzunovfeastserver.place;
 
-import com.example.polzunovfeastserver.event.util.EventForeignKey;
+import com.example.polzunovfeastserver.event.util.EventTableKeys;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
@@ -44,7 +44,7 @@ public class PlaceExceptionHandler {
         }
 
         //Foreign key constraints violation
-        if (cause.getConstraintName().equals(EventForeignKey.PLACE)) {
+        if (cause.getConstraintName().equals(EventTableKeys.FOREIGN_PLACE)) {
             message = "Cannot delete place, because there are events associated with it";
         } else {
             message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());

@@ -1,10 +1,8 @@
 package com.example.polzunovfeastserver.user.entity;
 
-import com.example.polzunovfeastserver.user.uitl.UserUniqueKey;
+import com.example.polzunovfeastserver.user.uitl.UserTableKeys;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +13,15 @@ import java.util.List;
 @Table(
         name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(name = UserUniqueKey.USERNAME, columnNames = "username"),
-                @UniqueConstraint(name = UserUniqueKey.EMAIL, columnNames = "email"),
-                @UniqueConstraint(name = UserUniqueKey.PHONE, columnNames = "phone")
+                @UniqueConstraint(name = UserTableKeys.UNIQUE_USERNAME, columnNames = "username"),
+                @UniqueConstraint(name = UserTableKeys.UNIQUE_EMAIL, columnNames = "email"),
+                @UniqueConstraint(name = UserTableKeys.UNIQUE_PHONE, columnNames = "phone")
         }
 )
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity implements UserDetails {

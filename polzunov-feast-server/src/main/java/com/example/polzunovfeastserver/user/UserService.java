@@ -49,7 +49,7 @@ public class UserService {
      * @return updated user without password
      */
     public User update(User user, long id) {
-        UserEntity previousUser = getUserEntityById(id);
+        UserEntity previousUser = getEntityById(id);
         if (user.getPassword() == null) {
             user.setPassword(previousUser.getPassword());
         } else {
@@ -64,11 +64,14 @@ public class UserService {
      * @return user without password
      */
     public User getById(long id) {
-        UserEntity userEntity = getUserEntityById(id);
+        UserEntity userEntity = getEntityById(id);
         return UserMapper.toUserWithoutPassword(userEntity);
     }
-    
-    public UserEntity getUserEntityById(long id) {
+
+    /**
+     * @throws UserNotFoundException if user doesn't exist
+     */
+    public UserEntity getEntityById(long id) {
         return userEntityRepo.findById(id).orElseThrow(() ->
                 new UserNotFoundException(String.format("User with id=%d not found", id))
         );

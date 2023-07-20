@@ -4,7 +4,10 @@ import com.example.polzunovfeastserver.user.entity.Role;
 import com.example.polzunovfeastserver.user.entity.UserEntity;
 import org.openapitools.model.User;
 
-public class UserMapper {
+public final class UserMapper {
+    private UserMapper() {
+        throw new UnsupportedOperationException("This is an utility class");
+    }
 
     public static UserEntity toUserEntity(User user, Long id, Role role) {
         return new UserEntity(

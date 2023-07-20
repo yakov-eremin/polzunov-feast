@@ -451,6 +451,10 @@ paths:
   /route:
     put:
       summary: Update user's route. If there is no route, it will be created and updated.
+      description: |
+       Route's nodes will be ordered by events' start time from earliest to latest.
+        
+        **Note:** if nodes contains duplicated event ids, duplicates will be ignored
       operationId: updateRouteByUserId
       tags:
         - route
@@ -472,13 +476,15 @@ paths:
         '401':
           $ref: '#/components/responses/TokenUnauthorized'
         '404':
-          description: User, event not found
+          description: User or event(s) not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '409':
-          description: The time of one event overlaps the time of another (e.g., two events with the same start time)
+          description: |
+            * The time of one event overlaps the time of another (e.g., two events with the same start time)
+            * Some events have already ended
           content:
             application/json:
               schema:

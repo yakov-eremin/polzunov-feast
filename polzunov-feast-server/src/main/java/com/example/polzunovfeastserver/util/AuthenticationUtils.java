@@ -4,7 +4,11 @@ import com.example.polzunovfeastserver.exception.CorruptedTokenException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public class AuthenticationUtil {
+public final class AuthenticationUtils {
+    private AuthenticationUtils() {
+        throw new UnsupportedOperationException("This is an utility class");
+    }
+
     public static long extractUserIdFromToken() throws CorruptedTokenException{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String idStr = authentication.getName();
