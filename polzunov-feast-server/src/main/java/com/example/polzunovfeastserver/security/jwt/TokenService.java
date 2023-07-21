@@ -1,6 +1,7 @@
 package com.example.polzunovfeastserver.security.jwt;
 
 import com.example.polzunovfeastserver.user.entity.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.openapitools.model.Token;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -13,12 +14,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TokenService {
     private final JwtEncoder encoder;
-
-    public TokenService(JwtEncoder encoder) {
-        this.encoder = encoder;
-    }
 
     public Token generateToken(UserEntity user) {
         Instant now = Instant.now();

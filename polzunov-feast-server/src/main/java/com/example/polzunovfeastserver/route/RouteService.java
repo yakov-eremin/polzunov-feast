@@ -58,29 +58,15 @@ public class RouteService {
      * If route contains duplicated events, it will be ignored and route will be updated.
      *
      * @return Route with nodes sorted by events start time asc
-     * @throws UserNotFoundException          if user doesn't exist
-     * @throws EventNotFoundException         if some events not found
-     * @throws RouteUpdateRestrictedException if some events have already ended
+     * @throws UserNotFoundException          user doesn't exist
+     * @throws EventNotFoundException         some events not found
+     * @throws RouteUpdateRestrictedException events canceled, have already started or overlap each other
      */
     public RouteWithEventResponse updateRouteByOwnerId(Route route, Long ownerId) {
         UserEntity owner = userService.getEntityById(ownerId);
 
         List<Long> eventIds = route.getNodes().stream().map(RouteNode::getEventId).toList();
-        List<EventEntity> events = eventRepo.findAllByIdOrderByStartTimeAsc(eventIds);
-
-        //check that all events exist
-        if (events.size() != eventIds.size()) {
-            Set<Long> notFoundIds = new HashSet<>(eventIds);
-            notFoundIds.removeAll(events.stream().map(EventEntity::getId).collect(toSet()));
-
-            if (!notFoundIds.isEmpty()) {
-                throw new EventNotFoundException(format("Cannot update route, because events with this ids not found: %s", notFoundIds));
-            } else { //the fact that set is empty means that all events found, but eventIds contain duplicates, which will be ignored
-                log.warn("User with id={} send duplicated event ids when updating his route. Events ids: {}", ownerId, eventIds);
-            }
-        }
-
-        checkEventsTime(events);
+        List<EventEntity> events = findAndCheckEvents(eventIds);
 
         List<RouteNodeEntity> routeNodes = events.stream().map(e -> new RouteNodeEntity(null, e)).toList();
 
@@ -88,7 +74,7 @@ public class RouteService {
         RouteEntity routeEntity;
         if (routeEntityOpt.isPresent()) {
             routeEntity = routeEntityOpt.get();
-            routeEntity.getRouteNodes().clear(); //clear old nodes
+            routeEntity.getRouteNodes().clear(); //delete old nodes
             routeEntity.getRouteNodes().addAll(routeNodes);// and save updated
         } else {
             routeEntity = new RouteEntity(null, owner, routeNodes); //create new route, if it didn't exist
@@ -102,17 +88,43 @@ public class RouteService {
     }
 
     /**
-     * Checks that events haven't started and doesn't overlap each other
-     * (if end time of earlier event is after or equal to start time of next event)
+     * Checks that events:
+     * <ul>
+     *     <li>exist</li>
+     *     <li>not canceled</li>
+     *     <li>haven't started and doesn't overlap each other (end time of earlier event is not after or equal to start time of next event)</li>
+     * </ul>
      *
-     * @param events must be sorted by start time acs
-     * @throws RouteUpdateRestrictedException if some events have already ended or events overlap each other
+     * @throws EventNotFoundException         some events not found
+     * @throws RouteUpdateRestrictedException events canceled, have already started or overlap each other
      */
-    private void checkEventsTime(List<EventEntity> events) {
-        OffsetDateTime now = OffsetDateTime.now();
+    private List<EventEntity> findAndCheckEvents(List<Long> eventIds) {
+        List<EventEntity> events = eventRepo.findAllByIdOrderByStartTimeAsc(eventIds);
 
+        //check that all events exist
+        if (events.size() != eventIds.size()) {
+            Set<Long> notFoundIds = new HashSet<>(eventIds);
+            notFoundIds.removeAll(events.stream().map(EventEntity::getId).collect(toSet()));
+
+            if (!notFoundIds.isEmpty()) {
+                throw new EventNotFoundException(format("Cannot update route, because events with this ids not found: %s", notFoundIds));
+            } else { //the fact that set is empty means that all events found, but eventIds contain duplicates, which will be ignored
+                log.warn("All events found, but event ids contain duplicates, ids: {}", eventIds);
+            }
+        }
+
+
+        OffsetDateTime now = OffsetDateTime.now();
         for (int i = 0; i < events.size(); i++) {
             EventEntity currentEvent = events.get(i);
+
+            //check not canceled
+            if (currentEvent.isCanceled()) {
+                throw new RouteUpdateRestrictedException(
+                        format("Cannot update route, because event with id=%d is canceled", currentEvent.getId()));
+            }
+
+            //check start time
             if (currentEvent.getStartTime().isBefore(now)) {
                 throw new RouteUpdateRestrictedException(
                         format("Cannot update route, because events with id=%d has already ended, event start time = '%s",
@@ -120,6 +132,7 @@ public class RouteService {
                 );
             }
 
+            //check overlap
             if (i + 1 < events.size()) {
                 EventEntity nextEvent = events.get(i + 1);
                 if (currentEvent.getEndTime().isAfter(nextEvent.getStartTime()) ||
@@ -134,5 +147,6 @@ public class RouteService {
                 }
             }
         }
+        return events;
     }
 }

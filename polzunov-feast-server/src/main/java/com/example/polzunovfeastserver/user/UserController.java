@@ -1,6 +1,7 @@
 package com.example.polzunovfeastserver.user;
 
 import com.example.polzunovfeastserver.util.AuthenticationUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.UserApi;
 import org.openapitools.model.Credentials;
@@ -13,12 +14,9 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class UserController implements UserApi {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public ResponseEntity<Token> signUpUser(User user) {

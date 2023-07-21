@@ -35,7 +35,7 @@ public class RouteEntity {
     )
     private UserEntity owner;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(
             name = "route_id",
             foreignKey = @ForeignKey(name = RouteNodeTableKeys.FOREIGN_ROUTE, value = ConstraintMode.CONSTRAINT)

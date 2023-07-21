@@ -37,4 +37,6 @@ public class EventEntity {
             foreignKey = @ForeignKey(name = EventTableKeys.FOREIGN_PLACE, value = ConstraintMode.CONSTRAINT)
     )
     private PlaceEntity place;
+
+    private boolean canceled;
 }

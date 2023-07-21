@@ -152,14 +152,14 @@ paths:
         - place
         - admin
       requestBody:
-        description: Place to create
+        description: Place to create. *Id can be every random integer value, because provided id will be substituted with generated one*
         content:
           'application/json':
             schema:
               $ref: '#/components/schemas/Place'
       responses:
         '200':
-          description: Place created
+          description: Place created, *it will have generated id*
           content:
             'application/json':
               schema:
@@ -312,14 +312,17 @@ paths:
         - event
         - admin
       requestBody:
-        description: Event to create
+        description: | 
+         Event to create. 
+          - *Id can be every random integer value, because provided id will be substituted with generated one*
+          - Field 'canceled' may not be present, because it will be set to false anyway
         content:
           'application/json':
             schema:
               $ref: '#/components/schemas/Event'
       responses:
         '200':
-          description: Event created
+          description: Event created, *it will have generated id*
           content:
             'application/json':
               schema:
@@ -362,6 +365,15 @@ paths:
           $ref: '#/components/responses/TokenUnauthorized'
         '404':
           description: Admin, place or event not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: |
+            This checks will *not* be performed if event is canceled:
+            * Event has already started
+            * It's in someone's route
         '500':
           $ref: '#/components/responses/InternalServerError'
     get:
@@ -491,6 +503,7 @@ paths:
           description: |
             * The time of one event overlaps the time of another (e.g., two events with the same start time)
             * Some events have already ended
+            * Some events are canceled
           content:
             application/json:
               schema:
@@ -633,6 +646,9 @@ components:
         placeId:
           type: integer
           format: int64
+        canceled:
+          type: boolean
+          default: false
     EventWithPlaceResponse:
       type: object
       properties:
@@ -653,6 +669,9 @@ components:
           example: 2019-01-01T01:00:00+3:00
         place:
           $ref: '#/components/schemas/Place'
+        canceled:
+          type: boolean
+          default: false
 
     Place:
       type: object

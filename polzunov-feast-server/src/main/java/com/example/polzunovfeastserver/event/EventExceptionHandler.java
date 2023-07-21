@@ -1,7 +1,7 @@
 package com.example.polzunovfeastserver.event;
 
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
-import com.example.polzunovfeastserver.event.util.EventTableKeys;
+import com.example.polzunovfeastserver.event.exception.EventUpdateRestrictedException;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import com.example.polzunovfeastserver.route.node.util.RouteNodeTableKeys;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +21,15 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RestControllerAdvice(basePackages = "com.example.polzunovfeastserver.event")
 @Order(Ordered.HIGHEST_PRECEDENCE) //needed to not fall into global exception handler
 public class EventExceptionHandler {
+
+    @ExceptionHandler(EventUpdateRestrictedException.class)
+    @ResponseStatus(CONFLICT)
+    public ErrorResponse onEventUpdateRestrictedException(EventUpdateRestrictedException e) {
+        log.warn(e.getMessage(), e);
+        ErrorResponse error = new ErrorResponse();
+        error.setMessage(e.getMessage());
+        return error;
+    }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(CONFLICT)

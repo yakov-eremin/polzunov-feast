@@ -11,17 +11,6 @@ public final class EventMapper {
         throw new UnsupportedOperationException("This is an utility class");
     }
 
-    public static Event toEvent(EventEntity eventEntity) {
-        Event event = new Event();
-        event.setId(eventEntity.getId());
-        event.setName(eventEntity.getName());
-        event.setDescription(eventEntity.getDescription());
-        event.setStartTime(eventEntity.getStartTime());
-        event.setEndTime(eventEntity.getEndTime());
-        event.setPlaceId(eventEntity.getPlace().getId());
-        return event;
-    }
-
     public static EventWithPlaceResponse toEventWithPlaceResponse(EventEntity eventEntity, Place place) {
         EventWithPlaceResponse event = new EventWithPlaceResponse();
         event.setId(eventEntity.getId());
@@ -30,6 +19,7 @@ public final class EventMapper {
         event.setStartTime(eventEntity.getStartTime());
         event.setEndTime(eventEntity.getEndTime());
         event.setPlace(place);
+        event.setCanceled(eventEntity.isCanceled());
         return event;
     }
 
@@ -40,7 +30,8 @@ public final class EventMapper {
                 event.getDescription(),
                 event.getStartTime(),
                 event.getEndTime(),
-                placeEntity
+                placeEntity,
+                event.getCanceled()
         );
     }
 }

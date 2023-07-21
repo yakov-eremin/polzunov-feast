@@ -1,5 +1,6 @@
 package com.example.polzunovfeastserver.place;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.PlaceApi;
 import org.openapitools.model.Place;
@@ -10,13 +11,10 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class PlaceController implements PlaceApi {
 
     private final PlaceService placeService;
-
-    public PlaceController(PlaceService placeService) {
-        this.placeService = placeService;
-    }
 
     @Override
     public ResponseEntity<Place> addPlace(Place place) {

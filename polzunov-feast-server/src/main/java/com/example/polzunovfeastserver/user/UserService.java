@@ -5,6 +5,7 @@ import com.example.polzunovfeastserver.user.entity.Role;
 import com.example.polzunovfeastserver.user.entity.UserEntity;
 import com.example.polzunovfeastserver.user.exception.UserNotFoundException;
 import com.example.polzunovfeastserver.user.exception.WrongUserPasswordException;
+import lombok.RequiredArgsConstructor;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
 import org.openapitools.model.User;
@@ -14,17 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserEntityRepository userEntityRepo;
     private final TokenService tokenService;
     private final PasswordEncoder encoder;
-
-    public UserService(UserEntityRepository userEntityRepo, TokenService tokenService, PasswordEncoder encoder) {
-        this.userEntityRepo = userEntityRepo;
-        this.tokenService = tokenService;
-        this.encoder = encoder;
-    }
 
     public Token signUp(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
