@@ -12,9 +12,9 @@ public final class UserMapper {
     public static UserEntity toUserEntity(User user, Long id, Role role) {
         return new UserEntity(
                 id,
-                user.getUsername(),
+                user.getUsername().trim(),
                 user.getPassword(),
-                user.getName(),
+                user.getName().trim(),
                 user.getPhone(),
                 user.getEmail(),
                 role

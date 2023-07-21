@@ -46,16 +46,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable) //TODO configure cors before prod
                 .csrf(AbstractHttpConfigurer::disable)
-                .headers(headers -> headers
-                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/user/signin", "/user/signup").permitAll()
                         .requestMatchers(GET, "/place", "/place/{id}").permitAll()
                         .requestMatchers(GET, "/event", "/event/{id}").permitAll()
+                        .requestMatchers(GET, "/category", "/category/{id}").permitAll()
                         //TODO remove below permissions when admins added
                         .requestMatchers(POST, "/place").permitAll()
                         .requestMatchers(PUT, "/place").permitAll()
@@ -63,6 +61,9 @@ public class SecurityConfig {
                         .requestMatchers(POST, "/event").permitAll()
                         .requestMatchers(PUT, "/event").permitAll()
                         .requestMatchers(DELETE, "/event/{id}").permitAll()
+                        .requestMatchers(POST, "/category").permitAll()
+                        .requestMatchers(PUT, "/category").permitAll()
+                        .requestMatchers(DELETE, "/category/{id}").permitAll()
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 

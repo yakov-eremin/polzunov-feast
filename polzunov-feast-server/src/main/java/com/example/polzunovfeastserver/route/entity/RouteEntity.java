@@ -35,10 +35,19 @@ public class RouteEntity {
     )
     private UserEntity owner;
 
+    /**
+     * Do not use getNodes.clear()/remove()/removeAll()/add()/addAll(). Use {@link #updateNodes} instead
+     */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(
             name = "route_id",
             foreignKey = @ForeignKey(name = RouteNodeTableKeys.FOREIGN_ROUTE, value = ConstraintMode.CONSTRAINT)
     )
-    private List<RouteNodeEntity> routeNodes;
+    @Setter(AccessLevel.NONE)
+    private List<RouteNodeEntity> nodes;
+
+    public void updateNodes(List<RouteNodeEntity> nodes) {
+        this.nodes.clear();
+        this.nodes.addAll(nodes);
+    }
 }

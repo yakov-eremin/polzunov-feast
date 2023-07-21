@@ -11,6 +11,8 @@ tags:
   - name: admin
   - name: event
   - name: route
+  - name: place
+  - name: category
 
 paths:
   ###################################### user ##########################################################################
@@ -27,27 +29,27 @@ paths:
             schema:
               $ref: '#/components/schemas/Credentials'
       responses:
-        '200':
+        200:
           description: User authenticated, token of type "Bearer" passed in the body
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Token'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '401':
+        401:
           description: Wrong password
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '404':
+        404:
           description: Username not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
   /user/signup:
@@ -60,25 +62,25 @@ paths:
       requestBody:
         description: User to sign up
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        '200':
+        200:
           description: User signed up, authentication token of type "Bearer" passed in the body
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Token'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '409':
+        409:
           description: Username, email or phone number already taken
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
   /user:
@@ -90,27 +92,27 @@ paths:
       requestBody:
         description: User object with new data. *Password can be null, if it doesn't need to be updated.*
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        '200':
+        200:
           description: Updated user with *password=null*
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '409':
+        409:
           description: Username, email or phone number already taken
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
     get:
@@ -119,15 +121,15 @@ paths:
       tags:
         - user
       responses:
-        '200':
+        200:
           description: User info
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/User'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
     delete:
@@ -136,11 +138,11 @@ paths:
       tags:
         - user
       responses:
-        '200':
+        200:
           description: User deleted
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
   ##################################### place ##########################################################################
@@ -154,27 +156,27 @@ paths:
       requestBody:
         description: Place to create. *Id can be every random integer value, because provided id will be substituted with generated one*
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/Place'
       responses:
-        '200':
+        200:
           description: Place created, *it will have generated id*
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Place'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: Admin not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
     put:
@@ -186,27 +188,27 @@ paths:
       requestBody:
         description: Place to update
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/Place'
       responses:
-        '200':
+        200:
           description: Place updated
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Place'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: Admin or place not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
     get:
@@ -233,7 +235,7 @@ paths:
             minimum: 1
             default: 10
       responses:
-        '200':
+        200:
           description: Places sent
           content:
             application/json:
@@ -241,9 +243,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Place'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
   /place/{id}:
@@ -262,19 +264,19 @@ paths:
       tags:
         - place
       responses:
-        '200':
+        200:
           description: Place sent
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/Place'
-        '404':
+        404:
           description: Place not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
     delete:
@@ -284,23 +286,23 @@ paths:
         - place
         - admin
       responses:
-        '200':
+        200:
           description: Place deleted
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: Admin not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '409':
+        409:
           description: Cannot delete place, because there are events associated with it
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
     ##################################### event ##########################################################################
@@ -312,32 +314,33 @@ paths:
         - event
         - admin
       requestBody:
-        description: | 
-         Event to create. 
-          - *Id can be every random integer value, because provided id will be substituted with generated one*
-          - Field 'canceled' may not be present, because it will be set to false anyway
+        description: |
+          Event to create. 
+           - *Id can be every random integer value, because provided id will be substituted with generated one*
+           - Field 'canceled' may not be present, because it will be set to false anyway
+           - Not found and duplicated categories will be ignored
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '200':
+        200:
           description: Event created, *it will have generated id*
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/EventWithPlaceResponse'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: Admin or place not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
     put:
@@ -347,34 +350,34 @@ paths:
         - event
         - admin
       requestBody:
-        description: Event object with new data
+        description: Event object with new data. Not found and duplicated categories will be ignored
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/Event'
       responses:
-        '200':
+        200:
           description: Event updated
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/EventWithPlaceResponse'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: Admin, place or event not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '409':
+        409:
           description: |
             This checks will *not* be performed if event is canceled:
-            * Event has already started
-            * It's in someone's route
-        '500':
+            - Event has already started
+            - It's in someone's route
+        500:
           $ref: '#/components/responses/InternalServerError'
     get:
       summary: Get all events
@@ -400,17 +403,17 @@ paths:
             minimum: 1
             default: 10
       responses:
-        '200':
+        200:
           description: Events sent
           content:
-            'application/json':
+            application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/EventWithPlaceResponse'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
   /event/{id}:
@@ -429,15 +432,15 @@ paths:
       tags:
         - event
       responses:
-        '200':
+        200:
           description: Event found
           content:
-            'application/json':
+            application/json:
               schema:
                 $ref: '#/components/schemas/EventWithPlaceResponse'
-        '404':
+        404:
           $ref: '#/components/responses/NotFound'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Delete event by id
@@ -446,25 +449,173 @@ paths:
         - event
         - admin
       responses:
-        '200':
+        200:
           description: Event deleted
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: Admin not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '409':
+        409:
           description: Cannot delete event, because there are routes associated with it
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
-
+  
+  ##################################### category #######################################################################
+  /category:
+    post:
+      summary: Create new category
+      operationId: addCategory
+      tags:
+        - category
+        - admin
+      requestBody:
+        description: |
+         Category to create. 
+          - *Id can be every random integer because provided id will be substituted with generated one*
+          - Category name must be unique. Uniqueness check is case-sensitive
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        200:
+          description: Category created, *it will have generated id*
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        404:
+          description: Admin not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: Category with this name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      summary: Update category by id
+      operationId: updateCategoryById
+      tags:
+        - category
+        - admin
+      requestBody:
+        description: Category object with new data. *Category name must be unique. Uniqueness check is case-sensitive*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        200:
+          description: Category updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        404:
+          description: Admin or category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: Category with this name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      summary: Get all categories
+      operationId: getAllCategories
+      security: [ ]
+      tags:
+        - category
+      responses:
+        200:
+          description: Categories sent
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /category/{id}:
+    parameters:
+      - in: path
+        name: id
+        description: Category id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Get category by id
+      operationId: getCategoryById
+      security: [ ]
+      tags:
+        - category
+      responses:
+        200:
+          description: Category found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete category by id
+      operationId: deleteCategoryById
+      tags:
+        - category
+        - admin
+      responses:
+        200:
+          description: Category deleted
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        404:
+          description: Admin not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: Cannot delete category, because there are events associated with it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  
   ############################################ route ###################################################################
   /route:
     put:
@@ -479,27 +630,27 @@ paths:
       requestBody:
         description: Route object
         content:
-          'application/json':
+          application/json:
             schema:
               $ref: '#/components/schemas/Route'
       responses:
-        '200':
+        200:
           description: Route updated
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/RouteWithEventResponse'
-        '400':
+        400:
           $ref: '#/components/responses/BadRequest'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: User or event(s) not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '409':
+        409:
           description: |
             * The time of one event overlaps the time of another (e.g., two events with the same start time)
             * Some events have already ended
@@ -508,7 +659,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
     get:
       summary: Get user's route. If there is no route, it will be created and sent.
@@ -517,17 +668,17 @@ paths:
       tags:
         - route
       responses:
-        '200':
+        200:
           description: Route sent
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/RouteWithEventResponse'
-        '401':
+        401:
           $ref: '#/components/responses/TokenUnauthorized'
-        '404':
+        404:
           description: User not found
-        '500':
+        500:
           $ref: '#/components/responses/InternalServerError'
 
 #################################### Components ########################################################################
@@ -649,6 +800,17 @@ components:
         canceled:
           type: boolean
           default: false
+        categoryIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+        ageLimit:
+          description: Only people whose age >= ageLimit are allowed
+          type: integer
+          format: int32
+          default: 0
     EventWithPlaceResponse:
       type: object
       properties:
@@ -672,6 +834,25 @@ components:
         canceled:
           type: boolean
           default: false
+        categories:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Category'
+        ageLimit:
+          description: Only people whose age >= ageLimit are allowed
+          type: integer
+          format: int32
+          default: 0
+    
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
 
     Place:
       type: object

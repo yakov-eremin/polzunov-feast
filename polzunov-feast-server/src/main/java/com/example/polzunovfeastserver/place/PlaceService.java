@@ -39,9 +39,7 @@ public class PlaceService {
     }
 
     public Place getPlaceById(Long id) {
-        PlaceEntity placeEntity = placeRepo.findById(id).orElseThrow(() -> new PlaceNotFoundException(
-                String.format("Cannot get place with id=%d, because place not found", id)
-        ));
+        PlaceEntity placeEntity = getEntityById(id);
         return PlaceMapper.toPlace(placeEntity);
     }
 
@@ -50,5 +48,14 @@ public class PlaceService {
             return;
         }
         placeRepo.deleteById(id);
+    }
+
+    /**
+     * @throws PlaceNotFoundException place not found
+     */
+    public PlaceEntity getEntityById(Long id) {
+        return placeRepo.findById(id).orElseThrow(() -> new PlaceNotFoundException(
+                String.format("Cannot get place with id=%d, because place not found", id)
+        ));
     }
 }

@@ -1,6 +1,8 @@
 package com.example.polzunovfeastserver.route;
 
+import com.example.polzunovfeastserver.category.CategoryMapper;
 import com.example.polzunovfeastserver.event.EventEntityRepository;
+import com.example.polzunovfeastserver.event.EventMapper;
 import com.example.polzunovfeastserver.event.entity.EventEntity;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
 import com.example.polzunovfeastserver.route.entity.RouteEntity;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.Route;
 import org.openapitools.model.RouteNode;
+import org.openapitools.model.RouteNodeWithEventResponse;
 import org.openapitools.model.RouteWithEventResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 import java.util.*;
 
+import static com.example.polzunovfeastserver.place.PlaceMapper.toPlace;
+import static com.example.polzunovfeastserver.route.RouteMapper.toRouteWithEventResponse;
+import static com.example.polzunovfeastserver.route.node.RouteNodeMapper.toRouteNodeEntity;
+import static com.example.polzunovfeastserver.route.node.RouteNodeMapper.toRouteNodeWithEvent;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toSet;
 
@@ -43,13 +50,14 @@ public class RouteService {
         Optional<RouteEntity> routeEntityOpt = routeRepo.findByOwner_Id(ownerId);
         RouteEntity routeEntity = routeEntityOpt.orElseGet(() -> {
                     log.info("Route owned by user with id={} didn't exist, creating it", ownerId);
-                    return routeRepo.save(new RouteEntity(null, owner, List.of()));
+                    return routeRepo.save(new RouteEntity(null, owner, new ArrayList<>()));
                 }
         );
 
-        RouteWithEventResponse routeWithEventResponse = RouteMapper.toRouteWithEvent(routeEntity);
-        routeWithEventResponse.getNodes().sort(Comparator.comparing(n -> n.getEvent().getStartTime()));
-        return routeWithEventResponse;
+        List<RouteNodeEntity> nodeEntities = routeEntity.getNodes();
+        List<RouteNodeWithEventResponse> nodes = convertNodesAndSortByStartTimeAsc(nodeEntities);
+
+        return toRouteWithEventResponse(nodes);
     }
 
     /**
@@ -68,23 +76,22 @@ public class RouteService {
         List<Long> eventIds = route.getNodes().stream().map(RouteNode::getEventId).toList();
         List<EventEntity> events = findAndCheckEvents(eventIds);
 
-        List<RouteNodeEntity> routeNodes = events.stream().map(e -> new RouteNodeEntity(null, e)).toList();
+        List<RouteNodeEntity> routeNodes = events.stream().map(e -> toRouteNodeEntity(null, e)).toList();
 
         Optional<RouteEntity> routeEntityOpt = routeRepo.findByOwner_Id(ownerId);
         RouteEntity routeEntity;
         if (routeEntityOpt.isPresent()) {
             routeEntity = routeEntityOpt.get();
-            routeEntity.getRouteNodes().clear(); //delete old nodes
-            routeEntity.getRouteNodes().addAll(routeNodes);// and save updated
+            routeEntity.updateNodes(routeNodes);
         } else {
             routeEntity = new RouteEntity(null, owner, routeNodes); //create new route, if it didn't exist
         }
         routeEntity = routeRepo.save(routeEntity);
 
+        List<RouteNodeEntity> nodeEntities = routeEntity.getNodes();
+        List<RouteNodeWithEventResponse> nodes = convertNodesAndSortByStartTimeAsc(nodeEntities);
 
-        RouteWithEventResponse routeWithEventResponse = RouteMapper.toRouteWithEvent(routeEntity);
-        routeWithEventResponse.getNodes().sort(Comparator.comparing(n -> n.getEvent().getStartTime()));
-        return routeWithEventResponse;
+        return toRouteWithEventResponse(nodes);
     }
 
     /**
@@ -148,5 +155,21 @@ public class RouteService {
             }
         }
         return events;
+    }
+
+    private List<RouteNodeWithEventResponse> convertNodesAndSortByStartTimeAsc(List<RouteNodeEntity> nodeEntities) {
+        return nodeEntities.stream()
+                .map(n -> {
+                    EventEntity event = n.getEvent();
+                    return toRouteNodeWithEvent(
+                            EventMapper.toEventWithPlaceResponse(
+                                    event,
+                                    toPlace(event.getPlace()),
+                                    event.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet())
+                            )
+                    );
+                })
+                .sorted(Comparator.comparing(n -> n.getEvent().getStartTime()))
+                .toList();
     }
 }

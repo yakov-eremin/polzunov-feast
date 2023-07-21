@@ -5,12 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.PlaceApi;
 import org.openapitools.model.Place;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class PlaceController implements PlaceApi {
 

@@ -6,4 +6,14 @@ public final class EventTableKeys {
     }
 
     public static final String FOREIGN_PLACE = "events_fkey_place_id";
+
+    /**
+     * Technically this is an 'event_categories' table constraint, not 'events', but it will be applied in EventEntity
+     */
+    public static final String FOREIGN_CATEGORY = "event_categories_fkey_category_id";
+
+    /**
+     * Technically this is an 'event_categories' table constraint, not 'events', but it will be applied in EventEntity
+     */
+    public static final String FOREIGN_EVENT = "event_categories_fkey_event_id";
 }

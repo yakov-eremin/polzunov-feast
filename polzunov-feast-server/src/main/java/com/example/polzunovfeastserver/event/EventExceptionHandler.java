@@ -45,7 +45,7 @@ public class EventExceptionHandler {
 
         //Foreign key constraints violation
         if (cause.getConstraintName().equals(RouteNodeTableKeys.FOREIGN_EVENT)) {
-            message = "Cannot delete place, because there are events associated with it";
+            message = "Cannot delete event, because there are routes associated with it";
         } else {
             message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
         }
