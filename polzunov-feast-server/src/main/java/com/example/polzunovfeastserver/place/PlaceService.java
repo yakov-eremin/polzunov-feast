@@ -1,7 +1,9 @@
 package com.example.polzunovfeastserver.place;
 
+import com.example.polzunovfeastserver.event.EventEntityRepository;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
+import com.example.polzunovfeastserver.place.excepition.PlaceUpdateRestrictedException;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.model.Place;
 import org.springframework.data.domain.Page;
@@ -11,11 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class PlaceService {
     private final PlaceEntityRepository placeRepo;
+    private final EventEntityRepository eventRepo;
 
     public Place addPlace(Place place) {
         place.setId(null);
@@ -23,12 +28,22 @@ public class PlaceService {
         return PlaceMapper.toPlace(placeRepo.save(placeEntity));
     }
 
+    /**
+     * @throws PlaceNotFoundException place not found
+     * @throws PlaceUpdateRestrictedException there are events associated with this place
+     */
     public Place updatePlaceById(Place place) {
         if (!placeRepo.existsById(place.getId())) {
             throw new PlaceNotFoundException(
-                    String.format("Cannot update place with id=%d, because place not found", place.getId())
+                    format("Cannot update place with id=%d, because place not found", place.getId())
             );
         }
+
+        if (eventRepo.existsByPlace_Id(place.getId())) {
+            throw new PlaceUpdateRestrictedException(
+                    format("Cannot update place with id=%d, there are events with this place", place.getId()));
+        }
+
         PlaceEntity placeEntity = PlaceMapper.toPlaceEntity(place);
         return PlaceMapper.toPlace(placeRepo.save(placeEntity));
     }
@@ -38,6 +53,9 @@ public class PlaceService {
         return places.stream().map(PlaceMapper::toPlace).toList();
     }
 
+    /**
+     * @throws PlaceNotFoundException place not found
+     */
     public Place getPlaceById(Long id) {
         PlaceEntity placeEntity = getEntityById(id);
         return PlaceMapper.toPlace(placeEntity);
@@ -55,7 +73,7 @@ public class PlaceService {
      */
     public PlaceEntity getEntityById(Long id) {
         return placeRepo.findById(id).orElseThrow(() -> new PlaceNotFoundException(
-                String.format("Cannot get place with id=%d, because place not found", id)
+                format("Cannot get place with id=%d, because place not found", id)
         ));
     }
 }

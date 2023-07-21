@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface EventEntityRepository extends JpaRepository<EventEntity, Long> {
+
     @Query("select e from EventEntity e where e.id in :ids order by e.startTime asc ")
     List<EventEntity> findAllByIdOrderByStartTimeAsc(List<Long> ids);
+
+    boolean existsByPlace_Id(Long placeId);
 }

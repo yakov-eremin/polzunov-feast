@@ -2,6 +2,7 @@ package com.example.polzunovfeastserver.place;
 
 import com.example.polzunovfeastserver.event.util.EventTableKeys;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
+import com.example.polzunovfeastserver.place.excepition.PlaceUpdateRestrictedException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.openapitools.model.ErrorResponse;
@@ -20,6 +21,16 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Order(Ordered.HIGHEST_PRECEDENCE) //needed to not fall into global exception handler
 public class PlaceExceptionHandler {
 
+    @ExceptionHandler(PlaceUpdateRestrictedException.class)
+    @ResponseStatus(CONFLICT)
+    public ErrorResponse onPlaceUpdateRestrictedException(PlaceUpdateRestrictedException e) {
+        String message = e.getMessage();
+        log.warn(message, e);
+        ErrorResponse response = new ErrorResponse();
+        response.setMessage(message);
+        return response;
+    }
+
     @ExceptionHandler(PlaceNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ErrorResponse onPlaceNotFoundException(PlaceNotFoundException e) {
@@ -29,7 +40,6 @@ public class PlaceExceptionHandler {
         response.setMessage(message);
         return response;
     }
-
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(CONFLICT)

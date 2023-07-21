@@ -2,6 +2,7 @@ package com.example.polzunovfeastserver.category;
 
 import com.example.polzunovfeastserver.category.exception.CategoryNotFoundException;
 import com.example.polzunovfeastserver.category.util.CategoryTableKeys;
+import com.example.polzunovfeastserver.event.util.EventTableKeys;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.openapitools.model.ErrorResponse;
@@ -43,11 +44,12 @@ public class CategoryExceptionHandler {
         }
 
         //Unique key constraints violation
-        if (cause.getConstraintName().equals(CategoryTableKeys.UNIQUE_NAME)) {
-            message = "Category name is not unique";
-        } else {
-            message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
-        }
+        message = switch (cause.getConstraintName()) {
+            case CategoryTableKeys.UNIQUE_NAME -> "Category name is not unique";
+            case EventTableKeys.FOREIGN_CATEGORY ->
+                    "Cannot delete category, because there are events associated with it";
+            default -> String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
+        };
         log.warn(message, e);
         ErrorResponse error = new ErrorResponse();
         error.setMessage(message);
