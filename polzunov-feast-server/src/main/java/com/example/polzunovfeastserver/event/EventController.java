@@ -1,5 +1,6 @@
 package com.example.polzunovfeastserver.event;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.EventApi;
 import org.openapitools.model.Event;
@@ -7,17 +8,15 @@ import org.openapitools.model.EventWithPlaceResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 public class EventController implements EventApi {
 
     private final EventService eventService;
-
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
-    }
 
     @Override
     public ResponseEntity<EventWithPlaceResponse> addEvent(Event event) {
@@ -28,14 +27,24 @@ public class EventController implements EventApi {
 
     @Override
     public ResponseEntity<EventWithPlaceResponse> updateEventById(Event event) {
-       EventWithPlaceResponse updatedEvent = eventService.updateEventById(event);
-       log.info("Event with id={} updated", updatedEvent.getId());
-       return ResponseEntity.ok(updatedEvent);
+        EventWithPlaceResponse updatedEvent = eventService.updateEventById(event);
+        log.info("Event with id={} updated", updatedEvent.getId());
+        return ResponseEntity.ok(updatedEvent);
     }
 
     @Override
-    public ResponseEntity<List<EventWithPlaceResponse>> getAllEvents(Integer page, Integer size) {
-        List<EventWithPlaceResponse> events = eventService.getAllEvents(page, size);
+    public ResponseEntity<List<EventWithPlaceResponse>> getAllEvents(List<Long> catIds, Integer age,
+                                                                     OffsetDateTime start, OffsetDateTime end,
+                                                                     Boolean canceled,
+                                                                     Integer page, Integer size) {
+        var eventParameter = EventParameter.builder()
+                .categoryIds(catIds)
+                .ageLimit(age)
+                .canceled(canceled)
+                .start(start)
+                .end(end)
+                .build();
+        List<EventWithPlaceResponse> events = eventService.getAllEvents(eventParameter, page, size);
         log.info("Events page of size={} with index={} returned, actual size={}", size, page, events.size());
         return ResponseEntity.ok(events);
     }

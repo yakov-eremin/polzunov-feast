@@ -25,6 +25,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Set;
 
+import static com.example.polzunovfeastserver.event.util.EventEntitySpecifications.where;
 import static com.example.polzunovfeastserver.event.EventMapper.toEventEntity;
 import static com.example.polzunovfeastserver.event.EventMapper.toEventWithPlaceResponse;
 import static com.example.polzunovfeastserver.place.PlaceMapper.toPlace;
@@ -128,8 +129,10 @@ public class EventService {
         }
     }
 
-    public List<EventWithPlaceResponse> getAllEvents(Integer page, Integer size) {
-        Page<EventEntity> events = eventRepo.findAll(PageRequest.of(page, size));
+    public List<EventWithPlaceResponse> getAllEvents(EventParameter eventParameter, Integer page, Integer size) {
+
+
+        Page<EventEntity> events = eventRepo.findAll(where(eventParameter), PageRequest.of(page, size));
         return events.stream().map(ev ->
                 toEventWithPlaceResponse(
                         ev,

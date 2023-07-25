@@ -393,6 +393,44 @@ paths:
         - event
       parameters:
         - in: query
+          name: catIds
+          description: Only events with specified category ids will be returned
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+        - in: query
+          name: age
+          description: Only events with age limit <= age will be returned
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: start
+          description: Only events with start time >= start will be returned. *Must be encoded*
+          required: false
+          schema:
+            type: string
+            format: date-time
+          example: 2024-12-04T10%3A15%3A30%2B00%3A00
+        - in: query
+          name: end
+          description: Only events with end time <= end will be returned. *Must be encoded*
+          required: false
+          schema:
+            type: string
+            format: date-time
+          example: 2024-12-05T10%3A15%3A30%2B00%3A00
+        - in: query
+          name: canceled
+          description: If true only canceled events will be returned, if false - only not canceled, if not present - both
+          required: false
+          schema:
+            type: boolean
+        - in: query
           name: page
           description: Index of first page to return
           required: false
@@ -484,9 +522,9 @@ paths:
         - admin
       requestBody:
         description: |
-         Category to create. 
-          - *Id can be every random integer because provided id will be substituted with generated one*
-          - Category name must be unique. Uniqueness check is case-sensitive
+          Category to create. 
+           - *Id can be every random integer because provided id will be substituted with generated one*
+           - Category name must be unique. Uniqueness check is case-sensitive
         content:
           application/json:
             schema:
