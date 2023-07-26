@@ -20,6 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static com.example.polzunovfeastserver.user.entity.Role.*;
 import static org.springframework.http.HttpMethod.*;
 
 @Configuration
@@ -50,20 +51,48 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/user/signin", "/user/signup").permitAll()
-                        .requestMatchers(GET, "/place", "/place/{id}").permitAll()
-                        .requestMatchers(GET, "/event", "/event/{id}").permitAll()
-                        .requestMatchers(GET, "/category", "/category/{id}").permitAll()
-                        //TODO remove below permissions when admins added
-                        .requestMatchers(POST, "/place").permitAll()
-                        .requestMatchers(PUT, "/place").permitAll()
-                        .requestMatchers(DELETE, "/place/{id}").permitAll()
-                        .requestMatchers(POST, "/event").permitAll()
-                        .requestMatchers(PUT, "/event").permitAll()
-                        .requestMatchers(DELETE, "/event/{id}").permitAll()
-                        .requestMatchers(POST, "/category").permitAll()
-                        .requestMatchers(PUT, "/category").permitAll()
-                        .requestMatchers(DELETE, "/category/{id}").permitAll()
+                        /*
+                        Spring will decode jwt with authorities prefixed by 'SCOPE_',
+                        e.g. if user send his token he will have authority 'SCOPE_USER'.
+                        .hasRole(USER) method will expect user to have 'ROLE_USER' authority, but we'll have 'SCOPE_USER',
+                        so I had to use .hasAuthority(USER.asSCOPE) instead of .hasRole(USER)
+                        */
+
+                        //no security
+                        .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
+                        .requestMatchers(
+                                GET,
+                                "/event", "/event/{id}",
+                                "/place", "place/{id}",
+                                "/category", "/category/{id}"
+                        ).permitAll()
+
+                        //only users
+                        .requestMatchers(PUT, "/user").hasAuthority(USER.asScope())
+                        .requestMatchers(DELETE, "/user").hasAuthority(USER.asScope())
+                        .requestMatchers(PUT, "/route").hasAuthority(USER.asScope())
+                        .requestMatchers(GET, "/route").hasAuthority(USER.asScope())
+
+                        //only admins (including root)
+                        .requestMatchers(
+                                POST,
+                                "/place", "/event", "/category"
+                        ).hasAnyAuthority(ADMIN.asScope(), ROOT.asScope())
+                        .requestMatchers(
+                                PUT,
+                                "/place", "/event", "/category"
+                        ).hasAnyAuthority(ADMIN.asScope(), ROOT.asScope())
+                        .requestMatchers(
+                                DELETE,
+                                "/place/{id}", "/event/{id}", "/category/{id}"
+                        ).hasAnyAuthority(ADMIN.asScope(), ROOT.asScope())
+
+                        //only root
+                        .requestMatchers(POST, "/admin/signup").hasAuthority(ROOT.asScope())
+                        .requestMatchers(PUT, "/admin/{username}").hasAuthority(ROOT.asScope())
+                        .requestMatchers(DELETE, "/admin/{username}").hasAuthority(ROOT.asScope())
+
+                        .requestMatchers("/**").hasAnyAuthority(ROOT.asScope(), USER.asScope(), ADMIN.asScope())
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
@@ -78,7 +107,7 @@ public class SecurityConfig {
                     );
         }
 
-        http.authorizeHttpRequests(requests -> requests.anyRequest().authenticated());
+        http.authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
         return http.build();
     }
 

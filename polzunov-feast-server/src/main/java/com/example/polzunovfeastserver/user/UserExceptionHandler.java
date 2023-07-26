@@ -33,10 +33,9 @@ public class UserExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ErrorResponse onUserNotFoundException(UserNotFoundException e) {
-        String message = "User not found";
-        log.warn(message, e);
+        log.warn(e.getMessage(), e);
         ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
+        response.setMessage(e.getMessage());
         return response;
     }
 
@@ -58,7 +57,8 @@ public class UserExceptionHandler {
             case UserTableKeys.UNIQUE_USERNAME -> message = "Username is not unique";
             case UserTableKeys.UNIQUE_EMAIL -> message = "Email is not unique";
             case UserTableKeys.UNIQUE_PHONE -> message = "Phone is not unique";
-            default -> message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
+            default ->
+                    message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
         }
         log.warn(message, e);
         ErrorResponse error = new ErrorResponse();

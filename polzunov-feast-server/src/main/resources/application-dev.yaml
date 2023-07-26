@@ -1,3 +1,7 @@
+root:
+  username: root
+  password: root
+
 spring:
   datasource:
     url: jdbc:h2:mem:polzunov-feast-db

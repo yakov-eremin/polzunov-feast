@@ -1,3 +1,8 @@
+root:
+  #TODO substitute with env variables before prod
+  username: root
+  password: root
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/polzunov-feast-db

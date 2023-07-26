@@ -9,20 +9,113 @@ security:
 tags:
   - name: user
   - name: admin
+  - name: root
+    description: Root can do everything that admins can, plus this actions
   - name: event
   - name: route
   - name: place
   - name: category
 
 paths:
+  ###################################### root ##########################################################################
+  /admin/signup:
+    post:
+      summary: Sign up new admin
+      operationId: signUpAdmin
+      tags:
+        - root
+      requestBody:
+        description: Admin to sign up
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Admin signed up, authentication token of type "Bearer" passed in the body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        409:
+          description: Username, email or phone number already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /admin/{username}:
+    parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+        description: Admin's username
+    put:
+      summary: Update admin
+      operationId: updateAdminByUsername
+      tags:
+        - root
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Admin updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          description: Username, email or phone number already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteAdminByUsername
+      summary: Delete admin
+      tags:
+        - root
+      responses:
+        200:
+          description: Admin deleted
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
   ###################################### user ##########################################################################
   /user/signin:
     post:
-      summary: Sign in new user
+      summary: Sign in user or admin
       operationId: signInUser
       security: [ ]
       tags:
         - user
+        - admin
       requestBody:
         content:
           application/json:
@@ -106,6 +199,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
         409:
           description: Username, email or phone number already taken
           content:
@@ -120,6 +215,7 @@ paths:
       operationId: getUser
       tags:
         - user
+        - admin
       responses:
         200:
           description: User info
@@ -142,6 +238,8 @@ paths:
           description: User deleted
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
         500:
           $ref: '#/components/responses/InternalServerError'
 
@@ -170,6 +268,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin not found
           content:
@@ -202,6 +302,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin or place not found
           content:
@@ -296,6 +398,8 @@ paths:
           description: Place deleted
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin not found
           content:
@@ -340,6 +444,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin or place not found
           content:
@@ -372,6 +478,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin, place or event not found
           content:
@@ -497,6 +605,8 @@ paths:
           description: Event deleted
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin not found
           content:
@@ -540,6 +650,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin not found
           content:
@@ -575,6 +687,8 @@ paths:
                 $ref: '#/components/schemas/Category'
         400:
           $ref: '#/components/responses/BadRequest'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin or category not found
           content:
@@ -645,6 +759,8 @@ paths:
           description: Category deleted
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
         404:
           description: Admin not found
           content:
@@ -688,6 +804,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
         404:
           description: User or event(s) not found
           content:
@@ -720,6 +838,8 @@ paths:
                 $ref: '#/components/schemas/RouteWithEventResponse'
         401:
           $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
         404:
           description: User not found
         500:

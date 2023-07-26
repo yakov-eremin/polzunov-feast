@@ -11,25 +11,27 @@ import org.openapitools.model.Token;
 import org.openapitools.model.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserEntityRepository userEntityRepo;
+    private final UserEntityRepository userRepo;
     private final TokenService tokenService;
     private final PasswordEncoder encoder;
 
     public Token signUp(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        UserEntity userEntity = UserMapper.toUserEntity(user, null, Role.ROLE_USER);
-        return tokenService.generateToken(userEntityRepo.save(userEntity));
+        UserEntity userEntity = UserMapper.toUserEntity(user, null, Role.USER);
+        return tokenService.generateToken(userRepo.save(userEntity));
     }
 
     public Token signIn(Credentials credentials) {
-        Optional<UserEntity> userOpt = userEntityRepo.findByUsername(credentials.getUsername());
+        Optional<UserEntity> userOpt = userRepo.findByUsername(credentials.getUsername());
         UserEntity user = userOpt.orElseThrow(() ->
                 new UserNotFoundException(String.format("Cannot sign in: user '%s' not found", credentials.getUsername()))
         );
@@ -42,6 +44,7 @@ public class UserService {
 
     /**
      * If password is null, then set it to previous password
+     *
      * @return updated user without password
      */
     public User update(User user, long id) {
@@ -52,7 +55,7 @@ public class UserService {
             user.setPassword(encoder.encode(user.getPassword()));
         }
         return UserMapper.toUserWithoutPassword(
-                userEntityRepo.save(UserMapper.toUserEntity(user, id, previousUser.getRole()))
+                userRepo.save(UserMapper.toUserEntity(user, id, previousUser.getRole()))
         );
     }
 
@@ -68,16 +71,16 @@ public class UserService {
      * @throws UserNotFoundException if user doesn't exist
      */
     public UserEntity getEntityById(long id) {
-        return userEntityRepo.findById(id).orElseThrow(() ->
+        return userRepo.findById(id).orElseThrow(() ->
                 new UserNotFoundException(String.format("User with id=%d not found", id))
         );
     }
 
     public void deleteById(long id) {
         //Sprig will complain if user to be deleted doesn't exist, even though docs claim the opposite
-        if (!userEntityRepo.existsById(id)) {
+        if (!userRepo.existsById(id)) {
             return;
         }
-        userEntityRepo.deleteById(id);
+        userRepo.deleteById(id);
     }
 }
