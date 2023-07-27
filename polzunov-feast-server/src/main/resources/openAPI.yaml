@@ -8,13 +8,13 @@ security:
   - bearerAuth: [ ]
 tags:
   - name: user
+    description: Only users can perform this operations
   - name: admin
+    description: Only admins (including root) can perform this operations
   - name: root
-    description: Root can do everything that admins can, plus this actions
-  - name: event
-  - name: route
-  - name: place
-  - name: category
+    description: Only root can perform this operation
+  - name: default
+    description: This operations can either be performed by every role or don't require authentication
 
 paths:
   ###################################### root ##########################################################################
@@ -113,9 +113,6 @@ paths:
       summary: Sign in user or admin
       operationId: signInUser
       security: [ ]
-      tags:
-        - user
-        - admin
       requestBody:
         content:
           application/json:
@@ -150,8 +147,6 @@ paths:
       summary: Sign up new user
       operationId: signUpUser
       security: [ ]
-      tags:
-        - user
       requestBody:
         description: User to sign up
         content:
@@ -213,9 +208,6 @@ paths:
     get:
       summary: Get user info without password
       operationId: getUser
-      tags:
-        - user
-        - admin
       responses:
         200:
           description: User info
@@ -249,7 +241,6 @@ paths:
       summary: Create new place
       operationId: addPlace
       tags:
-        - place
         - admin
       requestBody:
         description: Place to create. *Id can be every random integer value, because provided id will be substituted with generated one*
@@ -283,7 +274,6 @@ paths:
       summary: Update place by id
       operationId: updatePlaceById
       tags:
-        - place
         - admin
       requestBody:
         description: Place to update
@@ -323,8 +313,6 @@ paths:
       summary: Get all places
       operationId: getAllPlaces
       security: [ ]
-      tags:
-        - place
       parameters:
         - in: query
           name: page
@@ -369,8 +357,6 @@ paths:
       summary: Get place by id
       operationId: getPlaceById
       security: [ ]
-      tags:
-        - place
       responses:
         200:
           description: Place sent
@@ -391,7 +377,6 @@ paths:
       summary: Delete place by id
       operationId: deletePlaceById
       tags:
-        - place
         - admin
       responses:
         200:
@@ -421,7 +406,6 @@ paths:
       summary: Create new event
       operationId: addEvent
       tags:
-        - event
         - admin
       requestBody:
         description: |
@@ -459,7 +443,6 @@ paths:
       summary: Update event by id
       operationId: updateEventById
       tags:
-        - event
         - admin
       requestBody:
         description: Event object with new data. Not found and duplicated categories will be ignored
@@ -497,8 +480,6 @@ paths:
       summary: Get all events
       operationId: getAllEvents
       security: [ ]
-      tags:
-        - event
       parameters:
         - in: query
           name: catIds
@@ -581,8 +562,6 @@ paths:
       summary: Get event by id
       operationId: getEventById
       security: [ ]
-      tags:
-        - event
       responses:
         200:
           description: Event found
@@ -598,7 +577,6 @@ paths:
       summary: Delete event by id
       operationId: deleteEventById
       tags:
-        - event
         - admin
       responses:
         200:
@@ -628,7 +606,6 @@ paths:
       summary: Create new category
       operationId: addCategory
       tags:
-        - category
         - admin
       requestBody:
         description: |
@@ -670,7 +647,6 @@ paths:
       summary: Update category by id
       operationId: updateCategoryById
       tags:
-        - category
         - admin
       requestBody:
         description: Category object with new data. *Category name must be unique. Uniqueness check is case-sensitive*
@@ -707,8 +683,6 @@ paths:
       summary: Get all categories
       operationId: getAllCategories
       security: [ ]
-      tags:
-        - category
       responses:
         200:
           description: Categories sent
@@ -735,8 +709,6 @@ paths:
       summary: Get category by id
       operationId: getCategoryById
       security: [ ]
-      tags:
-        - category
       responses:
         200:
           description: Category found
@@ -752,7 +724,6 @@ paths:
       summary: Delete category by id
       operationId: deleteCategoryById
       tags:
-        - category
         - admin
       responses:
         200:
@@ -786,7 +757,7 @@ paths:
          **Note:** if nodes contains duplicated event ids, duplicates will be ignored
       operationId: updateRouteByUserId
       tags:
-        - route
+        - user
       requestBody:
         description: Route object
         content:
@@ -828,7 +799,7 @@ paths:
       description: Route's nodes will be ordered by events' start time from earliest to latest
       operationId: getRouteByUserId
       tags:
-        - route
+        - user
       responses:
         200:
           description: Route sent
