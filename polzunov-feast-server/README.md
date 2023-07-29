@@ -34,3 +34,27 @@ Container properties:
 - POSTGRES_USER: `polzunov`
 - POSTGRES_PASSWORD: `feast`
 - port: `5432`
+
+### Prod mode
+This mode has the following restrictions:
+1. Admins (including root) cannot create or delete entities, only update
+2. Root cannot create, delete or update admins
+
+This mode uses postgresql database stored in docker container, the data will be present after the app restarts.
+
+**Note:** access tokens will become invalid after the app restarts.
+
+Go to the project directory and do the following:
+1. Create a docker container with the database: `docker-compose up`
+2. Create .jar file: `./mvnw clean install -DskipTests`
+3. Execute .jar (will not work if the database is down): `java -Dspring.profiles.active=prod -jar target/polzunov-feast-server-0.0.1-SNAPSHOT.jar`
+
+Container properties:
+- POSTGRES_DB: `polzunov-feast-db`
+- POSTGRES_USER: `polzunov`
+- POSTGRES_PASSWORD: `feast`
+- port: `5432`
+
+## How perform admins' operations. REMOVE THIS SECTION BEFORE PROD
+Send sign in request with username and password `root`. Response will contain root's token.
+Use this token to do everything admins and root can.

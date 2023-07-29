@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.lang.NonNull;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,8 +44,28 @@ public class SecurityConfig {
         };
     }
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        //restrict some operations for admins when prod profile is active
+        if (env.acceptsProfiles(Profiles.of("prod"))) {
+            http
+                    .authorizeHttpRequests(requests -> requests
+                            //admins cannot create and delete
+                            .requestMatchers(
+                                    POST,
+                                    "/place", "/event", "/category"
+                            ).denyAll()
+                            .requestMatchers(
+                                    DELETE,
+                                    "/place/{id}", "/event/{id}", "/category/{id}"
+                            ).denyAll()
+                            //root cannot create, update and delete admins
+                            .requestMatchers("/admin/signup").denyAll()
+                    );
+        }
+
         http
                 .cors(AbstractHttpConfigurer::disable) //TODO configure cors before prod
                 .csrf(AbstractHttpConfigurer::disable)
@@ -57,15 +77,6 @@ public class SecurityConfig {
                         .hasRole(USER) method will expect user to have 'ROLE_USER' authority, but we'll have 'SCOPE_USER',
                         so I had to use .hasAuthority(USER.asSCOPE) instead of .hasRole(USER)
                         */
-
-                        //no security
-                        .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
-                        .requestMatchers(
-                                GET,
-                                "/event", "/event/{id}",
-                                "/place", "place/{id}",
-                                "/category", "/category/{id}"
-                        ).permitAll()
 
                         //only users
                         .requestMatchers(PUT, "/user").hasAuthority(USER.asScope())
@@ -92,9 +103,10 @@ public class SecurityConfig {
                         .requestMatchers(PUT, "/admin/{username}").hasAuthority(ROOT.asScope())
                         .requestMatchers(DELETE, "/admin/{username}").hasAuthority(ROOT.asScope())
 
-                        .requestMatchers("/**").hasAnyAuthority(ROOT.asScope(), USER.asScope(), ADMIN.asScope())
+                        //any role
+                        .requestMatchers(GET, "/user").authenticated()
                 )
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+                .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()));
 
         //configuration for h2 console
         if (env.acceptsProfiles(Profiles.of("dev"))) {

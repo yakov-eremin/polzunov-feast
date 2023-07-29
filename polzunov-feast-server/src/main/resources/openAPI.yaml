@@ -10,11 +10,11 @@ tags:
   - name: user
     description: Only users can perform this operations
   - name: admin
-    description: Only admins (including root) can perform this operations
+    description: Only admins (including root) can perform this operations. POST and DELETE will not be available if 'prod' mode is on
   - name: root
-    description: Only root can perform this operation
+    description: Only root can perform this operations. This actions will not be available if 'prod' mode is on
   - name: default
-    description: This operations can either be performed by every role or don't require authentication
+    description: This operations can either be performed by every role or don't require authentication.
 
 paths:
   ###################################### root ##########################################################################
