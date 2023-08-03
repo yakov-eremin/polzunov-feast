@@ -6,6 +6,7 @@
 If you only use `dev` mode, docker and docker-compose are not required.
 
 ## How to run
+**Note:** if you are on Windows and using the command prompt, run it as administrator and use `.\mvnw ...` instead of `./mvnw ...`
 ### Dev mode
 This mode uses in-memory database, hence you won't need docker and the data will be lost when you restart the app.
 
