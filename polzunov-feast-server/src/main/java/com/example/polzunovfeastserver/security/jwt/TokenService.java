@@ -12,11 +12,15 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
-import static java.time.temporal.ChronoUnit.HOURS;
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
 @RequiredArgsConstructor
 public class TokenService {
+
+    private static final String TOKEN_TYPE = "Bearer";
+    private static final int MINUTES_OF_TOKEN_LIFETIME = 60;
+
     private final JwtEncoder encoder;
 
     public Token generateToken(UserEntity user) {
@@ -28,15 +32,12 @@ public class TokenService {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plus(1, HOURS))
+                .expiresAt(now.plus(MINUTES_OF_TOKEN_LIFETIME, MINUTES))
                 .subject(user.getId().toString())
                 .claim("scope", scope)
                 .build();
 
-        String tokenValue = this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        Token token = new Token();
-        token.setAccessToken(tokenValue);
-        token.setTokenType("Bearer");
-        return token;
+        String tokenValue = encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        return new Token(tokenValue, TOKEN_TYPE);
     }
 }

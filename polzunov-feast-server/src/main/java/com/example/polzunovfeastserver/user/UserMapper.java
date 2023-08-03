@@ -12,21 +12,22 @@ public final class UserMapper {
     public static UserEntity toUserEntity(User user, Long id, Role role) {
         return new UserEntity(
                 id,
-                user.getUsername().trim(),
+                user.getUsername(),
                 user.getPassword(),
-                user.getName().trim(),
+                user.getName(),
                 user.getPhone(),
                 user.getEmail(),
                 role
         );
     }
 
-    public static User toUserWithoutPassword(UserEntity userEntity) {
-        User user = new User();
-        user.setUsername(userEntity.getUsername());
-        user.setName(userEntity.getName());
+    public static User toUser(UserEntity userEntity) {
+        User user =  new User(
+                userEntity.getUsername(),
+                userEntity.getName(),
+                userEntity.getEmail()
+        );
         user.setPhone(userEntity.getPhone());
-        user.setEmail(userEntity.getEmail());
         return user;
     }
 }

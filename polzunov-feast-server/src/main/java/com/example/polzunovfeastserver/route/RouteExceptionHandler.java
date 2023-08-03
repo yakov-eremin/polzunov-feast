@@ -24,26 +24,20 @@ public class RouteExceptionHandler {
     public ErrorResponse onUserNotFoundException(UserNotFoundException e) {
         String message = "User not found";
         log.warn(message, e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
-        return response;
+        return new ErrorResponse(message);
     }
 
     @ExceptionHandler(EventNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ErrorResponse onEventNotFoundException(EventNotFoundException e) {
         log.warn(e.getMessage(), e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(e.getMessage());
-        return response;
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler(RouteUpdateRestrictedException.class)
     @ResponseStatus(CONFLICT)
     public ErrorResponse onRouteUpdateRestrictedException(RouteUpdateRestrictedException e) {
         log.warn(e.getMessage(), e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(e.getMessage());
-        return response;
+        return new ErrorResponse(e.getMessage());
     }
 }
