@@ -26,9 +26,7 @@ public class CategoryExceptionHandler {
     public ErrorResponse onCategoryNotFoundException(CategoryNotFoundException e) {
         String message = e.getMessage();
         log.warn(message, e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
-        return response;
+        return new ErrorResponse(message);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -38,9 +36,7 @@ public class CategoryExceptionHandler {
         if (!(e.getCause() instanceof ConstraintViolationException cause)) {
             message = "Data integrity violation: ";
             log.warn(message, e);
-            ErrorResponse error = new ErrorResponse();
-            error.setMessage(message + e.getMessage());
-            return error;
+            return new ErrorResponse(message + e.getMessage());
         }
 
         //Unique key constraints violation
@@ -51,9 +47,7 @@ public class CategoryExceptionHandler {
             default -> String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
         };
         log.warn(message, e);
-        ErrorResponse error = new ErrorResponse();
-        error.setMessage(message);
-        return error;
+        return new ErrorResponse(message);
     }
 
 }

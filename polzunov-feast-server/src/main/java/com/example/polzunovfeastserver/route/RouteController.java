@@ -1,7 +1,7 @@
 package com.example.polzunovfeastserver.route;
 
 
-import com.example.polzunovfeastserver.util.AuthenticationUtils;
+import com.example.polzunovfeastserver.util.AuthUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.RouteApi;
@@ -19,7 +19,7 @@ public class RouteController implements RouteApi {
 
     @Override
     public ResponseEntity<RouteWithEventResponse> getRouteByUserId() {
-        Long userId = AuthenticationUtils.extractUserIdFromToken();
+        Long userId = AuthUtils.extractUserIdFromToken();
         RouteWithEventResponse route = routeService.getRouteByOwnerId(userId);
         log.info("Route owned by user with id={} returned", userId);
         return ResponseEntity.ok(route);
@@ -27,7 +27,7 @@ public class RouteController implements RouteApi {
 
     @Override
     public ResponseEntity<RouteWithEventResponse> updateRouteByUserId(Route route) {
-        Long userId = AuthenticationUtils.extractUserIdFromToken();
+        Long userId = AuthUtils.extractUserIdFromToken();
         RouteWithEventResponse routeWithEventResponse = routeService.updateRouteByOwnerId(route, userId);
         log.info("Route owned by user with id={} updated", userId);
         return ResponseEntity.ok(routeWithEventResponse);

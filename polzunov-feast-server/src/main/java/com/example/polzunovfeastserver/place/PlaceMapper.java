@@ -9,18 +9,18 @@ public final class PlaceMapper {
     }
 
     public static Place toPlace(PlaceEntity placeEntity) {
-        Place place = new Place();
-        place.setId(placeEntity.getId());
-        place.setName(placeEntity.getName());
-        place.setAddress(placeEntity.getAddress());
-        return place;
+        return new Place(
+                placeEntity.getId(),
+                placeEntity.getName(),
+                placeEntity.getAddress()
+        );
     }
 
     public static PlaceEntity toPlaceEntity(Place place) {
         return new PlaceEntity(
             place.getId(),
-            place.getName(),
-            place.getAddress()
+            place.getName().trim(),
+            place.getAddress().trim()
         );
     }
 }

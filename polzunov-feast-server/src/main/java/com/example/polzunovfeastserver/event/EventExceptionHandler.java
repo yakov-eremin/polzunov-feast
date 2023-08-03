@@ -26,9 +26,7 @@ public class EventExceptionHandler {
     @ResponseStatus(CONFLICT)
     public ErrorResponse onEventUpdateRestrictedException(EventUpdateRestrictedException e) {
         log.warn(e.getMessage(), e);
-        ErrorResponse error = new ErrorResponse();
-        error.setMessage(e.getMessage());
-        return error;
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -38,9 +36,7 @@ public class EventExceptionHandler {
         if (!(e.getCause() instanceof ConstraintViolationException cause)) {
             message = "Data integrity violation: ";
             log.warn(message, e);
-            ErrorResponse error = new ErrorResponse();
-            error.setMessage(message + e.getMessage());
-            return error;
+            return new ErrorResponse(message + e.getMessage());
         }
 
         //Foreign key constraints violation
@@ -50,9 +46,7 @@ public class EventExceptionHandler {
             message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
         }
         log.warn(message, e);
-        ErrorResponse error = new ErrorResponse();
-        error.setMessage(message);
-        return error;
+        return new ErrorResponse(message);
     }
 
     @ExceptionHandler(EventNotFoundException.class)
@@ -60,9 +54,7 @@ public class EventExceptionHandler {
     public ErrorResponse onEventNotFoundException(EventNotFoundException e) {
         String message = "Event not found";
         log.warn(message, e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
-        return response;
+        return new ErrorResponse(message);
     }
 
     @ExceptionHandler(PlaceNotFoundException.class)
@@ -70,8 +62,6 @@ public class EventExceptionHandler {
     public ErrorResponse onPlaceNotFoundException(PlaceNotFoundException e) {
         String message = "Place not found";
         log.warn(message, e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
-        return response;
+        return new ErrorResponse(message);
     }
 }

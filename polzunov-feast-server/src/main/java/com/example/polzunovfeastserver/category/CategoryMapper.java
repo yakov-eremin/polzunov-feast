@@ -16,9 +16,9 @@ public final class CategoryMapper {
     }
 
     public static Category toCategory(CategoryEntity categoryEntity) {
-        Category category = new Category();
-        category.setId(categoryEntity.getId());
-        category.setName(categoryEntity.getName());
-        return category;
+        return new Category(
+                categoryEntity.getId(),
+                categoryEntity.getName()
+        );
     }
 }

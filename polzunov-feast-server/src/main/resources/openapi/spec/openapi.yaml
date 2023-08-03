@@ -25,6 +25,7 @@ paths:
       tags:
         - root
       requestBody:
+        required: true
         description: Admin to sign up
         content:
           application/json:
@@ -51,9 +52,9 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         500:
           $ref: '#/components/responses/InternalServerError'
-  /admin/{username}:
+  /admin:
     parameters:
-      - in: path
+      - in: query
         name: username
         schema:
           type: string
@@ -65,6 +66,7 @@ paths:
       tags:
         - root
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -114,6 +116,7 @@ paths:
       operationId: signInUser
       security: [ ]
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -148,6 +151,7 @@ paths:
       operationId: signUpUser
       security: [ ]
       requestBody:
+        required: true
         description: User to sign up
         content:
           application/json:
@@ -178,6 +182,7 @@ paths:
       tags:
         - user
       requestBody:
+        required: true
         description: User object with new data. *Password can be null, if it doesn't need to be updated.*
         content:
           application/json:
@@ -243,6 +248,7 @@ paths:
       tags:
         - admin
       requestBody:
+        required: true
         description: Place to create. *Id can be every random integer value, because provided id will be substituted with generated one*
         content:
           application/json:
@@ -276,6 +282,7 @@ paths:
       tags:
         - admin
       requestBody:
+        required: true
         description: Place to update
         content:
           application/json:
@@ -408,6 +415,7 @@ paths:
       tags:
         - admin
       requestBody:
+        required: true
         description: |
           Event to create. 
            - *Id can be every random integer value, because provided id will be substituted with generated one*
@@ -445,6 +453,7 @@ paths:
       tags:
         - admin
       requestBody:
+        required: true
         description: Event object with new data. Not found and duplicated categories will be ignored
         content:
           application/json:
@@ -608,6 +617,7 @@ paths:
       tags:
         - admin
       requestBody:
+        required: true
         description: |
           Category to create. 
            - *Id can be every random integer because provided id will be substituted with generated one*
@@ -759,6 +769,7 @@ paths:
       tags:
         - user
       requestBody:
+        required: true
         description: Route object
         content:
           application/json:
@@ -845,6 +856,8 @@ components:
   schemas:
     ErrorResponse:
       type: object
+      required:
+        - message
       properties:
         message:
           type: string
@@ -852,21 +865,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ObjectValidationViolation'
+          description: Object validation errors
         fieldValidationViolations:
           type: array
           items:
             $ref: '#/components/schemas/FieldValidationViolation'
-        httpAttributeValidationViolation:
+          description: Field validation errors
+        httpAttributeValidationViolations:
           type: array
           items:
             $ref: '#/components/schemas/HttpAttributeValidationViolation'
+          description: Http attribute (path variables, request params, etc.) validation errors
     ObjectValidationViolation:
       type: object
+      required:
+        - message
       properties:
         message:
           type: string
     FieldValidationViolation:
       type: object
+      required:
+        - field
+        - message
       properties:
         field:
           type: string
@@ -874,6 +895,9 @@ components:
           type: string
     HttpAttributeValidationViolation:
       type: object
+      required:
+        - attribute
+        - message
       properties:
         attribute:
           type: string
@@ -882,6 +906,9 @@ components:
 
     Token:
       type: object
+      required:
+        - accessToken
+        - tokenType
       properties:
         accessToken:
           type: string
@@ -890,45 +917,116 @@ components:
         tokenType:
           type: string
           example: "Bearer"
+
     User:
+      required:
+        - username
+        - name
+        - email
       type: object
       properties:
         username:
           type: string
+          example: MrTweet
+          minLength: 3
+          maxLength: 32
+          pattern: ^\S*\S$
+          x-pattern-message: must not contain whitespace characters
+          description: |
+            - must not contain whitespace characters
+            - must be unique
         password:
           type: string
+          format: password
+          minLength: 8
+          maxLength: 32
+          pattern: ^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?^&])[A-Za-z\d@$!%*#?^&]{3,}$
+          x-pattern-message: must contain at least one letter, one number and one special character
+          writeOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) @NotNull(groups = com.example.polzunovfeastserver.util.validation_group.OnCreate.class)'
+          description: |
+            - must not be null when signing a user up
+            - must contain at least one letter, one number and one special character
+            - must be unique
         name:
           type: string
+          minLength: 2
+          maxLength: 256
+          x-field-extra-annotation: '@NotBlank'
+          description: must not be blank
         phone:
           type: string
+          format: phone
+          pattern: \+\d{1,3}\d{10}
+          x-pattern-message: must be a phone number in a format +country-codexxxxxxxxxx
+          example: '+71234567890'
+          description: Must be unique
         email:
           type: string
+          format: email
+          description: Must be unique
     Credentials:
       type: object
+      required:
+        - username
+        - password
       properties:
         username:
           type: string
+          example: MrTweet
+          minLength: 3
+          maxLength: 32
+          pattern: ^\S*\S$
+          x-pattern-message: must not contain whitespace characters
+          description: Must not contain whitespace characters
         password:
           type: string
+          format: password
+          minLength: 8
+          maxLength: 32
+          pattern: ^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?^&])[A-Za-z\d@$!%*#?^&]{3,}$
+          x-pattern-message: must contain at least one letter, one number and one special character
+          writeOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)'
+          description: Must contain at least one letter, one number and one special character
 
     Event:
       type: object
+      description: Event duration must be in range of 5 minutes to 24 hours
+      x-class-extra-annotation: '@com.example.polzunovfeastserver.event.util.DurationInMinutes(startField = "startTime", endField = "endTime", min = "5", max = "1440")'
+      required:
+        - id
+        - name
+        - startTime
+        - endTime
+        - placeId
+        - categoryIds
       properties:
         id:
           type: integer
           format: int64
         name:
           type: string
+          minLength: 2
+          maxLength: 128
+          x-field-extra-annotation: '@NotBlank'
+          description: Must not be blank
         description:
           type: string
+          default: ''
+          maxLength: 1024
         startTime:
           type: string
           format: date-time
-          example: 2019-01-01T00:00:00+3:00
+          example: 2025-01-01T00:00:00+3:00
+          x-field-extra-annotation: '@FutureOrPresent'
+          description: Can be either in future or in present
         endTime:
           type: string
           format: date-time
-          example: 2019-01-01T01:00:00+3:00
+          example: 2025-01-01T01:00:00+3:00
+          x-field-extra-annotation: '@Future'
+          description: Can only be in future
         placeId:
           type: integer
           format: int64
@@ -941,13 +1039,26 @@ components:
           items:
             type: integer
             format: int64
+          description: Might be empty
         ageLimit:
           description: Only people whose age >= ageLimit are allowed
           type: integer
           format: int32
           default: 0
+          minimum: 0
+          maximum: 21
     EventWithPlaceResponse:
       type: object
+      required:
+        - id
+        - name
+        - description
+        - startTime
+        - endTime
+        - place
+        - canceled
+        - categories
+        - ageLimit
       properties:
         id:
           type: integer
@@ -956,6 +1067,7 @@ components:
           type: string
         description:
           type: string
+          default: ""
         startTime:
           type: string
           format: date-time
@@ -982,26 +1094,41 @@ components:
     
     Category:
       type: object
+      required:
+        - id
+        - name
       properties:
         id:
           type: integer
           format: int64
         name:
           type: string
+          minLength: 2
+          maxLength: 64
 
     Place:
       type: object
+      required:
+        - id
+        - name
+        - address
       properties:
         id:
           type: integer
           format: int64
         name:
           type: string
+          minLength: 2
+          maxLength: 256
         address:
           type: string
+          minLength: 2
+          maxLength: 512
 
     Route:
       type: object
+      required:
+        - nodes
       properties:
         nodes:
           type: array
@@ -1009,6 +1136,8 @@ components:
             $ref: '#/components/schemas/RouteNode'
     RouteWithEventResponse:
       type: object
+      required:
+        - nodes
       properties:
         nodes:
           type: array
@@ -1017,12 +1146,16 @@ components:
 
     RouteNode:
       type: object
+      required:
+        - eventId
       properties:
         eventId:
           type: integer
           format: int64
     RouteNodeWithEventResponse:
       type: object
+      required:
+        - event
       properties:
         event:
           $ref: '#/components/schemas/EventWithPlaceResponse'

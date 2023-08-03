@@ -4,8 +4,8 @@ import com.example.polzunovfeastserver.exception.CorruptedTokenException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-public final class AuthenticationUtils {
-    private AuthenticationUtils() {
+public final class AuthUtils {
+    private AuthUtils() {
         throw new UnsupportedOperationException("This is an utility class");
     }
 

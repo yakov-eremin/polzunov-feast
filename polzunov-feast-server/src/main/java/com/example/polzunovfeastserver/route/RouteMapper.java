@@ -11,8 +11,6 @@ public final class RouteMapper {
     }
 
     public static RouteWithEventResponse toRouteWithEventResponse(List<RouteNodeWithEventResponse> routeNodes) {
-        RouteWithEventResponse route = new RouteWithEventResponse();
-        route.setNodes(routeNodes);
-        return route;
+        return new RouteWithEventResponse(routeNodes);
     }
 }

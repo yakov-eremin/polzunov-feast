@@ -54,7 +54,7 @@ public class UserService {
         } else {
             user.setPassword(encoder.encode(user.getPassword()));
         }
-        return UserMapper.toUserWithoutPassword(
+        return UserMapper.toUser(
                 userRepo.save(UserMapper.toUserEntity(user, id, previousUser.getRole()))
         );
     }
@@ -64,7 +64,7 @@ public class UserService {
      */
     public User getById(long id) {
         UserEntity userEntity = getEntityById(id);
-        return UserMapper.toUserWithoutPassword(userEntity);
+        return UserMapper.toUser(userEntity);
     }
 
     /**

@@ -5,7 +5,15 @@
 
 If you only use `dev` mode, docker and docker-compose are not required.
 
+## Open API
+To view open api copy contents of `/src/main/resources/openapi/spec/openapi.yaml` into the [swgger editor](https://editor.swagger.io/).
+
 ## How to run
+**Note:** if you are on Windows and using the command prompt, run it as administrator and use `.\mvnw ...` instead of `./mvnw ...`.
+
+<!--TODO remove before prod-->
+To access secured endpoint see ['How to access secured endpoints'](#how-to-access-secured-endpoints).
+
 ### Dev mode
 This mode uses in-memory database, hence you won't need docker and the data will be lost when you restart the app.
 
@@ -55,6 +63,7 @@ Container properties:
 - POSTGRES_PASSWORD: `feast`
 - port: `5432`
 
-## How perform admins' operations. REMOVE THIS SECTION BEFORE PROD
-Send sign in request with username and password `root`. Response will contain root's token.
-Use this token to do everything admins and root can.
+<!--TODO remove before prod-->
+## How to access secured endpoints
+- User: sign up a new user and use returned authorization token.
+- Root: sign in with username=`root` and password=`root123!`, use returned authorization token.

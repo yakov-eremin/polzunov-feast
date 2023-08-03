@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.user.root_admin;
+package com.example.polzunovfeastserver.user.root;
 
 import com.example.polzunovfeastserver.security.jwt.TokenService;
 import com.example.polzunovfeastserver.user.UserEntityRepository;
@@ -39,7 +39,7 @@ public class RootService {
         } else {
             admin.setPassword(encoder.encode(admin.getPassword()));
         }
-        return UserMapper.toUserWithoutPassword(
+        return UserMapper.toUser(
                 userRepo.save(UserMapper.toUserEntity(admin, previousAdmin.getId(), previousAdmin.getRole()))
         );
     }

@@ -4,6 +4,7 @@ import com.example.polzunovfeastserver.category.entity.CategoryEntity;
 import com.example.polzunovfeastserver.event.util.EventTableKeys;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.OffsetDateTime;
@@ -30,6 +31,7 @@ public class EventEntity {
     @Column(name = "event_name")
     private String name;
 
+    @Size(max = 1024)
     private String description;
 
     @Column(name = "start_time")
@@ -54,7 +56,7 @@ public class EventEntity {
     @Setter(AccessLevel.NONE)
     @ManyToMany
     @JoinTable(
-            name = "event_categories", //TODO Разобраться, какие ограничения надо поставить на внешние ключи
+            name = "event_categories",
             joinColumns = @JoinColumn(
                     name = "event_id",
                     foreignKey = @ForeignKey(name = FOREIGN_EVENT, value = NO_CONSTRAINT)

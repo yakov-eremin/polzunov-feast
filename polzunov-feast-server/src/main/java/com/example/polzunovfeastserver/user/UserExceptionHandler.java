@@ -25,18 +25,14 @@ public class UserExceptionHandler {
     public ErrorResponse onWrongPasswordException(WrongUserPasswordException e) {
         String message = "Wrong password";
         log.warn(message, e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(message);
-        return response;
+        return new ErrorResponse(message);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ErrorResponse onUserNotFoundException(UserNotFoundException e) {
         log.warn(e.getMessage(), e);
-        ErrorResponse response = new ErrorResponse();
-        response.setMessage(e.getMessage());
-        return response;
+        return new ErrorResponse(e.getMessage());
     }
 
     //Exception can be thrown when database unique constraints violated
@@ -47,9 +43,7 @@ public class UserExceptionHandler {
         if (!(e.getCause() instanceof ConstraintViolationException cause)) {
             message = "Data integrity violation: ";
             log.warn(message, e);
-            ErrorResponse error = new ErrorResponse();
-            error.setMessage(message + e.getMessage());
-            return error;
+            return new ErrorResponse(message + e.getMessage());
         }
 
         //Unique key constraints violation
@@ -61,8 +55,6 @@ public class UserExceptionHandler {
                     message = String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
         }
         log.warn(message, e);
-        ErrorResponse error = new ErrorResponse();
-        error.setMessage(message);
-        return error;
+        return new ErrorResponse(message);
     }
 }
