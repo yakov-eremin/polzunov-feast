@@ -1,6 +1,7 @@
 package com.example.polzunovfeastserver.place.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Table(name = "places")
@@ -19,5 +20,6 @@ public class PlaceEntity {
     @Column(name = "place_name")
     private String name;
 
+    @Size(max = 512)
     private String address;
 }
