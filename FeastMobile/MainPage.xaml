@@ -10,6 +10,7 @@
             Spacing="5">
 
             <Image
+                x:Name="test"
                 Source="main_image.png"
                 SemanticProperties.Description="Happy people!"
                 HeightRequest="200"
@@ -21,7 +22,7 @@
                 HorizontalOptions="Fill" HorizontalTextAlignment="Center"/>
 
             <!--First-->
-            <StackLayout 
+            <StackLayout
                 Orientation="Horizontal"
                 Padding="15"
                 Spacing="10">

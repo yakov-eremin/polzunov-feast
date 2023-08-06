@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace FeastMobile;
@@ -19,6 +21,14 @@ public partial class RegisterPage : ContentPage
     }
     private async void RegisterClick(object sender, EventArgs e)
     {
+        errorLayout.IsVisible = false;
+
+        if (string.IsNullOrEmpty(NameTextBox.Text))
+        {
+            await DisplayAlert("Ошибка", "Имя не введено", "ОK");
+            return;
+        }
+
         if (string.IsNullOrEmpty(EmailTextBox.Text))
         {
             await DisplayAlert("Ошибка", "Почта не введена", "ОK");
@@ -37,8 +47,56 @@ public partial class RegisterPage : ContentPage
             return;
         }
 
-        //Переход на страницу подтверждения
-        await Application.Current.MainPage.Navigation.PushAsync(new FinalRegister(), true);
+        NameTextBox.IsEnabled = false;
+        EmailTextBox.IsEnabled = false; 
+        PassTextBox.IsEnabled = false;
+
+        HttpClient sharedClient = new()
+        {
+            BaseAddress = new Uri("http://192.168.0.105:8080"),
+        };
+
+        using StringContent jsonContent = new(
+                JsonSerializer.Serialize(new
+                {
+                    username = NameTextBox.Text,
+                    password = PassTextBox.Text,
+                    name = NameTextBox.Text,
+                    email = EmailTextBox.Text
+                }),
+        Encoding.UTF8,
+        "application/json");
+
+        using HttpResponseMessage response = await sharedClient.PostAsync("user/signup", jsonContent);
+
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+
+        if (jsonResponse.Contains("accessToken"))
+        {
+            //Переход на страницу подтверждения
+            await Application.Current.MainPage.Navigation.PushAsync(new FinalRegister(), true);
+        }
+        else
+        {
+            MessageErrorFromServer messageErrorFromServer = JsonSerializer.Deserialize<MessageErrorFromServer>(jsonResponse);
+            switch (messageErrorFromServer.message)
+            {
+                case "Email is not unique":
+                    errorLayout.Text = "Данная почта уже используется. Повторите попытку";
+                    break;
+                default:
+                    errorLayout.Text = "Произошла ошибка. Повторите попытку";
+                    break;
+
+            }
+            errorLayout.IsVisible = true;
+
+            EmailTextBox.IsEnabled = true;
+            PassTextBox.IsEnabled = true;
+            NameTextBox.IsEnabled = true;
+
+
+        }
     }
 
     void SetState(bool isValid, Entry entry)

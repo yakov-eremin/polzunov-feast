@@ -54,6 +54,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="FinalLogin.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="FinalRegister.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

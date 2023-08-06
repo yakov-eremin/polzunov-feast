@@ -22,6 +22,19 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         
+        <!--Name textbox-->
+        <StackLayout>
+            <Label
+                FontSize="16"
+                Text="Имя"/>
+            <Entry 
+                x:Name="NameTextBox"
+                FontSize="18"
+                Placeholder="Введите имя" 
+                Keyboard="Text">
+            </Entry>
+        </StackLayout>
+        
         <!--Email textbox-->
         <StackLayout>
             <Label
@@ -65,6 +78,16 @@
                 IsPassword="True" />
 
         </StackLayout>
+        
+        <!--Error label-->
+        <Label
+            x:Name="errorLayout"
+            FontSize="16"
+            TextColor="red"
+            Text="Ошибка при регистрации. Повторите снова."
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="false"/>
 
         <!--Register Button-->
         <Button 

@@ -12,6 +12,7 @@
             Routing.RegisterRoute(nameof(RegisterPage), typeof(RegisterPage));
             Routing.RegisterRoute(nameof(VerifyPage), typeof(VerifyPage));
             Routing.RegisterRoute(nameof(FinalRegister), typeof(FinalRegister));
+            Routing.RegisterRoute(nameof(FinalLogin), typeof(FinalLogin));
         }
     }
 }

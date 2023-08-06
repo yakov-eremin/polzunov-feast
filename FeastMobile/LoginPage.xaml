@@ -18,33 +18,50 @@
             FontSize="25"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-
+        
+        <!--Email textbox-->
         <StackLayout>
             <Label
                 FontSize="16"
                 Text="E-mail"/>
-            <Entry 
+            <Entry
+                x:Name="EmailTextBox"
                 FontSize="18"
                 Placeholder="Введите E-mail" Keyboard="Email" />
         </StackLayout>
-
+        
+        <!--Password textbox-->
         <StackLayout>
             <Label
                 FontSize="16"
                 Text="Пароль"/>
             <Entry 
+                x:Name="PassTextBox"
                 FontSize="18"
                 Placeholder="Введите пароль" Keyboard="Email" />
 
         </StackLayout>
 
+        <!--Error label-->
+        <Label
+            x:Name="errorLayout"
+            FontSize="16"
+            TextColor="red"
+            Text="Ошибка при авторизации. Повторите снова."
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            IsVisible="false"/>
+
+        <!--Login button-->
         <Button 
             Text="Войти" 
             BackgroundColor="#1E78F0" 
-            FontAttributes="Bold"/>
-
+            FontAttributes="Bold"
+            Clicked="LoginButton_Clicked"/>
+        
+        <!--Social byttons-->
         <FlexLayout JustifyContent="SpaceBetween">
-
+            <!--VK button-->
             <Button 
                 ImageSource="vk.png" 
                 Text="VK" 
@@ -52,6 +69,8 @@
                 BackgroundColor="#ddebfd" 
                 TextColor="Black" 
                 FontAttributes="Bold"/>
+            
+            <!--Telegram button-->
             <Button 
                 ImageSource="telegram.png" 
                 Text="Telegram" 
@@ -59,13 +78,14 @@
                 BackgroundColor="#ddebfd" 
                 TextColor="Black" 
                 FontAttributes="Bold"/>
-
+            
         </FlexLayout>
-
+        
+        <!--Sign up button-->
         <StackLayout 
             Orientation="Horizontal"
             HorizontalOptions="Center">
-            
+
             <Label 
                 Text="Нет аккаунта?" 
                 VerticalOptions="Center"/>
@@ -75,6 +95,6 @@
                 TextColor="Blue"/>
             
         </StackLayout>
-
+        
     </VerticalStackLayout>
 </ContentPage>
