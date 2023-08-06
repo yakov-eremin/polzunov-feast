@@ -90,7 +90,16 @@
             </HorizontalStackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
-                <Button Text="Отмена" Clicked="ClosePopupButton_Clicked" Padding="0" CornerRadius="0" HeightRequest="20" FontAttributes="Bold" TextColor="#1E78F0" BackgroundColor="Transparent" Margin="0,5,10,5"/>
+                <Button 
+                    Text="Отмена" 
+                    Clicked="ClosePopupButton_Clicked" 
+                    Padding="0" 
+                    CornerRadius="0" 
+                    HeightRequest="20" 
+                    FontAttributes="Bold" 
+                    TextColor="#1E78F0" 
+                    BackgroundColor="Transparent" 
+                    Margin="0,5,10,5"/>
                 <Button Text="Сохранить" Clicked="SavePopupButton_Clicked" Padding="0" CornerRadius="0" HeightRequest="20" FontAttributes="Bold" TextColor="#1E78F0" BackgroundColor="Transparent" Margin="25,5,15,5"/>
             </StackLayout>
 

@@ -1,6 +1,6 @@
 using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Maui.Behaviors;
-using CommunityToolkit.Maui.Core;
+using FeastMobile.Services;
+using FeastMobile.View;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 

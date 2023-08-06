@@ -37,14 +37,20 @@
                 <CollectionView ItemsSource="{Binding Categories}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Category">
-                            <Button Padding="8,12,8,8" Margin="7,3,7,3" WidthRequest="104" HeightRequest="76" ImageSource="{Binding Image}"
+                            <Button Padding="8,12,8,8" 
+                                Margin="7,3,7,3" 
+                                WidthRequest="104" 
+                                HeightRequest="76" 
+                                ImageSource="{Binding Image}"                                  
+                                FontFamily="RobotoMedium"
                                 BackgroundColor="#FFFFFF"                               
                                 BorderColor="#C5C5C5"                               
                                 CornerRadius="12" BorderWidth="1"
-                                Clicked="CategoryButton_Clicked" TextColor="BLACK"
+                                Clicked="CategoryButton_Clicked" 
+                                TextColor="BLACK"
                                 Text="{Binding Name}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" FontSize="13"
-                                    ContentLayout="Top,3"
-                                    LineBreakMode="CharacterWrap">
+                                ContentLayout="Top,3"
+                                LineBreakMode="CharacterWrap">
                                 <Button.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
                                         <Setter Property="BackgroundColor" Value="#F2F7FE" />
@@ -85,12 +91,29 @@
                                 TextColor="#212121"
                                 FontSize="14"
                                 HorizontalOptions="Start" />
-                            <Label
-                                Padding="0,0,0,0"
-                                Text="Время"
+                            <HorizontalStackLayout>
+                                <Label 
+                                x:Name="SelectedTimeFromLabel" 
+                                Text="{Binding SelectedTimeFromLabel}"                                    
+                                Padding="0,0,0,0"                                
                                 TextColor="#616161"
                                 FontSize="12"
                                 HorizontalOptions="Start" />
+                                <Label                                 
+                                Text=" - "                                    
+                                Padding="0,0,0,0"                                
+                                TextColor="#616161"
+                                FontSize="12"
+                                HorizontalOptions="Start" />
+                                <Label 
+                                x:Name="SelectedTimeToLabel" 
+                                Text="{Binding SelectedTimeToLabel}"                                    
+                                Padding="0,0,0,0"                                
+                                TextColor="#616161"
+                                FontSize="12"
+                                HorizontalOptions="Start" />
+
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
 
                         <Image
@@ -104,10 +127,16 @@
                     </Grid>
                 </Frame>
 
-                <Button Text="Время" Command="{Binding GoToTimeCommand}"/>
+                
                 
                 <StackLayout>
-                    <Button Text="Показать {0} мероприятий" VerticalOptions="EndAndExpand" Command="{Binding FindEventsCommand}"/>
+                    <Button                       
+                        Text="Показать мероприятия" 
+                        VerticalOptions="EndAndExpand" 
+                        TextColor="White"
+                        FontFamily="RobotoMedium"
+                        BackgroundColor="{StaticResource MainAccent}"
+                        Command="{Binding FindEventsCommand}"/>
                 </StackLayout>
             </VerticalStackLayout>
         </ScrollView>

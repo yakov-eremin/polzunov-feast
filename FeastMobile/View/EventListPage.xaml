@@ -56,7 +56,9 @@
                 <StackLayout
                     Orientation="Horizontal">
                     <SearchBar 
-                        Placeholder="Найти мероприятие" 
+                        Placeholder="Найти мероприятие"
+                        Text="{Binding SearchText}" 
+                        SearchCommand="{Binding SearchCommand}"
                         WidthRequest="250" 
                         Margin="0"/>
                     <Button 
@@ -80,7 +82,7 @@
         <ScrollView
             Grid.Row="1">
             <StackLayout>
-                <CollectionView ItemsSource="{Binding Events}">
+                <CollectionView ItemsSource="{Binding FilteredEvents}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Event">
                             <Frame 
