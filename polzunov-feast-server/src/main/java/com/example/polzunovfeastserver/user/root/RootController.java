@@ -19,9 +19,9 @@ public class RootController implements AdminApi {
     private final RootService rootService;
 
     @Override
-    public ResponseEntity<Void> deleteAdminByUsername(@NonNull String username) {
-        rootService.deleteAdminByUsername(username);
-        log.info("Admin '{}' deleted", username);
+    public ResponseEntity<Void> deleteAdminById(@NonNull Long id) {
+        rootService.deleteAdminById(id);
+        log.info("Admin with id='{}' deleted", id);
         return ResponseEntity.ok().build();
     }
 
@@ -29,14 +29,14 @@ public class RootController implements AdminApi {
     @Validated(OnCreate.class)
     public ResponseEntity<Token> signUpAdmin(User user) {
         Token token = rootService.signUpAdmin(user);
-        log.info("Admin '{}' signed up", user.getUsername());
+        log.info("Admin with email '{}' signed up", user.getEmail());
         return ResponseEntity.ok(token);
     }
 
     @Override
-    public ResponseEntity<User> updateAdminByUsername(@NonNull String username, User user) {
-        User updatedAdmin = rootService.updateAdminByUsername(username, user);
-        log.info("Admin '{}' updated", username);
+    public ResponseEntity<User> updateAdminById(@NonNull Long id, User user) {
+        User updatedAdmin = rootService.updateAdminByUsername(id, user);
+        log.info("Admin '{}' updated", id);
         return ResponseEntity.ok(updatedAdmin);
     }
 }

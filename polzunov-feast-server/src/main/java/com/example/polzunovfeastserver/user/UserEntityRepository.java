@@ -8,13 +8,15 @@ import java.util.Optional;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<UserEntity> findByUsername(String username);
+    Optional<UserEntity> findByEmail(String email);
 
-    boolean existsByUsername(String rootUsername);
+    boolean existsById(long id);
 
-    boolean existsByUsernameAndRole(String username, Role role);
+    boolean existsByEmail(String email);
 
-    Optional<UserEntity> findByUsernameAndRole(String username, Role role);
+    boolean existsByIdAndRole(long id, Role role);
 
-    void deleteByUsernameAndRole(String username, Role role);
+    Optional<UserEntity> findByIdAndRole(long id, Role role);
+
+    void deleteByIdAndRole(long id, Role role);
 }

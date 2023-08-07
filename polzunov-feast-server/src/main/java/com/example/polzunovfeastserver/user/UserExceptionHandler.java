@@ -48,7 +48,6 @@ public class UserExceptionHandler {
 
         //Unique key constraints violation
         switch (cause.getConstraintName()) {
-            case UserTableKeys.UNIQUE_USERNAME -> message = "Username is not unique";
             case UserTableKeys.UNIQUE_EMAIL -> message = "Email is not unique";
             case UserTableKeys.UNIQUE_PHONE -> message = "Phone is not unique";
             default ->

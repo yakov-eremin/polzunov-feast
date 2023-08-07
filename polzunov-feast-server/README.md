@@ -66,4 +66,4 @@ Container properties:
 <!--TODO remove before prod-->
 ## How to access secured endpoints
 - User: sign up a new user and use returned authorization token.
-- Root: sign in with username=`root` and password=`root123!`, use returned authorization token.
+- Root: sign in with email=`root@root.root` and password=`root123!`, use returned authorization token.

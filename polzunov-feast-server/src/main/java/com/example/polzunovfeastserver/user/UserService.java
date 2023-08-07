@@ -31,13 +31,13 @@ public class UserService {
     }
 
     public Token signIn(Credentials credentials) {
-        Optional<UserEntity> userOpt = userRepo.findByUsername(credentials.getUsername());
+        Optional<UserEntity> userOpt = userRepo.findByEmail(credentials.getEmail());
         UserEntity user = userOpt.orElseThrow(() ->
-                new UserNotFoundException(String.format("Cannot sign in: user '%s' not found", credentials.getUsername()))
+                new UserNotFoundException(String.format("Cannot sign in: user with email '%s' not found", credentials.getPassword()))
         );
 
         if (!encoder.matches(credentials.getPassword(), user.getPassword())) {
-            throw new WrongUserPasswordException(String.format("Wrong password for user '%s'", user.getUsername()));
+            throw new WrongUserPasswordException(String.format("Wrong password for user with email '%s'", user.getUsername()));
         }
         return tokenService.generateToken(user);
     }

@@ -13,7 +13,6 @@ import java.util.List;
 @Table(
         name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(name = UserTableKeys.UNIQUE_USERNAME, columnNames = "username"),
                 @UniqueConstraint(name = UserTableKeys.UNIQUE_EMAIL, columnNames = "email"),
                 @UniqueConstraint(name = UserTableKeys.UNIQUE_PHONE, columnNames = "phone")
         }
@@ -30,7 +29,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "user_id")
     private Long id;
 
-    private String username;
     private String password;
 
     @Column(name = "user_name")
@@ -45,6 +43,16 @@ public class UserEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    /**
+     * This method needs to implemented even though our users do not have usernames, so it returns email just like {@link #getEmail()}.
+     *
+     * @return email of this user
+     */
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override

@@ -1,5 +1,5 @@
 root:
-  username: root
+  email: root@root.root
   password: root123!
 
 spring:

@@ -1,6 +1,6 @@
 root:
   #TODO substitute with env variables before prod
-  username: root
+  email: root@root.root
   password: root123!
 
 spring:

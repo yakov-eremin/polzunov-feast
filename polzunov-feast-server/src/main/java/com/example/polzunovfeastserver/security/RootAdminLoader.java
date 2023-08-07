@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RootAdminLoader implements CommandLineRunner {
 
-    @Value("${root.username}")
-    private String rootUsername;
+    @Value("${root.email}")
+    private String rootEmail;
 
     @Value("${root.password}")
     private String rootPassword;
@@ -26,17 +26,16 @@ public class RootAdminLoader implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        if (userRepo.existsByUsername(rootUsername)) {
+        if (userRepo.existsByEmail(rootEmail)) {
             return;
         }
 
         UserEntity root = new UserEntity(
                 null,
-                rootUsername,
                 passwordEncoder.encode(rootPassword),
                 "root",
                 null,
-                null,
+                rootEmail,
                 Role.ROOT
         );
 

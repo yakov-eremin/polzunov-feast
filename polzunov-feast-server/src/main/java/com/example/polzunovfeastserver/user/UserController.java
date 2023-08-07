@@ -24,14 +24,14 @@ public class UserController implements UserApi {
     @Validated(OnCreate.class)
     public ResponseEntity<Token> signUpUser(User user) {
         Token token = userService.signUp(user);
-        log.info("User '{}' signed up", user.getUsername());
+        log.info("User with email '{}' signed up", user.getEmail());
         return ResponseEntity.ok(token);
     }
 
     @Override
     public ResponseEntity<Token> signInUser(Credentials credentials) {
         Token token = userService.signIn(credentials);
-        log.info("User '{}' signed in", credentials.getUsername());
+        log.info("User with email '{}' signed in", credentials.getEmail());
         return ResponseEntity.ok(token);
     }
 
@@ -39,7 +39,7 @@ public class UserController implements UserApi {
     public ResponseEntity<User> updateUser(User user) {
         long id = AuthUtils.extractUserIdFromToken();
         User updatedUser = userService.update(user, id);
-        log.info("User '{}' updated", updatedUser.getUsername());
+        log.info("User with email '{}' updated", updatedUser.getEmail());
         return new ResponseEntity<>(updatedUser, OK);
     }
 
@@ -47,7 +47,7 @@ public class UserController implements UserApi {
     public ResponseEntity<User> getUser() {
         long id = AuthUtils.extractUserIdFromToken();
         User user = userService.getById(id);
-        log.info("User '{}' fetched", user.getUsername());
+        log.info("User with id '{}' fetched", user.getId());
         return new ResponseEntity<>(user, OK);
     }
 
@@ -55,6 +55,7 @@ public class UserController implements UserApi {
     public ResponseEntity<Void> deleteUser() {
         long id = AuthUtils.extractUserIdFromToken();
         userService.deleteById(id);
+        log.info("User with id '{}' deleted", id);
         return new ResponseEntity<>(OK);
     }
 }

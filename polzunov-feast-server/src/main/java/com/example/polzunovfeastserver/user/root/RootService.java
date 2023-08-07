@@ -30,9 +30,9 @@ public class RootService {
         return tokenService.generateToken(userRepo.save(userEntity));
     }
 
-    public User updateAdminByUsername(String username, User admin) {
-        UserEntity previousAdmin = userRepo.findByUsernameAndRole(username, ADMIN).orElseThrow(() ->
-                new UserNotFoundException(format("Cannot update admin with username '%s', because admin not found", username)));
+    public User updateAdminByUsername(long id, User admin) {
+        UserEntity previousAdmin = userRepo.findByIdAndRole(id, ADMIN).orElseThrow(() ->
+                new UserNotFoundException(format("Cannot update admin with id=%d, because admin not found", id)));
         admin.setPassword(encoder.encode(admin.getPassword()));
         if (admin.getPassword() == null) {
             admin.setPassword(previousAdmin.getPassword());
@@ -44,10 +44,10 @@ public class RootService {
         );
     }
 
-    public void deleteAdminByUsername(String username) {
-        if (!userRepo.existsByUsernameAndRole(username, ADMIN)) {
+    public void deleteAdminById(long id) {
+        if (!userRepo.existsByIdAndRole(id, ADMIN)) {
             return;
         }
-        userRepo.deleteByUsernameAndRole(username, ADMIN);
+        userRepo.deleteByIdAndRole(id, ADMIN);
     }
 }

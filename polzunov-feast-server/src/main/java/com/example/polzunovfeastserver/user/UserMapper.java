@@ -12,7 +12,6 @@ public final class UserMapper {
     public static UserEntity toUserEntity(User user, Long id, Role role) {
         return new UserEntity(
                 id,
-                user.getUsername(),
                 user.getPassword(),
                 user.getName(),
                 user.getPhone(),
@@ -22,8 +21,8 @@ public final class UserMapper {
     }
 
     public static User toUser(UserEntity userEntity) {
-        User user =  new User(
-                userEntity.getUsername(),
+        User user = new User(
+                userEntity.getId(),
                 userEntity.getName(),
                 userEntity.getEmail()
         );

@@ -45,24 +45,25 @@ paths:
         403:
           description: Only root can perform this operation
         409:
-          description: Username, email or phone number already taken
+          description: Email or phone number already taken
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         500:
           $ref: '#/components/responses/InternalServerError'
-  /admin:
+  /admin/{id}:
     parameters:
-      - in: query
-        name: username
+      - in: path
+        name: id
         schema:
-          type: string
+          type: integer
+          format: int64
         required: true
-        description: Admin's username
+        description: Admin's id
     put:
       summary: Update admin
-      operationId: updateAdminByUsername
+      operationId: updateAdminById
       tags:
         - root
       requestBody:
@@ -87,7 +88,7 @@ paths:
         404:
           $ref: '#/components/responses/NotFound'
         409:
-          description: Username, email or phone number already taken
+          description: Email or phone number already taken
           content:
             application/json:
               schema:
@@ -95,7 +96,7 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
     delete:
-      operationId: deleteAdminByUsername
+      operationId: deleteAdminById
       summary: Delete admin
       tags:
         - root
@@ -137,7 +138,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         404:
-          description: Username not found
+          description: User not found
           content:
             application/json:
               schema:
@@ -167,7 +168,7 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         409:
-          description: Username, email or phone number already taken
+          description: Email or phone number already taken
           content:
             application/json:
               schema:
@@ -202,7 +203,7 @@ paths:
         403:
           description: Only regular users can perform this action
         409:
-          description: Username, email or phone number already taken
+          description: Email or phone number already taken
           content:
             application/json:
               schema:
@@ -920,21 +921,16 @@ components:
 
     User:
       required:
-        - username
+        - id
         - name
         - email
       type: object
       properties:
-        username:
-          type: string
-          example: MrTweet
-          minLength: 3
-          maxLength: 32
-          pattern: ^\S*\S$
-          x-pattern-message: must not contain whitespace characters
-          description: |
-            - must not contain whitespace characters
-            - must be unique
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.READ_ONLY)'
         password:
           type: string
           format: password
@@ -968,17 +964,12 @@ components:
     Credentials:
       type: object
       required:
-        - username
+        - email
         - password
       properties:
-        username:
+        email:
           type: string
-          example: MrTweet
-          minLength: 3
-          maxLength: 32
-          pattern: ^\S*\S$
-          x-pattern-message: must not contain whitespace characters
-          description: Must not contain whitespace characters
+          format: email
         password:
           type: string
           format: password
