@@ -45,11 +45,7 @@ namespace FeastMobile
             }
             
         }
-        public  void CreateTokensDataBase()
-        { 
-
-        }
-
+      
 
         public void setNotificationParams(List<string> tokens, string title, string messageBody)
         {
@@ -57,7 +53,8 @@ namespace FeastMobile
             message.Notification.Title = title;
             message.Notification.Body = messageBody;
         }
-        public string getNotificationParams() { return message.Tokens[0]; }
+
+        
         public async void SendNotification()
         {
             var response = await FirebaseMessaging.DefaultInstance.SendMulticastAsync(this.message);

@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net7.0-android33.0": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -335,6 +344,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -3088,6 +3109,15 @@
       }
     },
     "net7.0-android33.0/android-arm": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -3421,6 +3451,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -6159,6 +6201,15 @@
       }
     },
     "net7.0-android33.0/android-arm64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -6492,6 +6543,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -9230,6 +9293,15 @@
       }
     },
     "net7.0-android33.0/android-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -9563,6 +9635,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -12301,6 +12385,15 @@
       }
     },
     "net7.0-android33.0/android-x86": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -12634,6 +12727,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -15372,6 +15477,15 @@
       }
     },
     "net7.0-android33.0/iossimulator-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -15705,6 +15819,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -18440,6 +18566,15 @@
       }
     },
     "net7.0-android33.0/maccatalyst-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -18773,6 +18908,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -21508,6 +21655,15 @@
       }
     },
     "net7.0-android33.0/win10-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -21841,6 +21997,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -24576,6 +24744,15 @@
       }
     },
     "net7.0-ios16.1": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -24896,6 +25073,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -25465,6 +25654,15 @@
       }
     },
     "net7.0-ios16.1/android-arm": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -25785,6 +25983,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -26435,6 +26645,15 @@
       }
     },
     "net7.0-ios16.1/android-arm64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -26755,6 +26974,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -27405,6 +27636,15 @@
       }
     },
     "net7.0-ios16.1/android-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -27725,6 +27965,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -28375,6 +28627,15 @@
       }
     },
     "net7.0-ios16.1/android-x86": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -28695,6 +28956,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -29345,6 +29618,15 @@
       }
     },
     "net7.0-ios16.1/iossimulator-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -29665,6 +29947,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -30321,6 +30615,15 @@
       }
     },
     "net7.0-ios16.1/maccatalyst-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -30641,6 +30944,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -31297,6 +31612,15 @@
       }
     },
     "net7.0-ios16.1/win10-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -31617,6 +31941,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -32251,6 +32587,15 @@
       }
     },
     "net7.0-maccatalyst16.1": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -32571,6 +32916,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -33128,6 +33485,15 @@
       }
     },
     "net7.0-maccatalyst16.1/android-arm": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -33448,6 +33814,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -34098,6 +34476,15 @@
       }
     },
     "net7.0-maccatalyst16.1/android-arm64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -34418,6 +34805,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -35068,6 +35467,15 @@
       }
     },
     "net7.0-maccatalyst16.1/android-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -35388,6 +35796,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -36038,6 +36458,15 @@
       }
     },
     "net7.0-maccatalyst16.1/android-x86": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -36358,6 +36787,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -37008,6 +37449,15 @@
       }
     },
     "net7.0-maccatalyst16.1/iossimulator-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -37328,6 +37778,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -37978,6 +38440,15 @@
       }
     },
     "net7.0-maccatalyst16.1/maccatalyst-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -38298,6 +38769,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -38951,6 +39434,15 @@
       }
     },
     "net7.0-maccatalyst16.1/win10-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -39271,6 +39763,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -39905,6 +40409,15 @@
       }
     },
     "net7.0-windows10.0.19041": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -40225,6 +40738,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -40942,6 +41467,15 @@
       }
     },
     "net7.0-windows10.0.19041/android-arm": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -41262,6 +41796,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -42030,6 +42576,15 @@
       }
     },
     "net7.0-windows10.0.19041/android-arm64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -42350,6 +42905,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -43118,6 +43685,15 @@
       }
     },
     "net7.0-windows10.0.19041/android-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -43438,6 +44014,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -44206,6 +44794,15 @@
       }
     },
     "net7.0-windows10.0.19041/android-x86": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -44526,6 +45123,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -45294,6 +45903,15 @@
       }
     },
     "net7.0-windows10.0.19041/iossimulator-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -45614,6 +46232,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -46382,6 +47012,15 @@
       }
     },
     "net7.0-windows10.0.19041/maccatalyst-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -46702,6 +47341,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -47470,6 +48121,15 @@
       }
     },
     "net7.0-windows10.0.19041/win10-x64": {
+      "BouncyCastle/1.8.9": {
+        "type": "package",
+        "compile": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "CommunityToolkit.Mvvm/8.2.0": {
         "type": "package",
         "compile": {
@@ -47790,6 +48450,18 @@
           "lib/net7.0/Grpc.Net.Common.dll": {
             "related": ".pdb;.xml"
           }
+        }
+      },
+      "iTextSharp/5.5.13.3": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.8.9"
+        },
+        "compile": {
+          "lib/itextsharp.dll": {}
+        },
+        "runtime": {
+          "lib/itextsharp.dll": {}
         }
       },
       "LiteDB/4.1.4": {
@@ -48552,6 +49224,19 @@
     }
   },
   "libraries": {
+    "BouncyCastle/1.8.9": {
+      "sha512": "axnBgvdD5n+FnEG6efk/tfKuMFru7R/EoISH9zjh319yb3HD24TEHSAbNN/lTRT2ulOGRxDgOsCjkuk08iwWPg==",
+      "type": "package",
+      "path": "bouncycastle/1.8.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "bouncycastle.1.8.9.nupkg.sha512",
+        "bouncycastle.nuspec",
+        "lib/BouncyCastle.Crypto.dll"
+      ]
+    },
     "CommunityToolkit.Mvvm/8.2.0": {
       "sha512": "F883u+B0AVUkRZS+VQBiZEJiqlGiiQhGA8Ejy1/Y8fl4ecBmSd+HYuDso0iiUhh+UxRDjp2aTQ7jGkuL2S4NrA==",
       "type": "package",
@@ -48978,6 +49663,22 @@
         "lib/netstandard2.1/Grpc.Net.Common.pdb",
         "lib/netstandard2.1/Grpc.Net.Common.xml",
         "packageIcon.png"
+      ]
+    },
+    "iTextSharp/5.5.13.3": {
+      "sha512": "vtnMhTEJdZFCkLqaQLjD8aqTBIVKHPrSFuSXnxbLEJlvE/j/l88fvG9wtsejXTmhtErMo0lA9T2LdfdfbwplYw==",
+      "type": "package",
+      "path": "itextsharp/5.5.13.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "gnu-agpl-v3.0.md",
+        "itextsharp.5.5.13.3.nupkg.sha512",
+        "itextsharp.nuspec",
+        "lib/iTextSharp.xml",
+        "lib/itextsharp.dll",
+        "notice.txt"
       ]
     },
     "LiteDB/4.1.4": {
@@ -54262,7 +54963,8 @@
       "Xamarin.Google.Dagger >= 2.46.1.1",
       "Xamarin.GooglePlayServices.Base >= 118.2.0.1",
       "Xamarin.Kotlin.StdLib >= 1.8.22",
-      "Xamarin.KotlinX.Coroutines.Android >= 1.7.1.1"
+      "Xamarin.KotlinX.Coroutines.Android >= 1.7.1.1",
+      "iTextSharp >= 5.5.13.3"
     ],
     "net7.0-ios16.1": [
       "CommunityToolkit.Mvvm >= 8.2.0",
@@ -54277,7 +54979,8 @@
       "Microsoft.Maui.Graphics >= 7.0.86",
       "Newtonsoft.Json >= 13.0.3",
       "SkiaSharp.Views.Maui.Controls.Compatibility >= 2.88.3",
-      "Xamarin.Essentials >= 1.7.7"
+      "Xamarin.Essentials >= 1.7.7",
+      "iTextSharp >= 5.5.13.3"
     ],
     "net7.0-maccatalyst16.1": [
       "CommunityToolkit.Mvvm >= 8.2.0",
@@ -54292,7 +54995,8 @@
       "Microsoft.Maui.Graphics >= 7.0.86",
       "Newtonsoft.Json >= 13.0.3",
       "SkiaSharp.Views.Maui.Controls.Compatibility >= 2.88.3",
-      "Xamarin.Essentials >= 1.7.7"
+      "Xamarin.Essentials >= 1.7.7",
+      "iTextSharp >= 5.5.13.3"
     ],
     "net7.0-windows10.0.19041": [
       "CommunityToolkit.Mvvm >= 8.2.0",
@@ -54310,7 +55014,8 @@
       "Microsoft.WindowsAppSDK >= 1.2.221209.1",
       "Newtonsoft.Json >= 13.0.3",
       "SkiaSharp.Views.Maui.Controls.Compatibility >= 2.88.3",
-      "Xamarin.Essentials >= 1.7.7"
+      "Xamarin.Essentials >= 1.7.7",
+      "iTextSharp >= 5.5.13.3"
     ]
   },
   "packageFolders": {
@@ -54521,6 +55226,10 @@
           "Xamarin.KotlinX.Coroutines.Android": {
             "target": "Package",
             "version": "[1.7.1.1, )"
+          },
+          "iTextSharp": {
+            "target": "Package",
+            "version": "[5.5.13.3, )"
           }
         },
         "imports": [
@@ -54612,6 +55321,10 @@
           "Xamarin.Essentials": {
             "target": "Package",
             "version": "[1.7.7, )"
+          },
+          "iTextSharp": {
+            "target": "Package",
+            "version": "[5.5.13.3, )"
           }
         },
         "imports": [
@@ -54703,6 +55416,10 @@
           "Xamarin.Essentials": {
             "target": "Package",
             "version": "[1.7.7, )"
+          },
+          "iTextSharp": {
+            "target": "Package",
+            "version": "[5.5.13.3, )"
           }
         },
         "imports": [
@@ -54811,6 +55528,10 @@
           "Xamarin.Essentials": {
             "target": "Package",
             "version": "[1.7.7, )"
+          },
+          "iTextSharp": {
+            "target": "Package",
+            "version": "[5.5.13.3, )"
           }
         },
         "imports": [
@@ -54902,6 +55623,26 @@
         "net7.0-android33.0/iossimulator-x64",
         "net7.0-android33.0/maccatalyst-x64",
         "net7.0-android33.0/win10-x64"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"BouncyCastle 1.8.9\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net7.0-android33.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "BouncyCastle",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"iTextSharp 5.5.13.3\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net7.0-android33.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "iTextSharp",
+      "targetGraphs": [
+        "net7.0-android33.0"
       ]
     }
   ]

@@ -6,16 +6,18 @@
     the contents are regenerated.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.companyname.feastmobile" android:versionCode="1" android:versionName="1.0">
-  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
+  <!-- suppress UsesMinSdkAttributes -->
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <permission android:name="com.companyname.feastmobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" android:protectionLevel="signature" />
   <uses-permission android:name="com.companyname.feastmobile.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <!-- Required by older versions of Google Play services to create IID tokens -->
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-  <application android:name="crc64b41aa4d64c3d922b.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@mipmap/appicon" android:label="FeastMobile" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true">
+  <application android:name="crc64b41aa4d64c3d922b.MainApplication" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:debuggable="true" android:extractNativeLibs="true" android:icon="@mipmap/appicon" android:label="FeastMobile" android:supportsRtl="true">
     <uses-library android:name="org.apache.http.legacy" android:required="false" />
     <activity android:name="crc64b41aa4d64c3d922b.MainActivity" android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:exported="true" android:theme="@style/Maui.SplashTheme">
       <intent-filter>

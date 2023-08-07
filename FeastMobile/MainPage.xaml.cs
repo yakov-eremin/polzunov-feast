@@ -19,6 +19,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;
 using Application = Microsoft.Maui.Controls.Application;
 using System.Net;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace FeastMobile
 {
@@ -38,16 +39,24 @@ namespace FeastMobile
            
         }
        
-        private async void OnCounterClicked(object sender, EventArgs e) /*Проверка работоспособности пушей*/
+        private async void OnCounterClicked(object sender, EventArgs e) /*Проверка работоспособности пушей, в дальнейшем удалить этот пример*/
         {
-            if(checkBox.IsChecked==true)
+
+            if (checkBox.IsChecked==true)
             {
                TokenSender tokenSender = new TokenSender();
                 tokenSender.SendTokenToServer(_deviceToken);
             }
             else
             {
-                App.Current.MainPage.DisplayAlert("Уведомления запрещены", "Вы запретили отпревку уведомлений", "OK");
+
+                string Title = "Hey!";
+                string Text = " I just meet you! And this is crazy!";
+                
+                TokenSender tokenSender = new TokenSender();
+                tokenSender.TestRequest(_deviceToken,Title, Text);
+                App.Current.MainPage.DisplayAlert("Отправлен тестовый запрос", "Вы отправили тестовый запрос", "OK")
+                ;
             }
            
         }

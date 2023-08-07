@@ -17,7 +17,7 @@ using System.Net;
 
 
 //Данные для проверки отправки уведомлений по времени
-DateTime feastDate = new DateTime(2023, 07, 09, 01, 33 , 00);
+DateTime feastDate = new DateTime(2023, 08, 06, 01, 33 , 00);
 DateTime currentDate = DateTime.Now;
 string token;
 var tokenList = new List<string>();
@@ -39,21 +39,58 @@ Task.Run(async () =>
 {
     while (true)
     {
-        checkTime = feastDate - currentDate;
+        HttpListenerContext context = listener.GetContext();
 
-        if (checkTime.TotalMinutes <= 1 && checkTime.TotalMinutes > 0)
+        using (Stream body = context.Request.InputStream)
         {
-            string title = "Не пропусти!";
-            string messageBody = "Мероприятие начнется через 1 минуту!";
-            lock (tokenListLock)
+            using (StreamReader reader = new StreamReader(body, context.Request.ContentEncoding))
             {
-                services.setNotificationParams(tokenList, title, messageBody);
-                 services.SendNotification().Wait();
+                string path = context.Request.Url.AbsolutePath;
+                if (path == "/api/message" && context.Request.HttpMethod == "POST")
+                {
+                    // Получаем JSON из тела запроса
+                    string jsonRequestBody = reader.ReadToEnd();
+
+                    try
+                    {
+                        // Десериализация JSON в объект MessageRequest
+                        var requestData = JsonConvert.DeserializeObject<JsonMessage>(jsonRequestBody);
+
+                        // Проверяем, что данные не пустые
+                       
+
+                        // Используем значения из requestData и помещаем их в отдельные переменные
+                        string deviceToken = requestData.Token;
+                        string title = requestData.Title;
+                        string text = requestData.Text;
+
+                        Console.WriteLine(deviceToken);
+                        Console.WriteLine(title);
+                        Console.WriteLine(text);
+
+                        List <string> a = new List<string>();
+                        a.Add(deviceToken);
+                        // В этом месте можно выполнить необходимые действия с полученными данными,
+                        // например, сохранить их в базу данных или выполнить какую-то логику
+
+                        // Создаем объект с параметрами
+                        services.setNotificationParams(tokenList,title,text);
+                        services.SendNotification().Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        // В случае ошибки десериализации или другой ошибки возвращаем статус 500
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.Close();
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("Некорректный запрос");
+                }
             }
         }
-
-        await Task.Delay(600); 
-        currentDate = DateTime.Now;
     }
 });
 
@@ -92,4 +129,11 @@ while (true)
     }
 }
 
+/*Тестовый пример структуры для отправки уведомлений*/
+struct JsonMessage
+{
+    public string Token { get; set; }
+    public string Text { get; set; } 
+    public string Title { get; set; }       
+}
 

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "akj4Gj9g+1YjywAi1OPHUraDFPC3TT0lgsyfJY1S2W+IekjmCWXLOxJbangAVk+siPmMIT+TfRnc5hV+MOhtQA==",
+  "dgSpecHash": "um8LmL42X81ameep6vm2uEJr9Am0ovUyjYE03WfRgGbqYYQGLK7SYzXN7pdpIwD0KngYrTI0SjXUMM8d9DzEVg==",
   "success": true,
   "projectFilePath": "C:\\polzunov-feast\\FeastMobile\\FeastMobile.csproj",
   "expectedPackageFiles": [
+    "C:\\Test\\bouncycastle\\1.8.9\\bouncycastle.1.8.9.nupkg.sha512",
     "C:\\Test\\communitytoolkit.mvvm\\8.2.0\\communitytoolkit.mvvm.8.2.0.nupkg.sha512",
     "C:\\Test\\firebaseadmin\\2.3.0\\firebaseadmin.2.3.0.nupkg.sha512",
     "C:\\Test\\firebasedatabase.net\\4.2.0\\firebasedatabase.net.4.2.0.nupkg.sha512",
@@ -24,6 +25,7 @@
     "C:\\Test\\grpc.core.api\\2.51.0\\grpc.core.api.2.51.0.nupkg.sha512",
     "C:\\Test\\grpc.net.client\\2.51.0\\grpc.net.client.2.51.0.nupkg.sha512",
     "C:\\Test\\grpc.net.common\\2.51.0\\grpc.net.common.2.51.0.nupkg.sha512",
+    "C:\\Test\\itextsharp\\5.5.13.3\\itextsharp.5.5.13.3.nupkg.sha512",
     "C:\\Test\\litedb\\4.1.4\\litedb.4.1.4.nupkg.sha512",
     "C:\\Test\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Test\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
@@ -208,6 +210,26 @@
         "net7.0-android33.0/iossimulator-x64",
         "net7.0-android33.0/maccatalyst-x64",
         "net7.0-android33.0/win10-x64"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"BouncyCastle 1.8.9\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net7.0-android33.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "BouncyCastle",
+      "targetGraphs": [
+        "net7.0-android33.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Пакет \"iTextSharp 5.5.13.3\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net7.0-android33.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
+      "libraryId": "iTextSharp",
+      "targetGraphs": [
+        "net7.0-android33.0"
       ]
     }
   ]
