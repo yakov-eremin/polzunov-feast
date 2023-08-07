@@ -5,6 +5,7 @@ import com.example.polzunovfeastserver.user.entity.Role;
 import com.example.polzunovfeastserver.user.entity.UserEntity;
 import com.example.polzunovfeastserver.user.exception.UserNotFoundException;
 import com.example.polzunovfeastserver.user.exception.WrongUserPasswordException;
+import com.example.polzunovfeastserver.user.uitl.UserTableKeys;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
@@ -49,6 +50,7 @@ public class UserService {
      * If password is null, then set it to previous password
      *
      * @return updated user without password
+     * @throws UserNotFoundException if user doesn't exist
      */
     public User update(User user, long id) {
         UserEntity previousUser = getEntityById(id);
@@ -94,10 +96,12 @@ public class UserService {
      */
     public void checkUser(User user) {
         if (userRepo.existsByEmail(user.getEmail())) {
-            throw new DataIntegrityViolationException(format("User with email '%s' already exists", user.getEmail()));
+            throw new DataIntegrityViolationException(
+                    format("User with email '%s' already exists, constraint: %s", user.getEmail(), UserTableKeys.UNIQUE_EMAIL));
         }
         if (user.getPhone() != null && userRepo.existsByPhone(user.getPhone())) {
-            throw new DataIntegrityViolationException(format("User with phone '%s' already exists", user.getPhone()));
+            throw new DataIntegrityViolationException(
+                    format("User with phone '%s' already exists, constraint: %s", user.getPhone(), UserTableKeys.UNIQUE_PHONE));
         }
     }
 }

@@ -4,8 +4,9 @@ import com.example.polzunovfeastserver.category.CategoryMapper;
 import com.example.polzunovfeastserver.category.CategoryService;
 import com.example.polzunovfeastserver.category.entity.CategoryEntity;
 import com.example.polzunovfeastserver.event.entity.EventEntity;
+import com.example.polzunovfeastserver.event.exception.EventHasAssociatedRoutesException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
-import com.example.polzunovfeastserver.event.exception.EventUpdateRestrictedException;
+import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
 import com.example.polzunovfeastserver.place.PlaceService;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
@@ -61,7 +62,7 @@ public class EventService {
     /**
      * @throws EventNotFoundException         event not found
      * @throws PlaceNotFoundException         place not found
-     * @throws EventUpdateRestrictedException It's already started, or it's in someone's route.
+     * @throws EventAlreadyStartedException It's already started, or it's in someone's route.
      *                                        This checks will not be performed if event is canceled
      */
     public EventWithPlaceResponse updateEventById(Event event) {
@@ -107,7 +108,8 @@ public class EventService {
      *
      * @param currentEvent data from db
      * @param newEvent     data from request
-     * @throws EventUpdateRestrictedException It's already started, or it's in someone's route.
+     * @throws EventAlreadyStartedException it's already started
+     * @throws EventHasAssociatedRoutesException it's in someone's route
      */
     private void checkThatCanBeUpdated(EventEntity currentEvent, Event newEvent) {
         if (currentEvent.isCanceled()) {
@@ -117,14 +119,14 @@ public class EventService {
         //check if it's already started
         OffsetDateTime now = OffsetDateTime.now();
         if (newEvent.getStartTime().isBefore(now) || newEvent.getStartTime().isEqual(now)) {
-            throw new EventUpdateRestrictedException(
+            throw new EventAlreadyStartedException(
                     format("Cannot update event with id=%d, because it's already started, " +
                             "event start time = '%s'", newEvent.getId(), newEvent.getStartTime()));
         }
 
         //check if it's in someone's route
         if (nodeRepo.existsByEventId(newEvent.getId())) {
-            throw new EventUpdateRestrictedException(
+            throw new EventHasAssociatedRoutesException(
                     format("Cannot update event with id=%d, because it's in someone's route.", newEvent.getId()));
         }
     }

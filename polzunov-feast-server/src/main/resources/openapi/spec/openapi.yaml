@@ -45,7 +45,10 @@ paths:
         403:
           description: Only root can perform this operation
         409:
-          description: Email or phone number already taken
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
           content:
             application/json:
               schema:
@@ -86,9 +89,18 @@ paths:
         403:
           description: Only root can perform this operation
         404:
-          $ref: '#/components/responses/NotFound'
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin with this id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         409:
-          description: Email or phone number already taken
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
           content:
             application/json:
               schema:
@@ -132,13 +144,17 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         401:
-          description: Wrong password
+          description: |
+            Code:
+            - WRONG_PASSWORD - wrong password
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         404:
-          description: User not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - user or admin not found
           content:
             application/json:
               schema:
@@ -168,7 +184,10 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         409:
-          description: Email or phone number already taken
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
           content:
             application/json:
               schema:
@@ -193,7 +212,10 @@ paths:
         400:
           $ref: '#/components/responses/BadRequest'
         409:
-          description: Email or phone number already taken
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
           content:
             application/json:
               schema:
@@ -225,8 +247,19 @@ paths:
           $ref: '#/components/responses/TokenUnauthorized'
         403:
           description: Only regular users can perform this action
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - user making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         409:
-          description: Email or phone number already taken
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - if user with this email is already exists
+            - PHONE_ALREADY_EXISTS - if user with this phone number is already exists
           content:
             application/json:
               schema:
@@ -292,7 +325,9 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
           content:
             application/json:
               schema:
@@ -326,7 +361,10 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin or place not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - PLACE_NOT_FOUND - place with this id is not found
           content:
             application/json:
               schema:
@@ -396,7 +434,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Place'
         404:
-          description: Place not found
+          description: |
+            Code:
+            - PLACE_NOT_FOUND - place with this id is not found
           content:
             application/json:
               schema:
@@ -417,13 +457,17 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         409:
-          description: Cannot delete place, because there are events associated with it
+          description: |
+            Code:
+            - PLACE_HAS_ASSOCIATED_EVENTS - cannot delete place, because there are events associated with it
           content:
             application/json:
               schema:
@@ -463,7 +507,10 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin or place not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - PLACE_NOT_FOUND - place with this id is not found
           content:
             application/json:
               schema:
@@ -497,16 +544,22 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin, place or event not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - PLACE_NOT_FOUND - place with this id is not found
+            - EVENT_NOT_FOUND - event with this id is not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         409:
           description: |
-            This checks will *not* be performed if event is canceled:
-            - Event has already started
-            - It's in someone's route
+            This checks will *not* be performed if event is canceled.
+            
+            Code:
+            - EVENT_ALREADY_STARTED - event has already started
+            - EVENT_HAS_ASSOCIATED_ROUTES - event is in someone's route
         500:
           $ref: '#/components/responses/InternalServerError'
     get:
@@ -603,7 +656,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/EventWithPlaceResponse'
         404:
-          $ref: '#/components/responses/NotFound'
+          description: |
+            Code:
+            - EVENT_NOT_FOUND - event with this id is not found
         500:
           $ref: '#/components/responses/InternalServerError'
     delete:
@@ -619,13 +674,17 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         409:
-          description: Cannot delete event, because there are routes associated with it
+          description: |
+            Code:
+            - EVENT_HAS_ASSOCIATED_ROUTES - cannot delete event, because there are routes associated with it
           content:
             application/json:
               schema:
@@ -664,13 +723,17 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         409:
-          description: Category with this name already exists
+          description: |
+            Code:
+            - CATEGORY_NAME_ALREADY_EXISTS
           content:
             application/json:
               schema:
@@ -700,13 +763,18 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin or category not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - CATEGORY_NOT_FOUND - category with this id is not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         409:
-          description: Category with this name already exists
+          description: |
+            Code:
+            - CATEGORY_NAME_ALREADY_EXISTS - category with this name already exists
           content:
             application/json:
               schema:
@@ -751,7 +819,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Category'
         404:
-          $ref: '#/components/responses/NotFound'
+          description: |
+            Code:
+            - CATEGORY_NOT_FOUND - category with this id is not found
         500:
           $ref: '#/components/responses/InternalServerError'
     delete:
@@ -767,13 +837,17 @@ paths:
         403:
           description: Only admins (including root) can perform this operation
         404:
-          description: Admin not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         409:
-          description: Cannot delete category, because there are events associated with it
+          description: |
+            Code:
+            - CATEGORY_HAS_ASSOCIATED_EVENTS - cannot delete category, because there are events associated with it
           content:
             application/json:
               schema:
@@ -813,16 +887,20 @@ paths:
         403:
           description: Only regular users can perform this action
         404:
-          description: User or event(s) not found
+          description: |
+            Code:
+            - USER_NOT_FOUND - user who makes this request is not found
+            - EVENT_NOT_FOUND - some of the provided event ids are not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         409:
           description: |
-            * The time of one event overlaps the time of another (e.g., two events with the same start time)
-            * Some events have already ended
-            * Some events are canceled
+            Code:
+            - EVENTS_TIME_OVERLAP - the time of one event overlaps the time of another (e.g., two events with the same start time)
+            - EVENT_ALREADY_STARTED - some events have already started
+            - EVENT_CANCELED - some events are canceled
           content:
             application/json:
               schema:
@@ -847,7 +925,13 @@ paths:
         403:
           description: Only regular users can perform this action
         404:
-          description: User not found
+          description: |
+            Code: 
+            - USER_NOT_FOUND - user making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         500:
           $ref: '#/components/responses/InternalServerError'
 
@@ -861,27 +945,30 @@ components:
 
   responses:
     InternalServerError:
-      description: Internal server error
+      description: |
+        Code:
+        - INTERNAL_SERVER_ERROR - internal server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
     BadRequest:
-      description: Bad request
+      description: |
+        Code:
+        - BAD_REQUEST - bad request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
     TokenUnauthorized:
       description: Token authorization failed, relogin required
-    NotFound:
-      description: Not found
 
   schemas:
     ErrorResponse:
       type: object
       required:
         - message
+        - code
       properties:
         message:
           type: string
@@ -900,6 +987,29 @@ components:
           items:
             $ref: '#/components/schemas/HttpAttributeValidationViolation'
           description: Http attribute (path variables, request params, etc.) validation errors
+        code:
+          type: string
+          description: Error codes that specifies the type of error
+          enum:
+            - WRONG_PASSWORD
+            - EMAIL_ALREADY_EXISTS
+            - PHONE_ALREADY_EXISTS
+            - USER_NOT_FOUND
+            - PLACE_NOT_FOUND
+            - PLACE_HAS_ASSOCIATED_EVENTS
+            - EVENT_NOT_FOUND
+            - EVENTS_TIME_OVERLAP
+            - EVENT_CANCELED
+            - EVENT_ALREADY_STARTED
+            - EVENT_HAS_ASSOCIATED_ROUTES
+            - CATEGORY_NAME_ALREADY_EXISTS
+            - CATEGORY_NOT_FOUND
+            - CATEGORY_HAS_ASSOCIATED_EVENTS
+            - BAD_REQUEST
+            - INTERNAL_SERVER_ERROR
+            - UNKNOWN
+          example: See the description for the code(s)
+
     ObjectValidationViolation:
       type: object
       required:

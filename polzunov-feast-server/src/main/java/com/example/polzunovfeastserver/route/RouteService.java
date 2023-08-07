@@ -4,7 +4,10 @@ import com.example.polzunovfeastserver.category.CategoryMapper;
 import com.example.polzunovfeastserver.event.EventEntityRepository;
 import com.example.polzunovfeastserver.event.EventMapper;
 import com.example.polzunovfeastserver.event.entity.EventEntity;
+import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
+import com.example.polzunovfeastserver.event.exception.EventCanceledException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
+import com.example.polzunovfeastserver.event.exception.EventsOverlapException;
 import com.example.polzunovfeastserver.route.entity.RouteEntity;
 import com.example.polzunovfeastserver.route.exception.RouteUpdateRestrictedException;
 import com.example.polzunovfeastserver.route.node.entity.RouteNodeEntity;
@@ -102,8 +105,10 @@ public class RouteService {
      *     <li>haven't started and doesn't overlap each other (end time of earlier event is not after or equal to start time of next event)</li>
      * </ul>
      *
-     * @throws EventNotFoundException         some events not found
-     * @throws RouteUpdateRestrictedException events canceled, have already started or overlap each other
+     * @throws EventNotFoundException       some events not found
+     * @throws EventCanceledException       some events are canceled
+     * @throws EventAlreadyStartedException some events have already started
+     * @throws EventsOverlapException        some events overlap each other
      */
     private List<EventEntity> findAndCheckEvents(List<Long> eventIds) {
         List<EventEntity> events = eventRepo.findAllByIdOrderByStartTimeAsc(eventIds);
@@ -127,14 +132,14 @@ public class RouteService {
 
             //check not canceled
             if (currentEvent.isCanceled()) {
-                throw new RouteUpdateRestrictedException(
+                throw new EventCanceledException(
                         format("Cannot update route, because event with id=%d is canceled", currentEvent.getId()));
             }
 
             //check start time
             if (currentEvent.getStartTime().isBefore(now)) {
-                throw new RouteUpdateRestrictedException(
-                        format("Cannot update route, because events with id=%d has already ended, event start time = '%s",
+                throw new EventAlreadyStartedException(
+                        format("Cannot update route, because events with id=%d has already started, event start time = '%s",
                                 currentEvent.getId(), currentEvent.getStartTime())
                 );
             }
@@ -144,7 +149,7 @@ public class RouteService {
                 EventEntity nextEvent = events.get(i + 1);
                 if (currentEvent.getEndTime().isAfter(nextEvent.getStartTime()) ||
                         currentEvent.getEndTime().isEqual(nextEvent.getStartTime())) {
-                    throw new RouteUpdateRestrictedException(
+                    throw new EventsOverlapException(
                             format("Cannot update route, because events overlap each other: " +
                                             "event with id=%d has start time = '%s' and end time = '%s', " +
                                             "event with id=%d has start time = '%s' and end time = '%s'",

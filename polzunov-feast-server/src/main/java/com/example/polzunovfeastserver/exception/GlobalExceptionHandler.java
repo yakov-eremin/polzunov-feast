@@ -43,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             String parameter = propertyPath.substring(propertyPath.lastIndexOf(".") + 1);
             violations.add(new HttpAttributeValidationViolation(parameter, violation.getMessage()));
         });
-        ErrorResponse error = new ErrorResponse(message);
+        ErrorResponse error = new ErrorResponse(message, ErrorResponse.CodeEnum.BAD_REQUEST);
         error.setHttpAttributeValidationViolations(violations);
         log.warn("{}: {}", message, error, e);
         return error;
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         String message = "Validation failed";
-        ErrorResponse error = new ErrorResponse(message);
+        ErrorResponse error = new ErrorResponse(message, ErrorResponse.CodeEnum.BAD_REQUEST);
         error.setFieldValidationViolations(fieldViolations);
         error.setObjectValidationViolations(objectViolations);
         log.warn("{}: ", message, ex);
@@ -91,7 +91,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         log.warn("MVC exception. {}: {}", message, body);
-        return ResponseEntity.status(statusCode).headers(headers).body(new ErrorResponse(message));
+        return ResponseEntity.status(statusCode).headers(headers).body(new ErrorResponse(message, ErrorResponse.CodeEnum.UNKNOWN));
     }
 
 
@@ -99,6 +99,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     public ErrorResponse onThrowable(final Throwable e) {
         log.error("Unexpected error occurred", e);
-        return new ErrorResponse("Unexpected error occurred: " + e.getMessage());
+        return new ErrorResponse("Unexpected error occurred: " + e.getMessage(), ErrorResponse.CodeEnum.INTERNAL_SERVER_ERROR);
     }
 }

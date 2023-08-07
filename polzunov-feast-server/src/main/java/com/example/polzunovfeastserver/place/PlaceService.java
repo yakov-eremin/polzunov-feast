@@ -3,7 +3,7 @@ package com.example.polzunovfeastserver.place;
 import com.example.polzunovfeastserver.event.EventEntityRepository;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
-import com.example.polzunovfeastserver.place.excepition.PlaceUpdateRestrictedException;
+import com.example.polzunovfeastserver.place.excepition.PlaceHasAssociatedEventsException;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.model.Place;
 import org.springframework.data.domain.Page;
@@ -29,8 +29,8 @@ public class PlaceService {
     }
 
     /**
-     * @throws PlaceNotFoundException place not found
-     * @throws PlaceUpdateRestrictedException there are events associated with this place
+     * @throws PlaceNotFoundException         place not found
+     * @throws PlaceHasAssociatedEventsException there are events associated with this place
      */
     public Place updatePlaceById(Place place) {
         if (!placeRepo.existsById(place.getId())) {
@@ -40,8 +40,8 @@ public class PlaceService {
         }
 
         if (eventRepo.existsByPlace_Id(place.getId())) {
-            throw new PlaceUpdateRestrictedException(
-                    format("Cannot update place with id=%d, there are events with this place", place.getId()));
+            throw new PlaceHasAssociatedEventsException(
+                    format("Cannot update place with id=%d, there are events associated with this place", place.getId()));
         }
 
         PlaceEntity placeEntity = PlaceMapper.toPlaceEntity(place);

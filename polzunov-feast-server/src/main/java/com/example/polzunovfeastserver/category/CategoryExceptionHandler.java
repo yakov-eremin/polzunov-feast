@@ -4,7 +4,6 @@ import com.example.polzunovfeastserver.category.exception.CategoryNotFoundExcept
 import com.example.polzunovfeastserver.category.util.CategoryTableKeys;
 import com.example.polzunovfeastserver.event.util.EventTableKeys;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.openapitools.model.ErrorResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -26,28 +25,26 @@ public class CategoryExceptionHandler {
     public ErrorResponse onCategoryNotFoundException(CategoryNotFoundException e) {
         String message = e.getMessage();
         log.warn(message, e);
-        return new ErrorResponse(message);
+        return new ErrorResponse(message, ErrorResponse.CodeEnum.CATEGORY_NOT_FOUND);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(CONFLICT)
     public ErrorResponse onDataIntegrityViolationException(DataIntegrityViolationException e) {
-        String message;
-        if (!(e.getCause() instanceof ConstraintViolationException cause)) {
-            message = "Data integrity violation: ";
-            log.warn(message, e);
-            return new ErrorResponse(message + e.getMessage());
+        String message = "Data integrity violation: " + e.getMessage();
+        ErrorResponse.CodeEnum code = ErrorResponse.CodeEnum.UNKNOWN;
+
+        String exceptionMessage = e.getMessage().toLowerCase();
+        if (exceptionMessage.contains(CategoryTableKeys.UNIQUE_NAME)) {
+            message = "Category name already exists";
+            code = ErrorResponse.CodeEnum.CATEGORY_NAME_ALREADY_EXISTS;
+        } else if (exceptionMessage.contains(EventTableKeys.FOREIGN_CATEGORY)) {
+            message = "Cannot delete category, because there are events associated with it";
+            code = ErrorResponse.CodeEnum.CATEGORY_NOT_FOUND;
         }
 
-        //Unique key constraints violation
-        message = switch (cause.getConstraintName()) {
-            case CategoryTableKeys.UNIQUE_NAME -> "Category name is not unique";
-            case EventTableKeys.FOREIGN_CATEGORY ->
-                    "Cannot delete category, because there are events associated with it";
-            default -> String.format("Constraint '%s' violation: %s", cause.getConstraintName(), cause.getMessage());
-        };
         log.warn(message, e);
-        return new ErrorResponse(message);
+        return new ErrorResponse(message, code);
     }
 
 }
