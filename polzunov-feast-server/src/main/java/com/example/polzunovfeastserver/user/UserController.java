@@ -58,4 +58,11 @@ public class UserController implements UserApi {
         log.info("User with id '{}' deleted", id);
         return new ResponseEntity<>(OK);
     }
+
+    @Override
+    public ResponseEntity<Void> checkUser(User user) {
+        userService.checkUser(user);
+        log.info("User with email '{}' can be added", user.getEmail());
+        return new ResponseEntity<>(OK);
+    }
 }

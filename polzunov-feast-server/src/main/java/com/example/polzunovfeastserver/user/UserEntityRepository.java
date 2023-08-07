@@ -19,4 +19,6 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByIdAndRole(long id, Role role);
 
     void deleteByIdAndRole(long id, Role role);
+
+    boolean existsByPhone(String phone);
 }

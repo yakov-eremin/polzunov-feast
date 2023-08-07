@@ -9,11 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.openapitools.model.Credentials;
 import org.openapitools.model.Token;
 import org.openapitools.model.User;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
+import static java.lang.String.format;
 
 @Service
 @Transactional
@@ -33,11 +36,11 @@ public class UserService {
     public Token signIn(Credentials credentials) {
         Optional<UserEntity> userOpt = userRepo.findByEmail(credentials.getEmail());
         UserEntity user = userOpt.orElseThrow(() ->
-                new UserNotFoundException(String.format("Cannot sign in: user with email '%s' not found", credentials.getPassword()))
+                new UserNotFoundException(format("Cannot sign in: user with email '%s' not found", credentials.getPassword()))
         );
 
         if (!encoder.matches(credentials.getPassword(), user.getPassword())) {
-            throw new WrongUserPasswordException(String.format("Wrong password for user with email '%s'", user.getUsername()));
+            throw new WrongUserPasswordException(format("Wrong password for user with email '%s'", user.getUsername()));
         }
         return tokenService.generateToken(user);
     }
@@ -72,7 +75,7 @@ public class UserService {
      */
     public UserEntity getEntityById(long id) {
         return userRepo.findById(id).orElseThrow(() ->
-                new UserNotFoundException(String.format("User with id=%d not found", id))
+                new UserNotFoundException(format("User with id=%d not found", id))
         );
     }
 
@@ -82,5 +85,19 @@ public class UserService {
             return;
         }
         userRepo.deleteById(id);
+    }
+
+    /**
+     * Check if some of user's fields are unique
+     *
+     * @throws DataIntegrityViolationException if user with unique fields already exists
+     */
+    public void checkUser(User user) {
+        if (userRepo.existsByEmail(user.getEmail())) {
+            throw new DataIntegrityViolationException(format("User with email '%s' already exists", user.getEmail()));
+        }
+        if (userRepo.existsByPhone(user.getPhone())) {
+            throw new DataIntegrityViolationException(format("User with phone '%s' already exists", user.getPhone()));
+        }
     }
 }

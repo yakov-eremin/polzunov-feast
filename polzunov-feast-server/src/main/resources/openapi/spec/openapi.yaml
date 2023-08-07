@@ -176,6 +176,29 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
 
+  /user/check:
+    post:
+      summary: Check if user's email or phone number is taken
+      operationId: checkUser
+      security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: User can be signed up
+        400:
+          $ref: '#/components/responses/BadRequest'
+        409:
+          description: Email or phone number already taken
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /user:
     put:
       summary: Update user profile info
