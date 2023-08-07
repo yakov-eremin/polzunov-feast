@@ -96,7 +96,7 @@ public class UserService {
         if (userRepo.existsByEmail(user.getEmail())) {
             throw new DataIntegrityViolationException(format("User with email '%s' already exists", user.getEmail()));
         }
-        if (userRepo.existsByPhone(user.getPhone())) {
+        if (user.getPhone() != null && userRepo.existsByPhone(user.getPhone())) {
             throw new DataIntegrityViolationException(format("User with phone '%s' already exists", user.getPhone()));
         }
     }
