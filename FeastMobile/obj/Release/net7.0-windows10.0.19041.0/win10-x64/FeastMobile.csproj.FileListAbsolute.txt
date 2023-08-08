@@ -1,0 +1,12 @@
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\FeastMobile.csproj.AssemblyReference.cache
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\mauiimage.inputs
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\mauifont.inputs
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\mauisplash.inputs
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\mauimanifest.stamp
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.g.i.cs
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.g.cs
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\XamlTypeInfo.g.cs
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.xaml
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.xbf
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\XamlSaveStateFile.xml
+D:\Programms\try\FeastMobile\obj\Release\net7.0-windows10.0.19041.0\win10-x64\FeastMobile.GeneratedMSBuildEditorConfig.editorconfig

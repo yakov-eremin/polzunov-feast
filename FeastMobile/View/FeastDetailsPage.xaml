@@ -57,6 +57,7 @@
                 </Button>
 
                 <Button
+                    x:Name="BackImageButton"
                     Grid.Column="0"
                     Grid.Row="1"
                     ImageSource="arrow_back.svg"
@@ -65,6 +66,7 @@
                 </Button>
 
                 <Button
+                    x:Name="ForwardImageButton"
                     Grid.Column="2"
                     Grid.Row="1"
                     ImageSource="arrow_forward.svg"
@@ -74,6 +76,7 @@
                 </Button>
 
                 <Frame
+                    x:Name="ImageNumFrame"
                     Grid.Column="2"
                     Grid.Row="2"
                     CornerRadius="20"

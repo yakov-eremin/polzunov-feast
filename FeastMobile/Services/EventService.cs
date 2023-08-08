@@ -24,8 +24,23 @@ public static class EventService
 
     public static async Task<List<Event>> LoadEventsFromInternetAsync()
     {
-        string json = await httpClient.GetStringAsync("/event");
-        List<Event> eventList = JsonConvert.DeserializeObject<List<Event>>(json);
+        List<Event> eventList = new List<Event>();
+
+        try 
+        {
+            HttpResponseMessage response = await httpClient.GetAsync("/event");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                eventList = JsonConvert.DeserializeObject<List<Event>>(content);
+
+            }
+        }
+        catch (Exception ex) 
+        { 
+            
+        }   
+
         return eventList;
     }
 

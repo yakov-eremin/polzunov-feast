@@ -11,7 +11,10 @@ public partial class FeastListPage : ContentPage
 		this.BindingContext = feastVM;
 
         Binding binding = new Binding { Source = feastVM, Path = "ActualFeasts", Mode = BindingMode.Default };
-        EventsCollectionView.SetBinding(CollectionView.ItemsSourceProperty, binding);
+        EventsCollectionView.SetBinding(BindableLayout.ItemsSourceProperty, binding);
+
+        object emptyView = UpcomingFeastsRadioButton.IsChecked ? Resources["UpcomingEmptyView"] : Resources["PastEmptyView"];
+        BindableLayout.SetEmptyView(EventsCollectionView, emptyView);
     }
 
 
@@ -36,12 +39,14 @@ public partial class FeastListPage : ContentPage
             if (UpcomingFeastsRadioButton.IsChecked)
             {
                 Binding binding = new Binding { Source = this.BindingContext, Path = "ActualFeasts", Mode = BindingMode.Default };
-                EventsCollectionView.SetBinding(CollectionView.ItemsSourceProperty, binding);
+                EventsCollectionView.SetBinding(BindableLayout.ItemsSourceProperty, binding);
+                BindableLayout.SetEmptyView(EventsCollectionView, Resources["UpcomingEmptyView"]);
             }
             else
             {
                 Binding binding = new Binding { Source = this.BindingContext, Path = "NotActualFeasts", Mode = BindingMode.Default };
-                EventsCollectionView.SetBinding(CollectionView.ItemsSourceProperty, binding);
+                EventsCollectionView.SetBinding(BindableLayout.ItemsSourceProperty, binding);
+                BindableLayout.SetEmptyView(EventsCollectionView, Resources["PastEmptyView"]);
             }
         }
     }

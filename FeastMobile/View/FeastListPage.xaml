@@ -9,7 +9,52 @@
              x:DataType="viewmodel:FeastViewModel"
              BackgroundColor="{StaticResource MainAccent}"
              Shell.NavBarIsVisible="False">
-    
+
+    <ContentPage.Resources>
+        <ContentView x:Key="UpcomingEmptyView">
+            <VerticalStackLayout 
+                                   Margin="10,100,10,0">
+                <Label 
+                    Text="Список событий пуст" 
+                    TextColor="{StaticResource Gray900}"
+                    FontAutoScalingEnabled="False"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center">
+                </Label>
+                <Label
+                    Text="Не переживайте, события будут добавлены в скором времени!"
+                    TextColor="{StaticResource Gray500}"
+                    FontAutoScalingEnabled="False"
+                    FontSize="16"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center">
+                </Label>
+            </VerticalStackLayout>
+        </ContentView>
+        <ContentView x:Key="PastEmptyView">
+            <VerticalStackLayout 
+                 Margin="10,100,10,0">
+                <Label 
+                    Text="Мы очистили список" 
+                    TextColor="{StaticResource Gray900}"
+                    FontAutoScalingEnabled="False"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center">
+                </Label>
+                <Label
+                    Text="т.к. с момента последнего события прошло много времени. "
+                    TextColor="{StaticResource Gray500}"
+                    FontAutoScalingEnabled="False"
+                    FontSize="16"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center">
+                </Label>
+            </VerticalStackLayout>
+        </ContentView>
+    </ContentPage.Resources>
+
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior x:Name="statusBar" />
     </ContentPage.Behaviors>
@@ -73,49 +118,72 @@
                         CheckedChanged="OnRadioButtonCheckedChanged">
                     </RadioButton>
                 </StackLayout>
-                
-                <CollectionView 
-                    Grid.Row="1"
-                    x:Name="EventsCollectionView"
-                    SelectionMode="None">
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Feast">
-                            <Frame 
-                               CornerRadius="16"
-                               BackgroundColor="Gray"
-                               BorderColor="Black"
-                               Margin="16,12,16,0"
-                               Padding="0">
-                                <Grid>
-                                    <Image 
+                <ScrollView
+                    Grid.Row="1">
+                    <StackLayout 
+                        Orientation="Vertical"
+                        Spacing="8"
+                        x:Name="EventsCollectionView">
+                        <BindableLayout.EmptyView>
+                            <VerticalStackLayout 
+                                   Margin="0,100,0,0">
+                                <Label 
+                                    Text="Список событий пуст" 
+                                    TextColor="{StaticResource Gray900}"
+                                    FontAutoScalingEnabled="False"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center">
+                                </Label>
+                                <Label
+                                    Text="Дождитесь добавления мероприятий или смените критерии поиска"
+                                    TextColor="{StaticResource Gray500}"
+                                    FontAutoScalingEnabled="False"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    HorizontalOptions="Center">
+                                </Label>
+                            </VerticalStackLayout>
+                        </BindableLayout.EmptyView>
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="model:Feast">
+                                <Frame 
+                                   CornerRadius="16"
+                                   BackgroundColor="Gray"
+                                   BorderColor="Black"
+                                   Margin="16,12,16,0"
+                                   Padding="0">
+                                    <Grid>
+                                        <Image 
                                        HorizontalOptions="Start"
                                        Aspect="AspectFill"
                                        Source="{Binding Images[0]}">
-                                    </Image>
-                                    <Grid Padding="13" ColumnSpacing="12">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="0.4*"/>
-                                            <RowDefinition Height="4.5*"/>
-                                            <RowDefinition Height="3*"/>
-                                            <RowDefinition Height="2*"/>
-                                            <RowDefinition Height="2*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions >
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
+                                        </Image>
+                                        <Grid Padding="13" ColumnSpacing="12">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="0.4*"/>
+                                                <RowDefinition Height="4.5*"/>
+                                                <RowDefinition Height="3*"/>
+                                                <RowDefinition Height="2*"/>
+                                                <RowDefinition Height="2*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions >
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
 
-                                        <Grid.Background>
-                                            <LinearGradientBrush 
+                                            <Grid.Background>
+                                                <LinearGradientBrush 
                                                 StartPoint="0,0"
                                                 EndPoint="0,1">
-                                                <GradientStop Color="#00000000" Offset="0" />
-                                                <GradientStop Color="#80000000" Offset="0.9" />
-                                            </LinearGradientBrush>
-                                        </Grid.Background>
+                                                    <GradientStop Color="#00000000" Offset="0" />
+                                                    <GradientStop Color="#80000000" Offset="0.9" />
+                                                </LinearGradientBrush>
+                                            </Grid.Background>
 
-                                        <Label 
+                                            <Label 
                                             FontAutoScalingEnabled="False"
                                            Text="{Binding Name}"
                                            FontFamily="RobotoBold"
@@ -125,8 +193,8 @@
                                            Grid.Column="0"
                                            Grid.ColumnSpan="2"
                                            >
-                                        </Label>
-                                        <Label 
+                                            </Label>
+                                            <Label 
                                            FontAutoScalingEnabled="False"
                                            FontFamily="RobotoMedium"
                                            FontSize="18"    
@@ -134,14 +202,14 @@
                                            Grid.Column="0"
                                            Grid.ColumnSpan="2"
                                            VerticalTextAlignment="Center">
-                                            <Label.Text>
-                                                <MultiBinding StringFormat="{}{0:M} • {1} мероприятий">
-                                                    <Binding Path="Date" />
-                                                    <Binding Path="ActivitiesNumber" />
-                                                </MultiBinding>
-                                            </Label.Text>
-                                        </Label>
-                                        <Button 
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0:M} • {1} мероприятий">
+                                                        <Binding Path="Date" />
+                                                        <Binding Path="ActivitiesNumber" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                            <Button 
                                             FontAutoScalingEnabled="False"
                                             Text="Подробнее"
                                             FontFamily="RobotoMedium"
@@ -156,8 +224,8 @@
                                             Padding="0,0,0,0"
                                             CommandParameter="{Binding .}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToDetailsCommand}">
-                                        </Button>
-                                        <Button 
+                                            </Button>
+                                            <Button 
                                             FontAutoScalingEnabled="False"
                                             Text="Перейти"
                                             FontFamily="RobotoMedium"
@@ -169,20 +237,15 @@
                                             Padding="0,0,0,0"
                                             CommandParameter="{Binding .}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FeastViewModel}}, Path=GoToEventsCommand}">
-                                        </Button>
+                                            </Button>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
 
-                    <CollectionView.ItemsLayout >
-                        <GridItemsLayout 
-                            Orientation="Vertical"
-                            Span="1"
-                            HorizontalItemSpacing="8"/>
-                    </CollectionView.ItemsLayout>
-                </CollectionView>
             </Grid>
         </Border>
     </Grid>

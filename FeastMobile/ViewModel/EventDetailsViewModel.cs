@@ -26,17 +26,8 @@ public partial class EventDetailsViewModel : BaseViewModel
     [RelayCommand]
     private void InitParamRelatedData()
     {
-        Description = CurrentEvent.Description[..150];
+        Description = CurrentEvent.Description[..300];
         LabelText = "•••";
-
-        //Due to lack of Images in Event DataModel
-
-        //Images = new ObservableCollection<string>();
-        //foreach (var image in CurrentEvent.Images) 
-        //{ 
-        //    Images.Add(image);
-        //}
-        //OnPropertyChanged(nameof(Images));
         OnPropertyChanged(nameof(Description));
     }
 
@@ -49,12 +40,12 @@ public partial class EventDetailsViewModel : BaseViewModel
     [RelayCommand]
     void ExpandLabel()
     {
-        if (CurrentEvent.Description.Length >= 150)
+        if (CurrentEvent.Description.Length >= 300)
         {
             if (IsLabelExpanded)
             {
                 LabelText = "•••";
-                Description = CurrentEvent.Description[..150];
+                Description = CurrentEvent.Description[..300];
                 IsLabelExpanded = false;
             }
             else

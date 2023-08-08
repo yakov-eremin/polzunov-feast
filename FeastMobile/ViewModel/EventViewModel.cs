@@ -10,7 +10,7 @@ public partial class EventViewModel : BaseViewModel
     private Feast currentFeast;
 
     [ObservableProperty]
-    private uint activitiensNumberLabelText;
+    private int activitiensNumberLabelText;
 
     [ObservableProperty]
     private string feastNameLabelText;
@@ -24,17 +24,19 @@ public partial class EventViewModel : BaseViewModel
 
     async void InitParamUnrelatedData()
     {
-        var tmpEvents = await EventService.LoadEventsLocalyAsync();
+        var tmpEvents = await EventService.LoadEventsFromInternetAsync();
+        tmpEvents = tmpEvents.OrderBy(e => e.StartTime).ToList();
+
         Events = new ObservableCollection<Event>();
         foreach (var events in tmpEvents)
             Events.Add(events);
         OnPropertyChanged(nameof(Events));
+        ActivitiensNumberLabelText = Events.Count;
     }
 
     [RelayCommand]
     private Task InitParamRelatedData()
     { 
-        ActivitiensNumberLabelText = CurrentFeast.ActivitiesNumber;
         FeastNameLabelText = CurrentFeast.Name;
         return Task.CompletedTask;
     }

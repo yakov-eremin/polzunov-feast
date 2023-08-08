@@ -19,6 +19,25 @@ public partial class FeastDetailsPage : ContentPage
         FeastDetailsViewModel viewModel = (FeastDetailsViewModel)BindingContext;
         viewModel.InitParamRelatedDataCommand.Execute(viewModel);
 
+        if (viewModel.NumOfImages > 1)
+        {
+            ImageNumFrame.IsVisible = true;
+            ImageNumFrame.IsEnabled = true;
+            BackImageButton.IsVisible = true;
+            BackImageButton.IsEnabled = true;
+            ForwardImageButton.IsVisible = true;
+            ForwardImageButton.IsEnabled = true;
+        }
+        else 
+        {
+            ImageNumFrame.IsVisible = false;
+            ImageNumFrame.IsEnabled = false;
+            BackImageButton.IsVisible = false;
+            BackImageButton.IsEnabled = false;
+            ForwardImageButton.IsVisible = false;
+            ForwardImageButton.IsEnabled = false;
+        }
+
         this.Behaviors.Add(new StatusBarBehavior
         {
             StatusBarColor = Colors.White,

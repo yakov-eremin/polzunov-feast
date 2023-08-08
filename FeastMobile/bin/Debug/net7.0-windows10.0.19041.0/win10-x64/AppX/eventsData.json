@@ -1,0 +1,44 @@
+[
+ {
+  "id": 0,
+  "name": "Квест-игра «Спрятано в музее».К Году культурного наследия народов России",
+  "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
+  "startTime": "2023-01-01T19:00:00+03:00",
+  "endTime": "2023-01-01T20:00:00+03:00",
+  "placeId": 0,
+  "canceled": false,
+  "categoryIds": [
+    0
+  ],
+  "ageLimit": 0
+}
+
+
+
+
+
+  {
+    "id": 53,
+    "name": "Квест-игра «Спрятано в музее».К Году культурного наследия народов России",
+    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
+    "startTime": "2023-01-01T19:00:00+03:00",
+    "endTime": "2023-01-01T20:00:00+03:00",
+    "place": {
+      "id": 1,
+      "name": "Государственный художественный музей Алтайского края.",
+      "address": "г.Барнаул, ул.Советская, 28"
+    }
+  },
+  {
+    "id": 54,
+    "name": "Миниэкскурсия «Вода камень точит»",
+    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
+    "startTime": "2023-01-01T01:00:00+03:00",
+    "endTime": "2023-01-01T01:20:00+03:00",
+    "place": {
+      "id": 2,
+      "name": "Алтайский государственный краеведческий музей",
+      "address": "г.Барнаул, пр.Красноармейский, 28"
+    }
+  }
+]

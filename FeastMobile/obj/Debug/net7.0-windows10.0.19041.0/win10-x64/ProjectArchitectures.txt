@@ -1,0 +1,1 @@
+D:\Programms\try\FeastMobile\FeastMobile.csproj;x64

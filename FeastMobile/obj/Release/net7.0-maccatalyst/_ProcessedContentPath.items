@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Content Include="Resources\Raw\AboutAssets.txt" />
+    <Content Include="Resources\Raw\activitydata.csv" />
+    <Content Include="Resources\Raw\eventsData.json" />
+    <Content Include="Resources\Raw\feastdata.json" />
+  </ItemGroup>
+</Project>

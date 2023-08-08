@@ -21,6 +21,8 @@ public partial class FeastViewModel : BaseViewModel
     async void InitParamUnrelatedData()
     {
         var tmpFeasts = await feastService.GetFeastsAsync();
+        tmpFeasts = tmpFeasts.OrderBy(e => e.Date).ToList();
+
 
         NotActualFeasts = new ObservableCollection<Feast>();
         ActualFeasts = new ObservableCollection<Feast>();

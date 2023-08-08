@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\academic_cap.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\academic_cap@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\academic_cap@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\account_circle.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\account_circle@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\account_circle@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\arrow_back.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\arrow_back@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\arrow_back@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\arrow_forward.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\arrow_forward@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\arrow_forward@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\check.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\check@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\check@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\clock.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\clock@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\clock@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\festival.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\festival@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\festival@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\filters.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\filters@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\filters@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\flag.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\flag@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\flag@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\list_alt.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\list_alt@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\list_alt@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\long_arrow_back.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\long_arrow_back@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\long_arrow_back@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\place.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\place@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\place@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\quit.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\quit@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\quit@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\room.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\room@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\room@3x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\save_alt.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\save_alt@2x.png" />
+    <BundleResource Include="D:\Programms\try\FeastMobile\obj\Release\net7.0-maccatalyst\resizetizer\r\save_alt@3x.png" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\OpenSans-Regular.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\OpenSans-Semibold.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\Roboto-Bold.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\Roboto-Medium.ttf" />
+    <BundleResource Include="obj\Release\net7.0-maccatalyst\resizetizer\f\Roboto-Regular.ttf" />
+  </ItemGroup>
+</Project>

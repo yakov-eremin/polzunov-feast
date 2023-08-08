@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Runtime;
+using static Microsoft.Maui.LifecycleEvents.AndroidLifecycle;
 
 namespace FeastMobile
 {

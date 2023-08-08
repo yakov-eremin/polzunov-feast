@@ -1,62 +1,98 @@
 [
   {
     "id": 1,
-    "name": "string",
-    "description": "string",
-    "startTime": "2019-01-01T00:00:00+03:00",
-    "endTime": "2019-01-01T01:00:00+03:00",
+    "name": "Мастеркласс «Ожившая игрушка» в стиле «Богородская игрушка»",
+    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi.Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
+    "startTime": "2025-01-01T19:00:00Z",
+    "endTime": "2025-01-01T20:00:00Z",
     "place": {
       "id": 1,
-      "name": "string",
-      "address": "string"
-    }
+      "name": "Алтайский государственный краеведческий музей",
+      "address": "г.Барнаул, пр.Красноармейский, 28"
+    },
+    "canceled": false,
+    "categories": [
+      {
+        "id": 7,
+        "name": "Обучение"
+      },
+      {
+        "id": 4,
+        "name": "Искусство"
+      }
+    ],
+    "ageLimit": 6
   },
   {
     "id": 2,
-    "name": "string",
-    "description": "string",
-    "startTime": "2019-01-01T00:00:00+03:00",
-    "endTime": "2019-01-01T01:00:00+03:00",
+    "name": "Мастеркласс «Черным по белому» Д.Октября.",
+    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi.Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
+    "startTime": "2025-01-01T20:00:00Z",
+    "endTime": "2025-01-01T21:00:00Z",
     "place": {
       "id": 2,
-      "name": "string",
-      "address": "string"
-    }
+      "name": "Государственный художественный музей Алтайского края",
+      "address": "г.Барнаул, ул.Советская, 28"
+    },
+    "canceled": false,
+    "categories": [
+      {
+        "id": 7,
+        "name": "Обучение"
+      },
+      {
+        "id": 4,
+        "name": "Искусство"
+      }
+    ],
+    "ageLimit": 6
   },
   {
     "id": 3,
-    "name": "string",
-    "description": "string",
-    "startTime": "2019-01-01T00:00:00+03:00",
-    "endTime": "2019-01-01T01:00:00+03:00",
+    "name": "220 лет строительства Колыванской шлифовальной фабрики: Экскурсия «Колывань камнерезная»",
+    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi.Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
+    "startTime": "2025-01-01T22:00:00Z",
+    "endTime": "2025-01-01T22:50:00Z",
     "place": {
       "id": 3,
-      "name": "string",
-      "address": "string"
-    }
+      "name": "Государственный музей истории литературы, искусства и культуры Алтая",
+      "address": "г.Барнаул, ул.Л.Толстого, 2"
+    },
+    "canceled": false,
+    "categories": [
+      {
+        "id": 8,
+        "name": "Выставки и музеи"
+      },
+      {
+        "id": 1,
+        "name": "Экскурсии"
+      }
+    ],
+    "ageLimit": 6
   },
   {
-    "id": 53,
+    "id": 4,
     "name": "Квест-игра «Спрятано в музее».К Году культурного наследия народов России",
-    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
-    "startTime": "2023-01-01T19:00:00+03:00",
-    "endTime": "2023-01-01T20:00:00+03:00",
+    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi.Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
+    "startTime": "2025-01-01T22:30:00Z",
+    "endTime": "2025-01-01T23:00:00Z",
     "place": {
-      "id": 53,
-      "name": "Государственный художественный музей Алтайского края.",
-      "address": "г.Барнаул,ул.Советская,28 (пересечение ул.Советская-пл.Октября)."
-    }
-  },
-  {
-    "id": 54,
-    "name": "Миниэкскурсия «Вода камень точит»",
-    "description": "Lorem ipsum dolor sit amet, get nullam non nisi est sit. Ut consequat semper viverra nam libero justo laoreet sit. Sem fringilla ut morbi tincidunt. Aliquam sem fringilla ut morbi",
-    "startTime": "2023-01-01T01:00:00+03:00",
-    "endTime": "2023-01-01T01:20:00+03:00",
-    "place": {
-      "id": 52,
-      "name": "Алтайский государственный краеведческий музей",
-      "address": "г.Барнаул, пр.Красноармейский, 28"
-    }
+      "id": 2,
+      "name": "Государственный художественный музей Алтайского края",
+      "address": "г.Барнаул, ул.Советская, 28"
+    },
+    "canceled": false,
+    "categories": [
+      {
+        "id": 8,
+        "name": "Выставки и музеи"
+      },
+      {
+        "id": 11,
+        "name": "Квесты"
+      }
+    ],
+    "ageLimit": 6
   }
 ]

@@ -40,7 +40,7 @@
                 </Label>
                 <Button 
                     x:Name="ProblemButton"
-                    Text="Сохранить"
+                    Text=""
                     ImageSource="save_alt.svg"
                     TextColor="White"
                     FontFamily="RobotoMedium"
@@ -56,8 +56,7 @@
                 <StackLayout
                     Orientation="Horizontal">
                     <SearchBar 
-                        Placeholder="Найти мероприятие" 
-                        WidthRequest="250" 
+                        Placeholder="Найти мероприятие"  
                         Margin="0"/>
                     <Button 
                         ImageSource="filters.svg"
@@ -72,58 +71,79 @@
                 FontFamily="RobotoRegular"
                 TextColor="{StaticResource Gray900}"
                 FontSize="12"
-                Text="{Binding Path=ActivitiensNumberLabelText, StringFormat='{0} мероприятий'}"
+                Text="{Binding Path=ActivitiensNumberLabelText, StringFormat='Мероприятий найдено : {0}'}"
                 Margin="10,10,10,0">
             </Label>
         </VerticalStackLayout>
-        
+
         <ScrollView
             Grid.Row="1">
-            <StackLayout>
-                <CollectionView ItemsSource="{Binding Events}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Event">
-                            <Frame 
+            <StackLayout BindableLayout.ItemsSource="{Binding Events}">
+                <BindableLayout.EmptyView>
+                    <VerticalStackLayout 
+                        Margin="10,100,10,0">
+                        <Label 
+                            Text="Мероприятия не найдены." 
+                            TextColor="{StaticResource Gray900}"
+                            FontAutoScalingEnabled="False"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center">
+                        </Label>
+                        <Label
+                            Text="Дождитесь добавления мероприятий или смените критерии поиска"
+                            TextColor="{StaticResource Gray500}"
+                            FontAutoScalingEnabled="False"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            HorizontalOptions="Center">
+                        </Label>
+                    </VerticalStackLayout>
+                </BindableLayout.EmptyView>
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="model:Event">
+                        <Frame 
                                 BackgroundColor="#FAFAFA" 
                                 BorderColor="#CACACA" 
                                 Padding="10" 
                                 Margin="10,10,10,10">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer 
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EventViewModel}}, Path=GoToDetailsCommand}"
                                         CommandParameter="{Binding .}"/>
-                                </Frame.GestureRecognizers>
-                                <StackLayout>
-                                    <Label 
+                            </Frame.GestureRecognizers>
+                            <StackLayout>
+                                <Label 
                                     FontSize="18" 
                                     FontFamily="RobotoRegular"
                                     Margin="0,5,0,5"
                                     TextColor="{StaticResource Gray900}">
-                                        <Label.Text>
-                                            <MultiBinding StringFormat="{}{0:t} – {1:t}">
-                                                <Binding Path="StartTime" Converter="{StaticResource Converter}" />
-                                                <Binding Path="EndTime" Converter="{StaticResource Converter}" />
-                                            </MultiBinding>
-                                        </Label.Text>
-                                    </Label>
-                                    <Label 
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0:t} – {1:t}">
+                                            <Binding Path="StartTime" Converter="{StaticResource Converter}" />
+                                            <Binding Path="EndTime" Converter="{StaticResource Converter}" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                                <Label 
                                         Text="{Binding Name}" 
                                         FontSize="14" 
                                         FontFamily="RobotoRegular" 
                                         TextColor="{StaticResource Gray900}"
                                         Margin="0,0,0,5"/>
 
-                                    <HorizontalStackLayout>
-                                        <Image Source="room" HeightRequest="16" WidthRequest="16" Margin="0,0,0,5"/>
-                                        <Label 
+                                <HorizontalStackLayout>
+                                    <Image Source="room" HeightRequest="16" WidthRequest="16" Margin="0,0,0,5"/>
+                                    <Label 
                                         Text="{Binding Location.Address}" 
                                         FontSize="13" 
                                         FontFamily="RobotoRegular"
                                         TextColor="{StaticResource Gray400}"
                                         Margin="0,0,0,5"
                                         />
-                                    </HorizontalStackLayout>
-                                    <Button 
+                                </HorizontalStackLayout>
+                                <Button 
                                     Text="Добавить в список" 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EventViewModel}}, Path=GoToRouteSelectionCommand}"
                                     CommandParameter="{Binding .}"
@@ -132,13 +152,10 @@
                                     Margin="5" 
                                     Padding="10"
                                     CornerRadius="12"/>
-                                </StackLayout>
-                            </Frame>
-
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
             </StackLayout>
         </ScrollView>
     </Grid>
