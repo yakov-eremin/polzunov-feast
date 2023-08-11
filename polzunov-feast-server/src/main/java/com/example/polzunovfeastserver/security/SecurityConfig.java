@@ -48,7 +48,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        /*
         //restrict some operations for admins when prod profile is active
         if (env.acceptsProfiles(Profiles.of("prod"))) {
             http
@@ -66,7 +65,6 @@ public class SecurityConfig {
                             .requestMatchers("/admin/signup").denyAll()
                     );
         }
-         */
 
         http
                 .cors(AbstractHttpConfigurer::disable) //TODO configure cors before prod
