@@ -21,25 +21,10 @@
                 FontSize="32"
                 HorizontalOptions="Center" />
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <StackLayout>
-                <CheckBox 
-                    x:Name="checkBox"  
-                     HorizontalOptions="Center"/>
-                <Label 
-                    Text="Флажок" 
-                     HorizontalOptions="Center"/>
-            </StackLayout>
-
+            
             <Button
                 x:Name="CounterBtn"
-                Text="Отправить токен"
+                Text="Сохранить в PDF"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />

@@ -9,6 +9,8 @@ public class MonoPackageManager_Resources {
 		"Microsoft.Maui.Controls.dll",
 		"Microsoft.Maui.Essentials.dll",
 		"BouncyCastle.Crypto.dll",
+		"CommunityToolkit.Maui.dll",
+		"CommunityToolkit.Maui.Core.dll",
 		"CommunityToolkit.Mvvm.dll",
 		"FirebaseAdmin.dll",
 		"Firebase.dll",
@@ -44,6 +46,12 @@ public class MonoPackageManager_Resources {
 		"Microsoft.Extensions.Primitives.dll",
 		"Microsoft.Maui.Graphics.dll",
 		"Newtonsoft.Json.dll",
+		"PdfSharp.Charting.dll",
+		"PdfSharp.dll",
+		"PdfSharpCore.dll",
+		"ICSharpCode.SharpZipLib.dll",
+		"SixLabors.Fonts.dll",
+		"SixLabors.ImageSharp.dll",
 		"SkiaSharp.dll",
 		"SkiaSharp.Views.Android.dll",
 		"SkiaSharp.Views.Maui.Controls.dll",
@@ -158,6 +166,10 @@ public class MonoPackageManager_Resources {
 		"Xamarin.Kotlin.StdLib.Jdk8.dll",
 		"Xamarin.KotlinX.Coroutines.Android.dll",
 		"Xamarin.KotlinX.Coroutines.Core.Jvm.dll",
+		"Plugin.FilePicker.dll",
+		"PdfSharp.Charting.resources.dll",
+		"PdfSharp.resources.dll",
+		"PdfSharpCore.resources.dll",
 	};
 	public static String[] Dependencies = new String[]{
 	};

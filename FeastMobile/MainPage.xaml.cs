@@ -20,6 +20,18 @@ using Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;
 using Application = Microsoft.Maui.Controls.Application;
 using System.Net;
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using System;
+using CommunityToolkit.Maui.Storage;
+using SkiaSharp;
+
+using System.Reflection;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf;
+using iTextSharp.text;
+
+using iTextSharp.text.pdf;
+using static Google.Rpc.Context.AttributeContext.Types;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FeastMobile
 {
@@ -27,38 +39,31 @@ namespace FeastMobile
     {
         private string _deviceToken;
        private PushNotifications pushNotifications = new PushNotifications();
-        public MainPage()
+        TokenSender tokenSender = new TokenSender();
+        FileSafe fileSafe = new FileSafe();
+       
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+        public MainPage(IFileSaver fileSaver)
         {
             InitializeComponent();
             if(Preferences.ContainsKey("DeviceToken")) //проверка генерации нового токена.
             {
                 _deviceToken = Preferences.Get("DeviceToken","");
             }
-           
+      
+            tokenSender.SendTokenToServer(_deviceToken);
+
             pushNotifications.ReadFireBaseAdminSdk();
-           
+            fileSafe.FileSaverInit(fileSaver);
+          
+
         }
        
-        private async void OnCounterClicked(object sender, EventArgs e) /*Проверка работоспособности пушей, в дальнейшем удалить этот пример*/
+        private async void OnCounterClicked(object sender, EventArgs e)
         {
 
-            if (checkBox.IsChecked==true)
-            {
-               TokenSender tokenSender = new TokenSender();
-                tokenSender.SendTokenToServer(_deviceToken);
-            }
-            else
-            {
 
-                string Title = "Hey!";
-                string Text = " I just meet you! And this is crazy!";
-                
-                TokenSender tokenSender = new TokenSender();
-                tokenSender.TestRequest(_deviceToken,Title, Text);
-                App.Current.MainPage.DisplayAlert("Отправлен тестовый запрос", "Вы отправили тестовый запрос", "OK")
-                ;
-            }
-           
         }
     }
 }

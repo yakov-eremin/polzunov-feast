@@ -1,1 +1,0 @@
-C:\polzunov-feast\FeastMobile\FeastMobile.csproj;x64

@@ -12,13 +12,13 @@ namespace FeastMobile
 {
     public class TokenSender
     {
-        //private static readonly HttpClient client = new HttpClient();
+
         public async Task SendTokenToServer(string deviceToken)
         {
             // Замените URL на URL, предоставленный ngrok для вашего локального сервера
             HttpClient client = new HttpClient();
-            var ngrokUrl = "https://abf5-2a0c-f040-0-8-00-38.ngrok-free.app";
-            var apiUrl = $"{ngrokUrl}/api/token" ;
+            var ngrokUrl = "https://3213-2a0c-f040-0-8-00-18.ngrok-free.app";
+            var apiUrl = $"{ngrokUrl}/api/token";
 
             var content = new StringContent(deviceToken);
 
@@ -39,7 +39,7 @@ namespace FeastMobile
         {
             // Замените URL на URL, предоставленный ngrok для вашего локального сервера
             HttpClient client = new HttpClient();
-            var ngrokUrl = "https://abf5-2a0c-f040-0-8-00-38.ngrok-free.app";
+            var ngrokUrl = "https://3213-2a0c-f040-0-8-00-18.ngrok-free.app";
             var apiUrl = $"{ngrokUrl}/api/message";
 
             try
