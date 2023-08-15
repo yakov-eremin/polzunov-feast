@@ -728,6 +728,8 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              required:
+                - image
               properties:
                 image:
                   type: string
@@ -1249,8 +1251,8 @@ components:
         imageUrls:
           description: Urls of images of this event. The first image is considered the main one.
           type: array
+          uniqueItems: true
           items:
-            uniqueItems: true
             type: string
             format: url
 
@@ -1304,7 +1306,6 @@ components:
           type: array
           uniqueItems: true
           items:
-            uniqueItems: true
             type: string
             format: url
 

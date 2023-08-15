@@ -7,6 +7,7 @@ import org.openapitools.model.Event;
 import org.openapitools.model.EventWithPlaceResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -30,6 +31,13 @@ public class EventController implements EventApi {
         EventWithPlaceResponse updatedEvent = eventService.updateEventById(event);
         log.info("Event with id={} updated", updatedEvent.getId());
         return ResponseEntity.ok(updatedEvent);
+    }
+
+    @Override
+    public ResponseEntity<String> addEventImage(Long id, MultipartFile image, Boolean main) {
+        String imageUrl = eventService.addEventImage(id, image, main);
+        log.info("Added an image to event with id={}", id);
+        return ResponseEntity.ok(imageUrl);
     }
 
     @Override

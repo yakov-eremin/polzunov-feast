@@ -3,6 +3,14 @@ root:
   email: root@root.root
   password: root123!
 
+static-data:
+  root-dir:
+    /static-data
+  root-url:
+    #TODO change before prod
+    http://localhost:9090
+
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/polzunov-feast-db

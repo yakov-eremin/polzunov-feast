@@ -2,6 +2,7 @@ package com.example.polzunovfeastserver.event;
 
 import com.example.polzunovfeastserver.category.entity.CategoryEntity;
 import com.example.polzunovfeastserver.event.entity.EventEntity;
+import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import org.openapitools.model.Category;
 import org.openapitools.model.Event;
@@ -15,7 +16,10 @@ public final class EventMapper {
         throw new UnsupportedOperationException("This is an utility class");
     }
 
-    public static EventWithPlaceResponse toEventWithPlaceResponse(EventEntity eventEntity, Place place, Set<Category> categories) {
+    public static EventWithPlaceResponse toEventWithPlaceResponse(EventEntity eventEntity,
+                                                                  Place place,
+                                                                  Set<Category> categories,
+                                                                  Set<String> imageUrls) {
         return new EventWithPlaceResponse(
                 eventEntity.getId(),
                 eventEntity.getName(),
@@ -25,11 +29,16 @@ public final class EventMapper {
                 place,
                 eventEntity.isCanceled(),
                 categories,
-                eventEntity.getAgeLimit()
+                eventEntity.getAgeLimit(),
+                imageUrls
         );
     }
 
-    public static EventEntity toEventEntity(Event event, PlaceEntity placeEntity, Set<CategoryEntity> categories) {
+    public static EventEntity toEventEntity(Event event,
+                                            PlaceEntity placeEntity,
+                                            Set<CategoryEntity> categories,
+                                            ImageEntity mainImageUrl,
+                                            Set<ImageEntity> imageUrls) {
         return new EventEntity(
                 event.getId(),
                 event.getName().trim(),
@@ -39,7 +48,9 @@ public final class EventMapper {
                 placeEntity,
                 event.getCanceled(),
                 categories,
-                event.getAgeLimit()
+                event.getAgeLimit(),
+                mainImageUrl,
+                imageUrls
         );
     }
 }

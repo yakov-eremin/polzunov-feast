@@ -8,6 +8,7 @@ import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedExcept
 import com.example.polzunovfeastserver.event.exception.EventCanceledException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
 import com.example.polzunovfeastserver.event.exception.EventsOverlapException;
+import com.example.polzunovfeastserver.event.image.ImageMapper;
 import com.example.polzunovfeastserver.route.entity.RouteEntity;
 import com.example.polzunovfeastserver.route.exception.RouteUpdateRestrictedException;
 import com.example.polzunovfeastserver.route.node.entity.RouteNodeEntity;
@@ -108,7 +109,7 @@ public class RouteService {
      * @throws EventNotFoundException       some events not found
      * @throws EventCanceledException       some events are canceled
      * @throws EventAlreadyStartedException some events have already started
-     * @throws EventsOverlapException        some events overlap each other
+     * @throws EventsOverlapException       some events overlap each other
      */
     private List<EventEntity> findAndCheckEvents(List<Long> eventIds) {
         List<EventEntity> events = eventRepo.findAllByIdOrderByStartTimeAsc(eventIds);
@@ -170,7 +171,8 @@ public class RouteService {
                             EventMapper.toEventWithPlaceResponse(
                                     event,
                                     toPlace(event.getPlace()),
-                                    event.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet())
+                                    event.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet()),
+                                    ImageMapper.toImageUrls(event.getMainImage(), event.getImages())
                             )
                     );
                 })

@@ -3,6 +3,10 @@ package com.example.polzunovfeastserver.event;
 import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
 import com.example.polzunovfeastserver.event.exception.EventHasAssociatedRoutesException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
+import com.example.polzunovfeastserver.event.image.exception.FailedToDeleteImageException;
+import com.example.polzunovfeastserver.event.image.exception.FailedToSaveImageException;
+import com.example.polzunovfeastserver.event.image.exception.ImageUrlNotFoundException;
+import com.example.polzunovfeastserver.event.image.exception.UnsupportedImageTypeException;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import com.example.polzunovfeastserver.route.node.util.RouteNodeTableKeys;
 import lombok.extern.slf4j.Slf4j;
@@ -14,13 +18,40 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @RestControllerAdvice(basePackages = "com.example.polzunovfeastserver.event")
 @Order(Ordered.HIGHEST_PRECEDENCE) //needed to not fall into global exception handler
 public class EventExceptionHandler {
+
+    @ExceptionHandler(UnsupportedImageTypeException.class)
+    @ResponseStatus(UNSUPPORTED_MEDIA_TYPE)
+    public ErrorResponse onUnsupportedImageTypeException(UnsupportedImageTypeException e) {
+        log.warn(e.getMessage(), e);
+        return new ErrorResponse(e.getMessage(), ErrorResponse.CodeEnum.UNSUPPORTED_IMAGE_TYPE);
+    }
+
+    @ExceptionHandler(FailedToSaveImageException.class)
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ErrorResponse onFailedToSaveImageException(FailedToSaveImageException e) {
+        log.warn(e.getMessage(), e);
+        return new ErrorResponse(e.getMessage(), ErrorResponse.CodeEnum.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(FailedToDeleteImageException.class)
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ErrorResponse onFailedToDeleteImageException(FailedToDeleteImageException e) {
+        log.warn(e.getMessage(), e);
+        return new ErrorResponse(e.getMessage(), ErrorResponse.CodeEnum.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ImageUrlNotFoundException.class)
+    @ResponseStatus(NOT_FOUND)
+    public ErrorResponse onImageUrlNotFoundException(ImageUrlNotFoundException e) {
+        log.warn(e.getMessage(), e);
+        return new ErrorResponse(e.getMessage(), ErrorResponse.CodeEnum.IMAGE_NOT_FOUND);
+    }
 
     @ExceptionHandler(EventAlreadyStartedException.class)
     @ResponseStatus(CONFLICT)

@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "static-data.root-dir",
+      "type": "java.lang.String",
+      "description": "Relative path to the folder where all static data is stored. The folder should be located next to the project itself. Use System.getProperty(\"user.dir\"); to find out the project directory."
+    },
+    {
+      "name": "static-data.root-url",
+      "type": "java.lang.String",
+      "description": "Root url of static data. Used to create a url for images and other static data by concatenating root url and static file's path."
+    }
+  ] }

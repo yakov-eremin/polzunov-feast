@@ -1,6 +1,6 @@
 package com.example.polzunovfeastserver.place;
 
-import com.example.polzunovfeastserver.event.util.EventTableKeys;
+import com.example.polzunovfeastserver.event.util.table_key.EventTableKeys;
 import com.example.polzunovfeastserver.place.excepition.PlaceHasAssociatedEventsException;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import lombok.extern.slf4j.Slf4j;

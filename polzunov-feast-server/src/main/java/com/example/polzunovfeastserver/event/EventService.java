@@ -4,9 +4,11 @@ import com.example.polzunovfeastserver.category.CategoryMapper;
 import com.example.polzunovfeastserver.category.CategoryService;
 import com.example.polzunovfeastserver.category.entity.CategoryEntity;
 import com.example.polzunovfeastserver.event.entity.EventEntity;
+import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
 import com.example.polzunovfeastserver.event.exception.EventHasAssociatedRoutesException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
-import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
+import com.example.polzunovfeastserver.event.image.ImageService;
+import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
 import com.example.polzunovfeastserver.place.PlaceService;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
@@ -21,14 +23,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.example.polzunovfeastserver.event.util.EventEntitySpecifications.where;
 import static com.example.polzunovfeastserver.event.EventMapper.toEventEntity;
 import static com.example.polzunovfeastserver.event.EventMapper.toEventWithPlaceResponse;
+import static com.example.polzunovfeastserver.event.image.ImageMapper.toImageUrls;
+import static com.example.polzunovfeastserver.event.util.EventEntitySpecifications.where;
 import static com.example.polzunovfeastserver.place.PlaceMapper.toPlace;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toSet;
@@ -43,6 +48,7 @@ public class EventService {
     private final PlaceService placeService;
     private final RouteNodeEntityRepository nodeRepo;
     private final CategoryService categoryService;
+    private final ImageService imageService;
 
     /**
      * @throws PlaceNotFoundException place not found
@@ -53,34 +59,36 @@ public class EventService {
 
         PlaceEntity placeEntity = placeService.getEntityById(event.getPlaceId());
         Set<CategoryEntity> categoryEntities = categoryService.getAllEntitiesById(event.getCategoryIds());
-        EventEntity eventEntity = eventRepo.save(toEventEntity(event, placeEntity, categoryEntities));
+        EventEntity eventEntity = eventRepo.save(toEventEntity(event, placeEntity, categoryEntities, null, new HashSet<>()));
 
         Set<Category> categories = eventEntity.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet());
-        return toEventWithPlaceResponse(eventEntity, toPlace(placeEntity), categories);
+        return toEventWithPlaceResponse(eventEntity, toPlace(placeEntity), categories, new HashSet<>());
     }
 
     /**
-     * @throws EventNotFoundException         event not found
-     * @throws PlaceNotFoundException         place not found
-     * @throws EventAlreadyStartedException It's already started, or it's in someone's route.
-     *                                        This checks will not be performed if event is canceled
+     * @throws EventNotFoundException                                                          event not found
+     * @throws PlaceNotFoundException                                                          place not found
+     * @throws EventAlreadyStartedException                                                    It's already started, or it's in someone's route.
+     *                                                                                         This checks will not be performed if event is canceled
+     * @throws com.example.polzunovfeastserver.event.image.exception.ImageUrlNotFoundException some image urls were not found
      */
     public EventWithPlaceResponse updateEventById(Event event) {
-        EventEntity eventEntity = eventRepo.findById(event.getId()).orElseThrow(() -> new EventNotFoundException(
-                format("Cannot update event with id=%d, because event not found", event.getId())
-        ));
+        EventEntity eventEntity = getEntityById(event.getId());
 
         checkThatCanBeUpdated(eventEntity, event);
-
-        if (!event.getPlaceId().equals(eventEntity.getPlace().getId())) {
-            eventEntity.setPlace(placeService.getEntityById(event.getPlaceId()));
-        }
+        updateEventImages(eventEntity, event);
 
         //We save 'canceled' before update because we need to send notifications only after data was saved.
         boolean entityCanceled = eventEntity.isCanceled();
 
         Set<CategoryEntity> categoryEntities = categoryService.getAllEntitiesById(event.getCategoryIds());
-        eventEntity = eventRepo.save(toEventEntity(event, eventEntity.getPlace(), categoryEntities));
+        eventEntity = eventRepo.save(
+                toEventEntity(event,
+                        placeService.getEntityById(event.getPlaceId()),
+                        categoryEntities,
+                        eventEntity.getMainImage(),
+                        eventEntity.getImages())
+        );
 
         if (!entityCanceled && event.getCanceled()) {
             //TODO send notification that event is canceled
@@ -92,7 +100,48 @@ public class EventService {
 
         Place place = toPlace(eventEntity.getPlace());
         Set<Category> categories = eventEntity.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet());
-        return toEventWithPlaceResponse(eventEntity, place, categories);
+        Set<String> imageUrls = toImageUrls(eventEntity.getMainImage(), eventEntity.getImages());
+        return toEventWithPlaceResponse(eventEntity, place, categories, imageUrls);
+    }
+
+    /**
+     * @throws com.example.polzunovfeastserver.event.image.exception.ImageUrlNotFoundException    some image urls were not found
+     * @throws com.example.polzunovfeastserver.event.image.exception.FailedToDeleteImageException cannot delete some images from file system
+     */
+    private void updateEventImages(EventEntity currEvent, Event newEvent) {
+        Set<ImageEntity> newImageEntities = imageService.findEntitiesByUrls(newEvent.getImageUrls()); //find all new images
+
+        deleteOldEventImagesFromFileSystem(currEvent, newImageEntities); //delete all images that are not in a new image set
+
+        //if new images is not empty then find main image
+        ImageEntity mainImageEntity = null;
+        if (!newImageEntities.isEmpty()) {
+            String mainImageUrl = newEvent.getImageUrls().iterator().next();
+            for (ImageEntity newImageEntity : newImageEntities) {
+                if (newImageEntity.getUrl().equals(mainImageUrl)) {
+                    mainImageEntity = newImageEntity;
+                    break;
+                }
+            }
+        }
+
+        currEvent.setMainImage(mainImageEntity);
+        currEvent.getImages().clear();
+        currEvent.getImages().addAll(newImageEntities);
+    }
+
+    /**
+     * Deletes images that are not in a new image set from the file system
+     *
+     * @throws com.example.polzunovfeastserver.event.image.exception.FailedToDeleteImageException cannot delete some images
+     */
+    private void deleteOldEventImagesFromFileSystem(EventEntity currEvent, Set<ImageEntity> newImageEntities) {
+        Set<ImageEntity> prevImageEntities = new HashSet<>(currEvent.getImages());
+        prevImageEntities.add(currEvent.getMainImage());
+        prevImageEntities.removeAll(newImageEntities);
+        if (!prevImageEntities.isEmpty()) {
+            imageService.deleteImages(prevImageEntities);
+        }
     }
 
     /**
@@ -108,7 +157,7 @@ public class EventService {
      *
      * @param currentEvent data from db
      * @param newEvent     data from request
-     * @throws EventAlreadyStartedException it's already started
+     * @throws EventAlreadyStartedException      it's already started
      * @throws EventHasAssociatedRoutesException it's in someone's route
      */
     private void checkThatCanBeUpdated(EventEntity currentEvent, Event newEvent) {
@@ -139,19 +188,23 @@ public class EventService {
                 toEventWithPlaceResponse(
                         ev,
                         toPlace(ev.getPlace()),
-                        ev.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet())
+                        ev.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet()),
+                        toImageUrls(ev.getMainImage(), ev.getImages())
                 )
         ).toList();
     }
 
+    /**
+     * @throws EventNotFoundException event with this id not found
+     */
     public EventWithPlaceResponse getEventById(Long id) {
-        EventEntity eventEntity = eventRepo.findById(id).orElseThrow(() -> new EventNotFoundException(
-                format("Cannot get event with id=%d, because event not found", id)
-        ));
+        EventEntity eventEntity = getEntityById(id);
         return toEventWithPlaceResponse(
                 eventEntity,
                 toPlace(eventEntity.getPlace()),
-                eventEntity.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet()));
+                eventEntity.getCategories().stream().map(CategoryMapper::toCategory).collect(toSet()),
+                toImageUrls(eventEntity.getMainImage(), eventEntity.getImages())
+        );
     }
 
     public void deleteEventById(Long id) {
@@ -159,5 +212,33 @@ public class EventService {
             return;
         }
         eventRepo.deleteById(id);
+    }
+
+    /**
+     * @param main specify if this image is main or not
+     * @throws EventNotFoundException                                                           event with this id is not found
+     * @throws UnsupportedOperationException                                                    content type of provided file is null or unsupported
+     * @throws com.example.polzunovfeastserver.event.image.exception.FailedToSaveImageException cannot save image
+     */
+    public String addEventImage(Long id, MultipartFile image, Boolean main) {
+        EventEntity eventEntity = getEntityById(id);
+        ImageEntity imageEntity = imageService.addImage(image);
+        if (main) {
+            eventEntity.getImages().add(eventEntity.getMainImage());
+            eventEntity.setMainImage(imageEntity);
+        } else {
+            eventEntity.getImages().add(imageEntity);
+        }
+        eventRepo.save(eventEntity);
+        return imageEntity.getUrl();
+    }
+
+    /**
+     * @throws EventNotFoundException event with this id not found
+     */
+    public EventEntity getEntityById(Long id) {
+        return eventRepo.findById(id).orElseThrow(() -> new EventNotFoundException(
+                format("Cannot get event with id=%d, because event not found", id)
+        ));
     }
 }

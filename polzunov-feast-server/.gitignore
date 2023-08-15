@@ -1,5 +1,6 @@
 HELP.md
 
+static-data
 target/
 !/.idea/.gitignore
 !.mvn/wrapper/maven-wrapper.jar

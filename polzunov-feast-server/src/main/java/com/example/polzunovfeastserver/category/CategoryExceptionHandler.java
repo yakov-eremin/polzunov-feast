@@ -2,7 +2,7 @@ package com.example.polzunovfeastserver.category;
 
 import com.example.polzunovfeastserver.category.exception.CategoryNotFoundException;
 import com.example.polzunovfeastserver.category.util.CategoryTableKeys;
-import com.example.polzunovfeastserver.event.util.EventTableKeys;
+import com.example.polzunovfeastserver.event.util.table_key.EventCategoriesTableKeys;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.ErrorResponse;
 import org.springframework.core.Ordered;
@@ -38,7 +38,7 @@ public class CategoryExceptionHandler {
         if (exceptionMessage.contains(CategoryTableKeys.UNIQUE_NAME)) {
             message = "Category name already exists";
             code = ErrorResponse.CodeEnum.CATEGORY_NAME_ALREADY_EXISTS;
-        } else if (exceptionMessage.contains(EventTableKeys.FOREIGN_CATEGORY)) {
+        } else if (exceptionMessage.contains(EventCategoriesTableKeys.FOREIGN_CATEGORY)) {
             message = "Cannot delete category, because there are events associated with it";
             code = ErrorResponse.CodeEnum.CATEGORY_NOT_FOUND;
         }

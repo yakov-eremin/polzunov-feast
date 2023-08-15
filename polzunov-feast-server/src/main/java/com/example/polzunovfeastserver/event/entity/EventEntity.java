@@ -1,7 +1,10 @@
 package com.example.polzunovfeastserver.event.entity;
 
 import com.example.polzunovfeastserver.category.entity.CategoryEntity;
-import com.example.polzunovfeastserver.event.util.EventTableKeys;
+import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
+import com.example.polzunovfeastserver.event.util.table_key.EventCategoriesTableKeys;
+import com.example.polzunovfeastserver.event.util.table_key.EventTableKeys;
+import com.example.polzunovfeastserver.event.image.util.table_key.ImageTableKeys;
 import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -10,8 +13,6 @@ import lombok.*;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
-import static com.example.polzunovfeastserver.event.util.EventTableKeys.FOREIGN_CATEGORY;
-import static com.example.polzunovfeastserver.event.util.EventTableKeys.FOREIGN_EVENT;
 import static jakarta.persistence.ConstraintMode.CONSTRAINT;
 import static jakarta.persistence.ConstraintMode.NO_CONSTRAINT;
 
@@ -49,46 +50,35 @@ public class EventEntity {
 
     private boolean canceled;
 
-    /**
-     * Do not use getCategories().add()/remove()/clear. Use
-     * {@link #addCategory} and {@link #removeCategory} instead
-     */
     @Setter(AccessLevel.NONE)
     @ManyToMany
     @JoinTable(
             name = "event_categories",
             joinColumns = @JoinColumn(
                     name = "event_id",
-                    foreignKey = @ForeignKey(name = FOREIGN_EVENT, value = NO_CONSTRAINT)
+                    foreignKey = @ForeignKey(name = EventCategoriesTableKeys.FOREIGN_EVENT, value = NO_CONSTRAINT)
             ),
             inverseJoinColumns = @JoinColumn(
                     name = "category_id",
-                    foreignKey = @ForeignKey(name = FOREIGN_CATEGORY, value = CONSTRAINT)
+                    foreignKey = @ForeignKey(name = EventCategoriesTableKeys.FOREIGN_CATEGORY, value = CONSTRAINT)
             )
     )
     private Set<CategoryEntity> categories;
 
     private int ageLimit;
 
+    @OneToOne
+    @JoinColumn(
+            name = "main_image_id",
+            foreignKey = @ForeignKey(name = EventTableKeys.FOREIGN_MAIN_IMAGE_URL, value = CONSTRAINT)
+    )
+    private ImageEntity mainImage;
 
-    public void addCategory(CategoryEntity category) {
-        categories.add(category);
-    }
-
-    public void removeCategory(CategoryEntity category) {
-        categories.remove(category);
-    }
-
-    public void addCategories(Set<CategoryEntity> categories) {
-        this.categories.addAll(categories);
-    }
-
-    public void removeCategories(Set<CategoryEntity> categories) {
-        this.categories.removeAll(categories);
-    }
-
-    public void clearCategories() {
-        this.categories.clear();
-    }
-
+    @Setter(AccessLevel.NONE)
+    @OneToMany
+    @JoinColumn(
+            name = "event_id",
+            foreignKey = @ForeignKey(name = ImageTableKeys.FOREIGN_EVENT, value = CONSTRAINT)
+    )
+    private Set<ImageEntity> images;
 }
