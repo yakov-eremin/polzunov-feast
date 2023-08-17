@@ -233,6 +233,8 @@ public class EventService {
         if (!eventRepo.existsById(id)) {
             return;
         }
+        EventEntity eventEntity = getEntityById(id);
+        deleteOldEventImagesFromFileSystem(eventEntity, new HashSet<>());
         eventRepo.deleteById(id);
     }
 
