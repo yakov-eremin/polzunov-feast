@@ -1193,7 +1193,7 @@ components:
     Event:
       type: object
       description: Event duration must be in range of 5 minutes to 24 hours
-      x-class-extra-annotation: '@com.example.polzunovfeastserver.event.util.DurationInMinutes(startField = "startTime", endField = "endTime", min = "5", max = "1440")'
+      x-class-extra-annotation: '@com.example.polzunovfeastserver.event.util.DurationInMinutes(startField = "startTime", endField = "endTime", min = 5, max = 1440)'
       required:
         - id
         - name

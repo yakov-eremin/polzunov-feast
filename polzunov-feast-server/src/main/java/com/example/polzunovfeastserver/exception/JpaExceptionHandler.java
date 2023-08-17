@@ -12,14 +12,14 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 
 @Slf4j
-@RestControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE) //needed to not fall into global exception handler
 public class JpaExceptionHandler {
 
     private static final Map<String, ErrorResponse.CodeEnum> CONSTRAINTS_TO_ERROR_CODES = Map.of(

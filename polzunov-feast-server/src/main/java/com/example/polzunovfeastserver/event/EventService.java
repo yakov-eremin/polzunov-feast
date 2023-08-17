@@ -1,15 +1,16 @@
 package com.example.polzunovfeastserver.event;
 
+import com.example.polzunovfeastserver.category.CategoryEntity;
 import com.example.polzunovfeastserver.category.CategoryMapper;
 import com.example.polzunovfeastserver.category.CategoryService;
-import com.example.polzunovfeastserver.category.CategoryEntity;
 import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
 import com.example.polzunovfeastserver.event.exception.EventHasAssociatedRoutesException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
-import com.example.polzunovfeastserver.image.ImageService;
 import com.example.polzunovfeastserver.image.ImageEntity;
-import com.example.polzunovfeastserver.place.PlaceService;
+import com.example.polzunovfeastserver.image.ImageService;
+import com.example.polzunovfeastserver.image.exception.ImageUrlNotFoundException;
 import com.example.polzunovfeastserver.place.PlaceEntity;
+import com.example.polzunovfeastserver.place.PlaceService;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import com.example.polzunovfeastserver.route.node.RouteNodeEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,8 @@ import java.util.Set;
 
 import static com.example.polzunovfeastserver.event.EventMapper.toEventEntity;
 import static com.example.polzunovfeastserver.event.EventMapper.toEventWithPlaceResponse;
-import static com.example.polzunovfeastserver.image.ImageMapper.toImageUrls;
 import static com.example.polzunovfeastserver.event.util.EventEntitySpecifications.where;
+import static com.example.polzunovfeastserver.image.ImageMapper.toImageUrls;
 import static com.example.polzunovfeastserver.place.PlaceMapper.toPlace;
 import static java.lang.String.format;
 import static java.util.stream.Collectors.toSet;
@@ -65,10 +66,10 @@ public class EventService {
     }
 
     /**
-     * @throws EventNotFoundException                                                          event not found
-     * @throws PlaceNotFoundException                                                          place not found
-     * @throws EventAlreadyStartedException                                                    It's already started, or it's in someone's route.
-     *                                                                                         This checks will not be performed if event is canceled
+     * @throws EventNotFoundException                                                    event not found
+     * @throws PlaceNotFoundException                                                    place not found
+     * @throws EventAlreadyStartedException                                              It's already started, or it's in someone's route.
+     *                                                                                   This checks will not be performed if event is canceled
      * @throws com.example.polzunovfeastserver.image.exception.ImageUrlNotFoundException some image urls were not found
      */
     public EventWithPlaceResponse updateEventById(Event event) {
@@ -108,25 +109,45 @@ public class EventService {
      * @throws com.example.polzunovfeastserver.image.exception.FailedToDeleteImageException cannot delete some images from file system
      */
     private void updateEventImages(EventEntity currEvent, Event newEvent) {
-        Set<ImageEntity> newImageEntities = imageService.findEntitiesByUrls(newEvent.getImageUrls()); //find all new images
+        if (newEvent.getImageUrls().isEmpty()) {
+            deleteOldEventImagesFromFileSystem(currEvent, new HashSet<>());
+            currEvent.setMainImage(null);
+            currEvent.getImages().clear();
+            return;
+        }
 
+        Set<ImageEntity> newImageEntities = imageService.findAllEntitiesByUrls(newEvent.getImageUrls()); //find all new images
         deleteOldEventImagesFromFileSystem(currEvent, newImageEntities); //delete all images that are not in a new image set
 
-        //if new images is not empty then find main image
-        ImageEntity mainImageEntity = null;
-        if (!newImageEntities.isEmpty()) {
-            String mainImageUrl = newEvent.getImageUrls().iterator().next();
-            for (ImageEntity newImageEntity : newImageEntities) {
-                if (newImageEntity.getUrl().equals(mainImageUrl)) {
-                    mainImageEntity = newImageEntity;
-                    break;
-                }
-            }
-        }
+        //find main image (the first image in the provided set)
+        String mainImageUrl = newEvent.getImageUrls().iterator().next();
+        ImageEntity mainImageEntity = extractMainImage(newImageEntities, mainImageUrl);
 
         currEvent.setMainImage(mainImageEntity);
         currEvent.getImages().clear();
         currEvent.getImages().addAll(newImageEntities);
+    }
+
+
+    /**
+     * Finds imageEntity with specified url, removes this entity from imageEntities and returns it.
+     *
+     * @throws ImageUrlNotFoundException couldn't find image entity with such url
+     */
+    private ImageEntity extractMainImage(Set<ImageEntity> imageEntities, String mainImageUrl) {
+        ImageEntity mainImageEntity = null;
+
+        for (ImageEntity newImageEntity : imageEntities) {
+            if (newImageEntity.getUrl().equals(mainImageUrl)) {
+                mainImageEntity = newImageEntity;
+                break;
+            }
+        }
+        if (mainImageEntity == null) {
+            throw new ImageUrlNotFoundException("Main image url not found: " + mainImageUrl);
+        }
+        imageEntities.remove(mainImageEntity);
+        return mainImageEntity;
     }
 
     /**
@@ -136,10 +157,12 @@ public class EventService {
      */
     private void deleteOldEventImagesFromFileSystem(EventEntity currEvent, Set<ImageEntity> newImageEntities) {
         Set<ImageEntity> prevImageEntities = new HashSet<>(currEvent.getImages());
-        prevImageEntities.add(currEvent.getMainImage());
+        if (currEvent.getMainImage() != null) {
+            prevImageEntities.add(currEvent.getMainImage());
+        }
         prevImageEntities.removeAll(newImageEntities);
         if (!prevImageEntities.isEmpty()) {
-            imageService.deleteImages(prevImageEntities);
+            imageService.deleteImagesFromFileSystem(prevImageEntities);
         }
     }
 
@@ -215,15 +238,17 @@ public class EventService {
 
     /**
      * @param main specify if this image is main or not
-     * @throws EventNotFoundException                                                           event with this id is not found
-     * @throws UnsupportedOperationException                                                    content type of provided file is null or unsupported
+     * @throws EventNotFoundException                                                     event with this id is not found
+     * @throws UnsupportedOperationException                                              content type of provided file is null or unsupported
      * @throws com.example.polzunovfeastserver.image.exception.FailedToSaveImageException cannot save image
      */
     public String addEventImage(Long id, MultipartFile image, Boolean main) {
         EventEntity eventEntity = getEntityById(id);
         ImageEntity imageEntity = imageService.addImage(image);
         if (main) {
-            eventEntity.getImages().add(eventEntity.getMainImage());
+            if (eventEntity.getMainImage() != null) {
+                eventEntity.getImages().add(eventEntity.getMainImage());
+            }
             eventEntity.setMainImage(imageEntity);
         } else {
             eventEntity.getImages().add(imageEntity);

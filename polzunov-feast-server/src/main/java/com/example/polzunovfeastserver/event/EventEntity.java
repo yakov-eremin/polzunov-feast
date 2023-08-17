@@ -1,9 +1,9 @@
 package com.example.polzunovfeastserver.event;
 
 import com.example.polzunovfeastserver.category.CategoryEntity;
-import com.example.polzunovfeastserver.image.ImageEntity;
 import com.example.polzunovfeastserver.event.util.table_key.EventCategoriesTableKeys;
 import com.example.polzunovfeastserver.event.util.table_key.EventsTableKeys;
+import com.example.polzunovfeastserver.image.ImageEntity;
 import com.example.polzunovfeastserver.image.util.ImagesTableKeys;
 import com.example.polzunovfeastserver.place.PlaceEntity;
 import jakarta.persistence.*;
@@ -67,7 +67,7 @@ public class EventEntity {
 
     private int ageLimit;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(
             name = "main_image_id",
             foreignKey = @ForeignKey(name = EventsTableKeys.FOREIGN_MAIN_IMAGE_URL, value = CONSTRAINT)
@@ -75,7 +75,7 @@ public class EventEntity {
     private ImageEntity mainImage;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(
             name = "event_id",
             foreignKey = @ForeignKey(name = ImagesTableKeys.FOREIGN_EVENT, value = CONSTRAINT)

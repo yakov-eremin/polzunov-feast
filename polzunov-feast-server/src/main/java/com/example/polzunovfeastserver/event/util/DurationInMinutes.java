@@ -52,16 +52,16 @@ public @interface DurationInMinutes {
      * <br>
      * default = 0
      */
-    String min() default "0";
+    int min() default 0;
 
     /**
      * Maximum duration in minutes
      * <br>
      * default = 1440 (24 hours)
      */
-    String max() default "1440";
+    int max() default 1440;
 
-    String message() default "duration is not valid";
+    String message() default "duration was %d min, but must be in range [%d, %d]";
 
     Class<?>[] groups() default {};
 
@@ -78,17 +78,11 @@ public @interface DurationInMinutes {
         public void initialize(DurationInMinutes constraintAnnotation) {
             startField = constraintAnnotation.startField();
             endField = constraintAnnotation.endField();
-            String minStr = constraintAnnotation.min();
-            String maxStr = constraintAnnotation.max();
-            try {
-                min = Integer.parseInt(minStr);
-                max = Integer.parseInt(maxStr);
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException(format("min/max must be integers, min='%s', max='%s'", minStr, maxStr), e);
-            }
+            min = constraintAnnotation.min();
+            max = constraintAnnotation.max();
 
             if (min < 0 || max < 0) {
-                throw new IllegalArgumentException(format("min/max must be positive, min=%d, max=%d", min, max));
+                throw new IllegalArgumentException(format("min and max must be positive, min=%d, max=%d", min, max));
             }
 
             if (min > max) {
@@ -114,6 +108,11 @@ public @interface DurationInMinutes {
             OffsetDateTime endDateTime = OffsetDateTime.parse(end.toString());
 
             long duration = Duration.between(startDateTime, endDateTime).toMinutes();
+            String message = format(context.getDefaultConstraintMessageTemplate(), duration, min, max);
+            context.buildConstraintViolationWithTemplate(message)
+                    .addConstraintViolation()
+                    .disableDefaultConstraintViolation();
+
             return duration >= min && duration <= max;
         }
     }

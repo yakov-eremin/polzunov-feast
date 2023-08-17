@@ -47,7 +47,7 @@ public class ImageService {
     /**
      * @throws ImageUrlNotFoundException some image urls were not found
      */
-    public Set<ImageEntity> findEntitiesByUrls(Set<String> urls) {
+    public Set<ImageEntity> findAllEntitiesByUrls(Set<String> urls) {
         urls = new HashSet<>(urls);
         Set<ImageEntity> imageEntities = imageRepo.findAllByUrl(urls);
         urls.removeAll(imageEntities.stream().map(ImageEntity::getUrl).collect(toSet()));
@@ -58,16 +58,12 @@ public class ImageService {
     }
 
     /**
-     * Deletes images in the file system and from db.
+     * Deletes images from the file system, NOT from the database.
      *
      * @throws FailedToDeleteImageException cannot delete image
      */
-    public void deleteImages(Set<ImageEntity> imageEntities) {
+    public void deleteImagesFromFileSystem(Set<ImageEntity> imageEntities) {
         for (ImageEntity imageEntity : imageEntities) {
-            if (imageEntity == null) {
-                continue;
-            }
-            imageRepo.deleteById(imageEntity.getId());
             Path imagePath = Paths.get(getAbsoluteStaticDataPath() + imageEntity.getPath());
             try {
                 Files.deleteIfExists(imagePath);
