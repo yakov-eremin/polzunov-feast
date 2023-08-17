@@ -1,6 +1,6 @@
 package com.example.polzunovfeastserver.user.entity;
 
-import com.example.polzunovfeastserver.user.uitl.UserTableKeys;
+import com.example.polzunovfeastserver.user.uitl.UsersTableKeys;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,8 +13,8 @@ import java.util.List;
 @Table(
         name = "users",
         uniqueConstraints = {
-                @UniqueConstraint(name = UserTableKeys.UNIQUE_EMAIL, columnNames = "email"),
-                @UniqueConstraint(name = UserTableKeys.UNIQUE_PHONE, columnNames = "phone")
+                @UniqueConstraint(name = UsersTableKeys.UNIQUE_EMAIL, columnNames = "email"),
+                @UniqueConstraint(name = UsersTableKeys.UNIQUE_PHONE, columnNames = "phone")
         }
 )
 @Entity

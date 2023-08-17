@@ -1,11 +1,11 @@
-package com.example.polzunovfeastserver.event.entity;
+package com.example.polzunovfeastserver.event;
 
-import com.example.polzunovfeastserver.category.entity.CategoryEntity;
-import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
+import com.example.polzunovfeastserver.category.CategoryEntity;
+import com.example.polzunovfeastserver.image.ImageEntity;
 import com.example.polzunovfeastserver.event.util.table_key.EventCategoriesTableKeys;
-import com.example.polzunovfeastserver.event.util.table_key.EventTableKeys;
-import com.example.polzunovfeastserver.event.image.util.table_key.ImageTableKeys;
-import com.example.polzunovfeastserver.place.entity.PlaceEntity;
+import com.example.polzunovfeastserver.event.util.table_key.EventsTableKeys;
+import com.example.polzunovfeastserver.image.util.ImagesTableKeys;
+import com.example.polzunovfeastserver.place.PlaceEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -44,7 +44,7 @@ public class EventEntity {
     @ManyToOne
     @JoinColumn(
             name = "place_id",
-            foreignKey = @ForeignKey(name = EventTableKeys.FOREIGN_PLACE, value = CONSTRAINT)
+            foreignKey = @ForeignKey(name = EventsTableKeys.FOREIGN_PLACE, value = CONSTRAINT)
     )
     private PlaceEntity place;
 
@@ -70,7 +70,7 @@ public class EventEntity {
     @OneToOne
     @JoinColumn(
             name = "main_image_id",
-            foreignKey = @ForeignKey(name = EventTableKeys.FOREIGN_MAIN_IMAGE_URL, value = CONSTRAINT)
+            foreignKey = @ForeignKey(name = EventsTableKeys.FOREIGN_MAIN_IMAGE_URL, value = CONSTRAINT)
     )
     private ImageEntity mainImage;
 
@@ -78,7 +78,7 @@ public class EventEntity {
     @OneToMany
     @JoinColumn(
             name = "event_id",
-            foreignKey = @ForeignKey(name = ImageTableKeys.FOREIGN_EVENT, value = CONSTRAINT)
+            foreignKey = @ForeignKey(name = ImagesTableKeys.FOREIGN_EVENT, value = CONSTRAINT)
     )
     private Set<ImageEntity> images;
 }

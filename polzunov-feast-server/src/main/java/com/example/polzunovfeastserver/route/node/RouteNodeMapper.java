@@ -1,7 +1,6 @@
 package com.example.polzunovfeastserver.route.node;
 
-import com.example.polzunovfeastserver.event.entity.EventEntity;
-import com.example.polzunovfeastserver.route.node.entity.RouteNodeEntity;
+import com.example.polzunovfeastserver.event.EventEntity;
 import org.openapitools.model.EventWithPlaceResponse;
 import org.openapitools.model.RouteNodeWithEventResponse;
 
@@ -11,9 +10,7 @@ public final class RouteNodeMapper {
     }
 
     public static RouteNodeWithEventResponse toRouteNodeWithEvent(EventWithPlaceResponse eventWithPlaceResponse) {
-        RouteNodeWithEventResponse routeNode = new RouteNodeWithEventResponse();
-        routeNode.setEvent(eventWithPlaceResponse);
-        return routeNode;
+        return new RouteNodeWithEventResponse(eventWithPlaceResponse);
     }
 
     public static RouteNodeEntity toRouteNodeEntity(Long id, EventEntity eventEntity) {

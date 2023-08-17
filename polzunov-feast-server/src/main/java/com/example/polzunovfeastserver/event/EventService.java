@@ -2,15 +2,14 @@ package com.example.polzunovfeastserver.event;
 
 import com.example.polzunovfeastserver.category.CategoryMapper;
 import com.example.polzunovfeastserver.category.CategoryService;
-import com.example.polzunovfeastserver.category.entity.CategoryEntity;
-import com.example.polzunovfeastserver.event.entity.EventEntity;
+import com.example.polzunovfeastserver.category.CategoryEntity;
 import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
 import com.example.polzunovfeastserver.event.exception.EventHasAssociatedRoutesException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
-import com.example.polzunovfeastserver.event.image.ImageService;
-import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
+import com.example.polzunovfeastserver.image.ImageService;
+import com.example.polzunovfeastserver.image.ImageEntity;
 import com.example.polzunovfeastserver.place.PlaceService;
-import com.example.polzunovfeastserver.place.entity.PlaceEntity;
+import com.example.polzunovfeastserver.place.PlaceEntity;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import com.example.polzunovfeastserver.route.node.RouteNodeEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ import java.util.Set;
 
 import static com.example.polzunovfeastserver.event.EventMapper.toEventEntity;
 import static com.example.polzunovfeastserver.event.EventMapper.toEventWithPlaceResponse;
-import static com.example.polzunovfeastserver.event.image.ImageMapper.toImageUrls;
+import static com.example.polzunovfeastserver.image.ImageMapper.toImageUrls;
 import static com.example.polzunovfeastserver.event.util.EventEntitySpecifications.where;
 import static com.example.polzunovfeastserver.place.PlaceMapper.toPlace;
 import static java.lang.String.format;
@@ -70,7 +69,7 @@ public class EventService {
      * @throws PlaceNotFoundException                                                          place not found
      * @throws EventAlreadyStartedException                                                    It's already started, or it's in someone's route.
      *                                                                                         This checks will not be performed if event is canceled
-     * @throws com.example.polzunovfeastserver.event.image.exception.ImageUrlNotFoundException some image urls were not found
+     * @throws com.example.polzunovfeastserver.image.exception.ImageUrlNotFoundException some image urls were not found
      */
     public EventWithPlaceResponse updateEventById(Event event) {
         EventEntity eventEntity = getEntityById(event.getId());
@@ -105,8 +104,8 @@ public class EventService {
     }
 
     /**
-     * @throws com.example.polzunovfeastserver.event.image.exception.ImageUrlNotFoundException    some image urls were not found
-     * @throws com.example.polzunovfeastserver.event.image.exception.FailedToDeleteImageException cannot delete some images from file system
+     * @throws com.example.polzunovfeastserver.image.exception.ImageUrlNotFoundException    some image urls were not found
+     * @throws com.example.polzunovfeastserver.image.exception.FailedToDeleteImageException cannot delete some images from file system
      */
     private void updateEventImages(EventEntity currEvent, Event newEvent) {
         Set<ImageEntity> newImageEntities = imageService.findEntitiesByUrls(newEvent.getImageUrls()); //find all new images
@@ -133,7 +132,7 @@ public class EventService {
     /**
      * Deletes images that are not in a new image set from the file system
      *
-     * @throws com.example.polzunovfeastserver.event.image.exception.FailedToDeleteImageException cannot delete some images
+     * @throws com.example.polzunovfeastserver.image.exception.FailedToDeleteImageException cannot delete some images
      */
     private void deleteOldEventImagesFromFileSystem(EventEntity currEvent, Set<ImageEntity> newImageEntities) {
         Set<ImageEntity> prevImageEntities = new HashSet<>(currEvent.getImages());
@@ -218,7 +217,7 @@ public class EventService {
      * @param main specify if this image is main or not
      * @throws EventNotFoundException                                                           event with this id is not found
      * @throws UnsupportedOperationException                                                    content type of provided file is null or unsupported
-     * @throws com.example.polzunovfeastserver.event.image.exception.FailedToSaveImageException cannot save image
+     * @throws com.example.polzunovfeastserver.image.exception.FailedToSaveImageException cannot save image
      */
     public String addEventImage(Long id, MultipartFile image, Boolean main) {
         EventEntity eventEntity = getEntityById(id);

@@ -1,7 +1,7 @@
 package com.example.polzunovfeastserver.category.util;
 
-public final class CategoryTableKeys {
-    private CategoryTableKeys() {
+public final class CategoriesTableKeys {
+    private CategoriesTableKeys() {
         throw new UnsupportedOperationException("This is an utility class");
     }
 

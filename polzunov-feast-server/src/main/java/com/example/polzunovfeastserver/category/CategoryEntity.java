@@ -1,6 +1,6 @@
-package com.example.polzunovfeastserver.category.entity;
+package com.example.polzunovfeastserver.category;
 
-import com.example.polzunovfeastserver.category.util.CategoryTableKeys;
+import com.example.polzunovfeastserver.category.util.CategoriesTableKeys;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Table(
         name = "categories",
-        uniqueConstraints = @UniqueConstraint(name = CategoryTableKeys.UNIQUE_NAME, columnNames = "category_name")
+        uniqueConstraints = @UniqueConstraint(name = CategoriesTableKeys.UNIQUE_NAME, columnNames = "category_name")
 )
 @Entity
 @Data

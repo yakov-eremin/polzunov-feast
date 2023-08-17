@@ -1,6 +1,5 @@
 package com.example.polzunovfeastserver.category;
 
-import com.example.polzunovfeastserver.category.entity.CategoryEntity;
 import org.openapitools.model.Category;
 
 public final class CategoryMapper {

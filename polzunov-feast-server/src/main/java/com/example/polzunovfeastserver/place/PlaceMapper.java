@@ -1,6 +1,5 @@
 package com.example.polzunovfeastserver.place;
 
-import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import org.openapitools.model.Place;
 
 public final class PlaceMapper {

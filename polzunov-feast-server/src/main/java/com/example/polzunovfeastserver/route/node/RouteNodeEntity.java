@@ -1,7 +1,7 @@
-package com.example.polzunovfeastserver.route.node.entity;
+package com.example.polzunovfeastserver.route.node;
 
-import com.example.polzunovfeastserver.event.entity.EventEntity;
-import com.example.polzunovfeastserver.route.node.util.RouteNodeTableKeys;
+import com.example.polzunovfeastserver.event.EventEntity;
+import com.example.polzunovfeastserver.route.node.util.RouteNodesTableKeys;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +22,7 @@ public class RouteNodeEntity {
     @ManyToOne
     @JoinColumn(
             name = "event_id",
-            foreignKey = @ForeignKey(name = RouteNodeTableKeys.FOREIGN_EVENT, value = ConstraintMode.CONSTRAINT)
+            foreignKey = @ForeignKey(name = RouteNodesTableKeys.FOREIGN_EVENT, value = ConstraintMode.CONSTRAINT)
     )
     private EventEntity event;
 }

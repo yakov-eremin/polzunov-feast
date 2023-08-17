@@ -1,6 +1,5 @@
 package com.example.polzunovfeastserver.category;
 
-import com.example.polzunovfeastserver.category.entity.CategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

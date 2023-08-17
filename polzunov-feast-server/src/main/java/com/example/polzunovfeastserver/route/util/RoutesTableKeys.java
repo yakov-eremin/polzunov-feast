@@ -1,8 +1,8 @@
 package com.example.polzunovfeastserver.route.util;
 
-public final class RouteTableKeys {
+public final class RoutesTableKeys {
 
-    private RouteTableKeys() {
+    private RoutesTableKeys() {
         throw new UnsupportedOperationException("This is an utility class");
     }
 

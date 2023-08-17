@@ -1,7 +1,7 @@
-package com.example.polzunovfeastserver.event.image.util.table_key;
+package com.example.polzunovfeastserver.image.util;
 
-public final class ImageTableKeys {
-    private ImageTableKeys() {
+public final class ImagesTableKeys {
+    private ImagesTableKeys() {
         throw new UnsupportedOperationException("This is an utility class");
     }
 

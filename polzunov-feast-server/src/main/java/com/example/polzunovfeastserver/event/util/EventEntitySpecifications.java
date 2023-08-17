@@ -1,7 +1,7 @@
 package com.example.polzunovfeastserver.event.util;
 
 import com.example.polzunovfeastserver.event.EventParameter;
-import com.example.polzunovfeastserver.event.entity.EventEntity;
+import com.example.polzunovfeastserver.event.EventEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.OffsetDateTime;

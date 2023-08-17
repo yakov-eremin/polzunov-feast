@@ -1,7 +1,7 @@
 package com.example.polzunovfeastserver.event.util.table_key;
 
-public final class EventTableKeys {
-    private EventTableKeys() {
+public final class EventsTableKeys {
+    private EventsTableKeys() {
         throw new UnsupportedOperationException("This is an utility class");
     }
 

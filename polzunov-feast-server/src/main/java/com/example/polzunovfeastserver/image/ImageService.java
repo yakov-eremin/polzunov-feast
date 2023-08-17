@@ -1,10 +1,9 @@
-package com.example.polzunovfeastserver.event.image;
+package com.example.polzunovfeastserver.image;
 
-import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
-import com.example.polzunovfeastserver.event.image.exception.FailedToDeleteImageException;
-import com.example.polzunovfeastserver.event.image.exception.FailedToSaveImageException;
-import com.example.polzunovfeastserver.event.image.exception.ImageUrlNotFoundException;
-import com.example.polzunovfeastserver.event.image.exception.UnsupportedImageTypeException;
+import com.example.polzunovfeastserver.image.exception.FailedToDeleteImageException;
+import com.example.polzunovfeastserver.image.exception.FailedToSaveImageException;
+import com.example.polzunovfeastserver.image.exception.ImageUrlNotFoundException;
+import com.example.polzunovfeastserver.image.exception.UnsupportedImageTypeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.example.polzunovfeastserver.route.node.util;
 
-public final class RouteNodeTableKeys {
-    private RouteNodeTableKeys() {
+public final class RouteNodesTableKeys {
+    private RouteNodesTableKeys() {
         throw new UnsupportedOperationException("This is an utility class");
     }
 

@@ -1,9 +1,8 @@
 package com.example.polzunovfeastserver.event;
 
-import com.example.polzunovfeastserver.category.entity.CategoryEntity;
-import com.example.polzunovfeastserver.event.entity.EventEntity;
-import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
-import com.example.polzunovfeastserver.place.entity.PlaceEntity;
+import com.example.polzunovfeastserver.category.CategoryEntity;
+import com.example.polzunovfeastserver.image.ImageEntity;
+import com.example.polzunovfeastserver.place.PlaceEntity;
 import org.openapitools.model.Category;
 import org.openapitools.model.Event;
 import org.openapitools.model.EventWithPlaceResponse;

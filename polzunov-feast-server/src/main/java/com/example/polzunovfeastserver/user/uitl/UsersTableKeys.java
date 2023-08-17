@@ -1,7 +1,7 @@
 package com.example.polzunovfeastserver.user.uitl;
 
-public class UserTableKeys {
-    private UserTableKeys() {
+public class UsersTableKeys {
+    private UsersTableKeys() {
         throw new UnsupportedOperationException("This is an utility class");
     }
 

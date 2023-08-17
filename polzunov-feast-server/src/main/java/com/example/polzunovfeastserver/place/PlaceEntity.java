@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.place.entity;
+package com.example.polzunovfeastserver.place;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;

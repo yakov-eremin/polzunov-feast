@@ -1,7 +1,6 @@
 package com.example.polzunovfeastserver.place;
 
 import com.example.polzunovfeastserver.event.EventEntityRepository;
-import com.example.polzunovfeastserver.place.entity.PlaceEntity;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import com.example.polzunovfeastserver.place.excepition.PlaceHasAssociatedEventsException;
 import lombok.RequiredArgsConstructor;

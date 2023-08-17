@@ -1,6 +1,4 @@
-package com.example.polzunovfeastserver.event.image;
-
-import com.example.polzunovfeastserver.event.image.entity.ImageEntity;
+package com.example.polzunovfeastserver.image;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

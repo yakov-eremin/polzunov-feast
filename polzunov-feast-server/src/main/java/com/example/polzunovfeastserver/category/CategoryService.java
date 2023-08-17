@@ -1,6 +1,5 @@
 package com.example.polzunovfeastserver.category;
 
-import com.example.polzunovfeastserver.category.entity.CategoryEntity;
 import com.example.polzunovfeastserver.category.exception.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.model.Category;

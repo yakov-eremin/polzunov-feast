@@ -1,17 +1,15 @@
 package com.example.polzunovfeastserver.route;
 
 import com.example.polzunovfeastserver.category.CategoryMapper;
+import com.example.polzunovfeastserver.event.EventEntity;
 import com.example.polzunovfeastserver.event.EventEntityRepository;
 import com.example.polzunovfeastserver.event.EventMapper;
-import com.example.polzunovfeastserver.event.entity.EventEntity;
 import com.example.polzunovfeastserver.event.exception.EventAlreadyStartedException;
 import com.example.polzunovfeastserver.event.exception.EventCanceledException;
 import com.example.polzunovfeastserver.event.exception.EventNotFoundException;
 import com.example.polzunovfeastserver.event.exception.EventsOverlapException;
-import com.example.polzunovfeastserver.event.image.ImageMapper;
-import com.example.polzunovfeastserver.route.entity.RouteEntity;
-import com.example.polzunovfeastserver.route.exception.RouteUpdateRestrictedException;
-import com.example.polzunovfeastserver.route.node.entity.RouteNodeEntity;
+import com.example.polzunovfeastserver.image.ImageMapper;
+import com.example.polzunovfeastserver.route.node.RouteNodeEntity;
 import com.example.polzunovfeastserver.user.UserService;
 import com.example.polzunovfeastserver.user.entity.UserEntity;
 import com.example.polzunovfeastserver.user.exception.UserNotFoundException;
@@ -70,9 +68,11 @@ public class RouteService {
      * If route contains duplicated events, it will be ignored and route will be updated.
      *
      * @return Route with nodes sorted by events start time asc
-     * @throws UserNotFoundException          user doesn't exist
-     * @throws EventNotFoundException         some events not found
-     * @throws RouteUpdateRestrictedException events canceled, have already started or overlap each other
+     * @throws UserNotFoundException        user doesn't exist
+     * @throws EventNotFoundException       some events not found
+     * @throws EventCanceledException       some events are canceled
+     * @throws EventAlreadyStartedException some events have already started
+     * @throws EventsOverlapException       some events overlap each other
      */
     public RouteWithEventResponse updateRouteByOwnerId(Route route, Long ownerId) {
         UserEntity owner = userService.getEntityById(ownerId);

@@ -1,14 +1,14 @@
-package com.example.polzunovfeastserver.event.image.entity;
+package com.example.polzunovfeastserver.image;
 
-import com.example.polzunovfeastserver.event.image.util.table_key.ImageTableKeys;
+import com.example.polzunovfeastserver.image.util.ImagesTableKeys;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Table(
         name = "images",
         uniqueConstraints = {
-                @UniqueConstraint(name = ImageTableKeys.UNIQUE_URL, columnNames = "url"),
-                @UniqueConstraint(name = ImageTableKeys.UNIQUE_PATH, columnNames = "path")
+                @UniqueConstraint(name = ImagesTableKeys.UNIQUE_URL, columnNames = "url"),
+                @UniqueConstraint(name = ImagesTableKeys.UNIQUE_PATH, columnNames = "path")
         }
 )
 @Entity

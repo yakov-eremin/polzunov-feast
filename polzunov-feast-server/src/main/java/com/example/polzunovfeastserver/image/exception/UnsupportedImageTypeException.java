@@ -1,4 +1,4 @@
-package com.example.polzunovfeastserver.event.image.exception;
+package com.example.polzunovfeastserver.image.exception;
 
 public class UnsupportedImageTypeException extends RuntimeException {
     public UnsupportedImageTypeException(String message) {
