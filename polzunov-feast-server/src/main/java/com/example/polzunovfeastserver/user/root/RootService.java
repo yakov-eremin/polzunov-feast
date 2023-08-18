@@ -1,6 +1,7 @@
 package com.example.polzunovfeastserver.user.root;
 
-import com.example.polzunovfeastserver.security.jwt.TokenService;
+import com.example.polzunovfeastserver.notification.NotificationService;
+import com.example.polzunovfeastserver.security.jwt.JwtService;
 import com.example.polzunovfeastserver.user.UserEntityRepository;
 import com.example.polzunovfeastserver.user.UserMapper;
 import com.example.polzunovfeastserver.user.entity.UserEntity;
@@ -21,13 +22,18 @@ import static java.lang.String.format;
 public class RootService {
 
     private final UserEntityRepository userRepo;
-    private final TokenService tokenService;
+    private final JwtService jwtService;
     private final PasswordEncoder encoder;
+    private final NotificationService notificationService;
 
     public Token signUpAdmin(User admin) {
         admin.setPassword(encoder.encode(admin.getPassword()));
         UserEntity userEntity = UserMapper.toUserEntity(admin, null, ADMIN);
-        return tokenService.generateToken(userRepo.save(userEntity));
+        userEntity = userRepo.save(userEntity);
+        if (admin.getNotificationToken().isPresent()) {
+            notificationService.addNotificationToken(userEntity, admin.getNotificationToken().get());
+        }
+        return jwtService.generateToken(userEntity);
     }
 
     public User updateAdminByUsername(long id, User admin) {

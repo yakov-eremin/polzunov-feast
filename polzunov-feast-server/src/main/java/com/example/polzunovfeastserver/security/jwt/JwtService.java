@@ -16,7 +16,7 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
 @RequiredArgsConstructor
-public class TokenService {
+public class JwtService {
 
     private static final String TOKEN_TYPE = "Bearer";
     private static final int MINUTES_OF_TOKEN_LIFETIME = 60;

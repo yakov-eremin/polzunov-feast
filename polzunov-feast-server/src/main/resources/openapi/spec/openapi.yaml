@@ -220,6 +220,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /user/logout:
+    delete:
+      summary: Deletes user's notification token
+      description: If notification token not found, it will be ignored
+      operationId: logoutUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+      responses:
+        200:
+          description: User logged out
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - user not found
+        500:
+          $ref: '#/components/responses/InternalServerError'
 
   /user:
     put:
@@ -1170,6 +1194,15 @@ components:
           type: string
           format: email
           description: Must be unique
+        notificationToken:
+          type: string
+          nullable: true
+          writeOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)'
+          description: |
+            Token for push notifications. Each device should have it's own token.
+             One user cannot have the same token twice. If you provide a token that this user already has, it will be ignored.
+
     Credentials:
       type: object
       required:
@@ -1189,6 +1222,22 @@ components:
           writeOnly: true
           x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)'
           description: Must contain at least one letter, one number and one special character
+        notificationToken:
+          type: string
+          nullable: true
+          writeOnly: true
+          description: |
+            Token for push notifications. Each device should have it's own token.
+             One user cannot have the same token twice. If you provide a token that this user already has, it will be ignored.
+
+    LogoutRequest:
+      type: object
+      properties:
+        notificationToken:
+          type: string
+          nullable: true
+          description: Token for push notifications. User will no longer receive push on device with this token
+
 
     Event:
       type: object

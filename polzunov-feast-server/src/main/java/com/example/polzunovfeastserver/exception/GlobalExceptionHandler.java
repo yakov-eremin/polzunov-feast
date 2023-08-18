@@ -9,7 +9,6 @@ import com.example.polzunovfeastserver.image.exception.UnsupportedImageTypeExcep
 import com.example.polzunovfeastserver.place.excepition.PlaceHasAssociatedEventsException;
 import com.example.polzunovfeastserver.place.excepition.PlaceNotFoundException;
 import com.example.polzunovfeastserver.user.exception.UserNotFoundException;
-import com.example.polzunovfeastserver.user.exception.WrongUserPasswordException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.model.ErrorResponse;
@@ -18,6 +17,8 @@ import org.openapitools.model.HttpAttributeValidationViolation;
 import org.openapitools.model.ObjectValidationViolation;
 import org.springframework.http.*;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -37,12 +38,23 @@ import static org.springframework.http.HttpStatus.*;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     //---user
-    @ExceptionHandler(WrongUserPasswordException.class)
+
+    /**
+     * {@link BadCredentialsException} can be thrown by {@link org.springframework.security.authentication.AuthenticationManager}
+     * when authenticating user.
+     */
+    @ExceptionHandler({BadCredentialsException.class})
     @ResponseStatus(UNAUTHORIZED)
-    public ErrorResponse onWrongPasswordException(WrongUserPasswordException e) {
-        String message = "Wrong password";
-        log.warn(message, e);
-        return new ErrorResponse(message, ErrorResponse.CodeEnum.WRONG_PASSWORD);
+    public ErrorResponse onBadCredentialsException(BadCredentialsException e) {
+        log.warn(e.getMessage(), e);
+        return new ErrorResponse(e.getMessage(), ErrorResponse.CodeEnum.WRONG_PASSWORD);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(NOT_FOUND)
+    public ErrorResponse onUsernameNotFoundException(UsernameNotFoundException e) {
+        log.warn(e.getMessage(), e);
+        return new ErrorResponse(e.getMessage(), ErrorResponse.CodeEnum.USER_NOT_FOUND);
     }
 
     @ExceptionHandler(UserNotFoundException.class)

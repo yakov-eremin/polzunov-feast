@@ -27,6 +27,7 @@ public final class UserMapper {
                 userEntity.getEmail()
         );
         user.setPhone(userEntity.getPhone());
+        user.setPassword(userEntity.getPassword());
         return user;
     }
 }

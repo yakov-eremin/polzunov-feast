@@ -19,7 +19,7 @@ public class RouteController implements RouteApi {
 
     @Override
     public ResponseEntity<RouteWithEventResponse> getRouteByUserId() {
-        Long userId = AuthUtils.extractUserIdFromToken();
+        Long userId = AuthUtils.extractUserIdFromJwt();
         RouteWithEventResponse route = routeService.getRouteByOwnerId(userId);
         log.info("Route owned by user with id={} returned", userId);
         return ResponseEntity.ok(route);
@@ -27,7 +27,7 @@ public class RouteController implements RouteApi {
 
     @Override
     public ResponseEntity<RouteWithEventResponse> updateRouteByUserId(Route route) {
-        Long userId = AuthUtils.extractUserIdFromToken();
+        Long userId = AuthUtils.extractUserIdFromJwt();
         RouteWithEventResponse routeWithEventResponse = routeService.updateRouteByOwnerId(route, userId);
         log.info("Route owned by user with id={} updated", userId);
         return ResponseEntity.ok(routeWithEventResponse);

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openapitools.api.UserApi;
 import org.openapitools.model.Credentials;
+import org.openapitools.model.LogoutRequest;
 import org.openapitools.model.Token;
 import org.openapitools.model.User;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,16 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public ResponseEntity<Void> logoutUser(LogoutRequest logoutRequest) {
+        long id = AuthUtils.extractUserIdFromJwt();
+        userService.logoutById(id, logoutRequest);
+        log.info("User with id={} logged out", id);
+        return new ResponseEntity<>(OK);
+    }
+
+    @Override
     public ResponseEntity<User> updateUser(User user) {
-        long id = AuthUtils.extractUserIdFromToken();
+        long id = AuthUtils.extractUserIdFromJwt();
         User updatedUser = userService.update(user, id);
         log.info("User with email '{}' updated", updatedUser.getEmail());
         return new ResponseEntity<>(updatedUser, OK);
@@ -45,7 +54,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<User> getUser() {
-        long id = AuthUtils.extractUserIdFromToken();
+        long id = AuthUtils.extractUserIdFromJwt();
         User user = userService.getById(id);
         log.info("User with id '{}' fetched", user.getId());
         return new ResponseEntity<>(user, OK);
@@ -53,7 +62,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<Void> deleteUser() {
-        long id = AuthUtils.extractUserIdFromToken();
+        long id = AuthUtils.extractUserIdFromJwt();
         userService.deleteById(id);
         log.info("User with id '{}' deleted", id);
         return new ResponseEntity<>(OK);

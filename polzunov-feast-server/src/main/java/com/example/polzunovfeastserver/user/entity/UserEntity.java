@@ -24,6 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
@@ -46,7 +47,7 @@ public class UserEntity implements UserDetails {
     }
 
     /**
-     * This method needs to implemented even though our users do not have usernames, so it returns email just like {@link #getEmail()}.
+     * This method needs to be implemented even though our users do not have usernames, so it returns email just like {@link #getEmail()}.
      *
      * @return email of this user
      */

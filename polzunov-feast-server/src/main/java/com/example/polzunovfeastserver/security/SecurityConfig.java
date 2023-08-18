@@ -1,5 +1,6 @@
 package com.example.polzunovfeastserver.security;
 
+import com.example.polzunovfeastserver.user.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,12 +8,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -121,6 +127,23 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        var authProvider = new DaoAuthenticationProvider(passwordEncoder);
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setHideUserNotFoundExceptions(false);
+        return new ProviderManager(authProvider);
+    }
+
+    /**
+     * Our users don't have usernames, so userDetailsServer will find them by email
+     */
+    @Bean
+    UserDetailsService userDetailsService(UserEntityRepository userRepo) {
+        return email -> userRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with email '%s' not found", email)));
     }
 
     @Bean

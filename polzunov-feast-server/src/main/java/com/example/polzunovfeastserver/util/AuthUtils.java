@@ -9,7 +9,7 @@ public final class AuthUtils {
         throw new UnsupportedOperationException("This is an utility class");
     }
 
-    public static long extractUserIdFromToken() throws CorruptedTokenException{
+    public static long extractUserIdFromJwt() throws CorruptedTokenException{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String idStr = authentication.getName();
         try {
