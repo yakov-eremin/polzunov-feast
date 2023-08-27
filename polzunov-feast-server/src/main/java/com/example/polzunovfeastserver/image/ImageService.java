@@ -51,7 +51,7 @@ public class ImageService {
         urls = new HashSet<>(urls);
         Set<ImageEntity> imageEntities = imageRepo.findAllByUrl(urls);
         urls.removeAll(imageEntities.stream().map(ImageEntity::getUrl).collect(toSet()));
-        if (urls.size() > 0) {
+        if (!urls.isEmpty()) {
             throw new ImageUrlNotFoundException(format("Some image urls were not found: %s", urls));
         }
         return imageEntities;

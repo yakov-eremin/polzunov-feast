@@ -221,9 +221,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
   /user/logout:
-    delete:
-      summary: Deletes user's notification token
-      description: If notification token not found, it will be ignored
+    put:
+      summary: Log out user
+      description: This operation just deletes user's notification token.
+        JWT stays valid and client can make requests with. 
+        It's client's responsibility to purge the token if user wishes to log out.
       operationId: logoutUser
       requestBody:
         required: true
@@ -956,9 +958,10 @@ paths:
   ############################################ route ###################################################################
   /route:
     put:
-      summary: Update user's route. If there is no route, it will be created and updated.
+      summary: Update user's route
       description: |
-        Route's nodes will be ordered by events' start time from earliest to latest.
+        - If there is no route, it will be created and updated.
+        - Route's nodes will be ordered by events' start time from earliest to latest.
         
          **Note:** if nodes contains duplicated event ids, duplicates will be ignored
       operationId: updateRouteByUserId
@@ -1006,8 +1009,10 @@ paths:
         500:
           $ref: '#/components/responses/InternalServerError'
     get:
-      summary: Get user's route. If there is no route, it will be created and sent.
-      description: Route's nodes will be ordered by events' start time from earliest to latest
+      summary: Get user's route
+      description: |
+       - If there is no route, it will be created and sent. 
+       - Route's nodes will be ordered by events' start time from earliest to latest
       operationId: getRouteByUserId
       tags:
         - user
@@ -1200,7 +1205,7 @@ components:
           writeOnly: true
           x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)'
           description: |
-            Token for push notifications. Each device should have it's own token.
+            Token for push notifications. Each device should have its own token.
              One user cannot have the same token twice. If you provide a token that this user already has, it will be ignored.
 
     Credentials:
