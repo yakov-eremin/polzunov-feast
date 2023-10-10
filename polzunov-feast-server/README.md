@@ -4,8 +4,6 @@
 1. `java 17+`
 2. `docker 24.0.2+`, `docker-compose 1.29.2+` - if you will use only 'dev' mode and will not use static server to retrieve images, that is not necessary
 
-If you only use `dev` mode, docker and docker-compose are not required.
-
 ## Open API
 To view open api copy contents of `/src/main/resources/openapi/spec/openapi.yaml` into the [swgger editor](https://editor.swagger.io/).
 
