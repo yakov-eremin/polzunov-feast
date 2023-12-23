@@ -1,5 +1,5 @@
 import {useCallback} from 'preact/hooks';
-import {FunctionComponent, h} from 'preact';
+import {h} from 'preact';
 import {Button, Card, CardActionArea, CardActions, CardMedia, Grid, Stack} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {CloudUpload} from "@mui/icons-material";
@@ -15,7 +15,7 @@ interface ImageUploadProps {
  * @param setImages
  * @constructor
  */
-const ImageUpload: FunctionComponent<ImageUploadProps> = ({images, setImages}) => {
+const ImageUpload = ({images, setImages}: ImageUploadProps) => {
 
     const handleChange = useCallback((event: h.JSX.TargetedEvent<HTMLInputElement, Event>) => {
         if (event.target.files && event.target.files[0]) {

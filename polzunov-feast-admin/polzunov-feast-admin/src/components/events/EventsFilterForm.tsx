@@ -45,7 +45,7 @@ export function EventsFilterForm() {
 
     return (
         <form onSubmit={
-            //пока что при сабмите выбранные прараметры просто выводятся в консоль
+            //TODO отправить запрос на сервер, по аналогии с EventDialog
             handleSubmit((data) => console.log(`data: ${JSON.stringify(data)}`))
         }
               style={{

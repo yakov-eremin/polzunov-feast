@@ -2,6 +2,7 @@ import {ThemeProvider} from "@emotion/react";
 import {colors, createTheme, CssBaseline} from "@mui/material";
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {MainPage} from "./MainPage.tsx";
+import {SignInPage} from "@/components/auth/SignInPage.tsx";
 
 export function App() {
 
@@ -41,7 +42,8 @@ export function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/events" element={<MainPage/>}/>
-                    <Route path='/*' element={<Navigate to='/events' replace/>}/>
+                    <Route path="/signin" element={<SignInPage/>}/>
+                    <Route path='/*' element={<Navigate to='/signin' replace/>}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>

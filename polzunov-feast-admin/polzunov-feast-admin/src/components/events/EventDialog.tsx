@@ -25,7 +25,7 @@ import {
     UpdatePlaceByIdRequest
 } from "@/openapi/apis/AdminApi.ts";
 import {labeledInputLabelStyle} from "@/util/styles.ts";
-import ImageUpload from "@/components/commons/ImageUploadProps.tsx";
+import ImageUpload from "@/components/commons/ImageUpload.tsx";
 import {toLocalIsoString} from "@/util/utils.ts";
 
 /**
