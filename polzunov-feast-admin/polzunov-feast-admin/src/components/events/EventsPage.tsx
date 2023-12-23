@@ -35,7 +35,7 @@ export function EventsPage() {
 
             <Divider/>
 
-            <EventsTable/>
+            <EventsTable updateTableTrigger={dialogOpen}/>
         </>
     )
 }
