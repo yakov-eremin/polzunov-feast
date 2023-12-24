@@ -21,8 +21,7 @@ import {
     AddEventImageRequest,
     AddEventRequest,
     AddPlaceRequest,
-    UpdateEventByIdRequest,
-    UpdatePlaceByIdRequest
+    UpdateEventByIdRequest
 } from "@/openapi/apis/AdminApi.ts";
 import {labeledInputLabelStyle} from "@/util/styles.ts";
 import ImageUpload from "@/components/commons/ImageUpload.tsx";
@@ -274,20 +273,6 @@ export function EventDialog({action = 'create', event = undefined, ...props}:
             .catch(reason => {
                 throw new Error(`Failed to update event: ${reason}`)
             })
-
-        // //Обновляем место
-        // place.id = event.place.id
-        // const updatePlaceByIdRequest: UpdatePlaceByIdRequest = {
-        //     place: place
-        // }
-        // await adminApi.updatePlaceById(updatePlaceByIdRequest)
-        //     .then(value => {
-        //         console.log(`Updated place ${value}`)
-        //     })
-        //     //TODO show popup with error
-        //     .catch(reason => {
-        //         throw new Error(`Failed to update place: ${reason}`)
-        //     })
     }
 
     /**

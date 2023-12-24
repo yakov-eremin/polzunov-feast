@@ -17,6 +17,19 @@ tags:
     description: This operations can either be performed by every role or don't require authentication.
 
 paths:
+  ###################################### misc ##########################################################################
+  /auth/token/check:
+    get:
+      summary: Check if token is valid
+      operationId: checkAuthToken
+      responses:
+        200:
+          description: Token is valid
+        401:
+          description: Token is invalid
+        403:
+          description: Token is invalid
+
   ###################################### root ##########################################################################
   /admin/signup:
     post:
@@ -224,7 +237,7 @@ paths:
     put:
       summary: Log out user
       description: This operation just deletes user's notification token.
-        JWT stays valid and client can make requests with. 
+        JWT stays valid and client can make requests with.
         It's client's responsibility to purge the token if user wishes to log out.
       operationId: logoutUser
       requestBody:
@@ -789,8 +802,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         500:
           $ref: '#/components/responses/InternalServerError'
-      
-      
+
+
 
       ##################################### category #######################################################################
   /category:
@@ -954,7 +967,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         500:
           $ref: '#/components/responses/InternalServerError'
-  
+
   ############################################ route ###################################################################
   /route:
     put:
@@ -1011,8 +1024,8 @@ paths:
     get:
       summary: Get user's route
       description: |
-       - If there is no route, it will be created and sent. 
-       - Route's nodes will be ordered by events' start time from earliest to latest
+        - If there is no route, it will be created and sent. 
+        - Route's nodes will be ordered by events' start time from earliest to latest
       operationId: getRouteByUserId
       tags:
         - user

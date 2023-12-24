@@ -4,7 +4,7 @@ import {LabeledInput} from "@/components/commons/LabeledInput.tsx";
 import {defaultApi, setAccessToken} from "@/util/api.ts";
 import {useEffect, useState} from "preact/hooks";
 import {useNavigate} from "react-router-dom";
-import {addCookie, getCookie} from "@/util/utils.ts";
+import {addCookie} from "@/util/utils.ts";
 
 type AuthFormData = {
     email: string
@@ -18,9 +18,8 @@ export function SignInPage() {
     const [authorizationError, setAuthorizationError] = useState<string | null>(null)
 
     useEffect(() => {
-        if (getCookie('accessToken')) {
-            navigate('/events')
-        }
+        defaultApi.checkAuthToken()
+            .then(_ => navigate('/events'))
     }, [])
 
     return (
