@@ -17,6 +17,19 @@ tags:
     description: This operations can either be performed by every role or don't require authentication.
 
 paths:
+  ###################################### misc ##########################################################################
+  /auth/token/check:
+    get:
+      summary: Check if token is valid
+      operationId: checkAuthToken
+      responses:
+        200:
+          description: Token is valid
+        401:
+          description: Token is invalid
+        403:
+          description: Token is invalid
+
   ###################################### root ##########################################################################
   /admin/signup:
     post:
