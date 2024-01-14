@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.example.polzunovfeastserver.user.entity.Role.ADMIN;
 import static java.lang.String.format;
 
@@ -55,5 +57,12 @@ public class RootService {
             return;
         }
         userRepo.deleteByIdAndRole(id, ADMIN);
+    }
+
+    public List<User> getAllAdmins() {
+        return userRepo.findAllByRole(ADMIN)
+                .stream()
+                .map(UserMapper::toUser)
+                .toList();
     }
 }

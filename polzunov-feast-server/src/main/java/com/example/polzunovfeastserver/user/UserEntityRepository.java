@@ -4,6 +4,7 @@ import com.example.polzunovfeastserver.user.entity.Role;
 import com.example.polzunovfeastserver.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
@@ -17,6 +18,8 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     boolean existsByIdAndRole(long id, Role role);
 
     Optional<UserEntity> findByIdAndRole(long id, Role role);
+
+    List<UserEntity> findAllByRole(Role role);
 
     void deleteByIdAndRole(long id, Role role);
 

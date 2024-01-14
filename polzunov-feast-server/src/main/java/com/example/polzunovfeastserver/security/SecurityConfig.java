@@ -111,6 +111,7 @@ public class SecurityConfig {
                         .requestMatchers(POST, "/admin/signup").hasAuthority(ROOT.asScope())
                         .requestMatchers(PUT, "/admin/{username}").hasAuthority(ROOT.asScope())
                         .requestMatchers(DELETE, "/admin/{username}").hasAuthority(ROOT.asScope())
+                        .requestMatchers(GET, "/admin").hasAuthority(ROOT.asScope())
 
                         //any role
                         .requestMatchers(GET, "/user").authenticated()

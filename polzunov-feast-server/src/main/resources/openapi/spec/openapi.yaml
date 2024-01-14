@@ -134,6 +134,27 @@ paths:
           description: Only root can perform this operation
         500:
           $ref: '#/components/responses/InternalServerError'
+  /admin:
+    get:
+      operationId: getAllAdmins
+      summary: Get all admins
+      tags:
+        - root
+      responses:
+        200:
+          description: List of admins
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        500:
+          $ref: '#/components/responses/InternalServerError'
 
   ###################################### user ##########################################################################
   /user/signin:
