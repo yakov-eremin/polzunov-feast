@@ -38,9 +38,8 @@ public partial class LoginPage : ContentPage
         using StringContent jsonContent = new(
                 JsonSerializer.Serialize(new
                 {
-                    //username поменять на почту, когда на сервере починят
-                    username = EmailTextBox.Text,
-                    password = PassTextBox.Text
+                    email = EmailTextBox.Text.ToString(),
+                    password = PassTextBox.Text.ToString()
                 }),
         Encoding.UTF8,
         "application/json");
@@ -57,28 +56,24 @@ public partial class LoginPage : ContentPage
         else
         {
             MessageErrorFromServer messageErrorFromServer = JsonSerializer.Deserialize<MessageErrorFromServer>(jsonResponse);
+
             switch (messageErrorFromServer.message)
             {
                 case "Wrong password":
                     errorLayout.Text = "Неправильный пароль. Повторите попытку";
                     break;
                 //Пока не работает, скоро на сервере исправят и будет почта вместо логина
-                case "Username not found":
+                case "User not found":
                     errorLayout.Text = "Такого пользователя не существует. Повторите попытку";
                     break;
                 default:
                     errorLayout.Text = "Произошла ошибка. Повторите попытку";
                     break;
-
             }
             errorLayout.IsVisible = true;
 
             EmailTextBox.IsEnabled = true;
             PassTextBox.IsEnabled = true;
-
-           
-            
-
         }
     }
 }

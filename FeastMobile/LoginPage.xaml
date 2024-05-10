@@ -38,7 +38,9 @@
             <Entry 
                 x:Name="PassTextBox"
                 FontSize="18"
-                Placeholder="Введите пароль" Keyboard="Email" />
+                Placeholder="Введите пароль" 
+                Keyboard="Plain"
+                IsPassword="True" />
 
         </StackLayout>
 

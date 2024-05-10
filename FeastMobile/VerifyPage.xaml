@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeastMobile.VerifyPage"
-             Title="Подтверждение">
+             Title="Подтверждение"
+             Shell.NavBarIsVisible="False">
 
     <StackLayout
         Padding="30"
@@ -17,6 +18,7 @@
             HorizontalOptions="Center" />
 
         <Label 
+            x:Name="WelcomeLabel"
             Text="Мы выслали вам специальный код на @example.com. Если код не пришел, проверьте раздел Спам"
             VerticalOptions="Center" 
             HorizontalOptions="Fill"
@@ -32,6 +34,13 @@
             <Entry x:Name="ThirdNum" Keyboard="Numeric" MaxLength="1" HorizontalTextAlignment="Center" HorizontalOptions="Fill" FontSize="30" TextChanged="ThirdNum_TextChanged"/>
             <Entry x:Name="FourthNum" Keyboard="Numeric" MaxLength="1" HorizontalTextAlignment="Center" HorizontalOptions="Fill" FontSize="30" TextChanged="FourthNum_TextChanged"/>
         </FlexLayout>
+
+        <Label
+            x:Name="errorLabel"
+            Text="Ошибка. Попробуйте снова"
+            TextColor="red"
+            HorizontalTextAlignment="Center"
+            IsVisible="false"/>
 
         <Button Text="Отправить код еще раз" BackgroundColor="#FFFFFF" TextColor="#1E78F0" />
 

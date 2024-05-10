@@ -59,29 +59,31 @@ public partial class RegisterPage : ContentPage
         using StringContent jsonContent = new(
                 JsonSerializer.Serialize(new
                 {
-                    username = NameTextBox.Text,
-                    password = PassTextBox.Text,
                     name = NameTextBox.Text,
                     email = EmailTextBox.Text
                 }),
         Encoding.UTF8,
         "application/json");
 
-        using HttpResponseMessage response = await sharedClient.PostAsync("user/signup", jsonContent);
+        using HttpResponseMessage response = await sharedClient.PostAsync("user/check", jsonContent);
 
         var jsonResponse = await response.Content.ReadAsStringAsync();
 
-        if (jsonResponse.Contains("accessToken"))
+        NameTextBox.IsEnabled = true;
+        EmailTextBox.IsEnabled = true;
+        PassTextBox.IsEnabled = true;
+
+        if (string.IsNullOrEmpty(jsonResponse))
         {
             //Переход на страницу подтверждения
-            await Application.Current.MainPage.Navigation.PushAsync(new FinalRegister(), true);
+            await Application.Current.MainPage.Navigation.PushAsync(new VerifyPage(EmailTextBox.Text, NameTextBox.Text, PassTextBox.Text), true);
         }
         else
         {
             MessageErrorFromServer messageErrorFromServer = JsonSerializer.Deserialize<MessageErrorFromServer>(jsonResponse);
             switch (messageErrorFromServer.message)
             {
-                case "Email is not unique":
+                case "Email is already in use":
                     errorLayout.Text = "Данная почта уже используется. Повторите попытку";
                     break;
                 default:
@@ -90,12 +92,6 @@ public partial class RegisterPage : ContentPage
 
             }
             errorLayout.IsVisible = true;
-
-            EmailTextBox.IsEnabled = true;
-            PassTextBox.IsEnabled = true;
-            NameTextBox.IsEnabled = true;
-
-
         }
     }
 
@@ -107,7 +103,7 @@ public partial class RegisterPage : ContentPage
 
     private void EmailTextBox_TextChanged(object sender, TextChangedEventArgs e)
     { 
-        bool isValid = Regex.IsMatch(e.NewTextValue, @"^([a-zA-Z]|[0-9])*@[a-z]+.[a-z]+");
+        bool isValid = Regex.IsMatch(e.NewTextValue, @"^([a-zA-Z]|[0-9]|[.]|)*@[a-z]+[.][a-z]+");
         SetState(isValid, EmailTextBox); 
         isValidEmail = isValid;
     }
