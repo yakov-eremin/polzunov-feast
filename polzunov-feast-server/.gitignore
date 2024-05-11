@@ -1,5 +1,6 @@
 HELP.md
 
+amplicode.xml
 static-data
 target/
 !/.idea/.gitignore

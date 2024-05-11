@@ -115,6 +115,7 @@ public class SecurityConfig {
 
                         //any role
                         .requestMatchers(GET, "/user").authenticated()
+                        .requestMatchers(GET, "/auth/token/check").authenticated()
                 )
                 .oauth2ResourceServer(o -> o.jwt(Customizer.withDefaults()));
 
