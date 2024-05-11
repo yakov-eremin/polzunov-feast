@@ -92,7 +92,7 @@ public class ImageService {
     }
 
     private String createUniqueImageName(MultipartFile image) {
-        return UUID.randomUUID() + "_" + Instant.now() + getImageExtension(image);
+        return UUID.randomUUID().toString();
     }
 
     /**
