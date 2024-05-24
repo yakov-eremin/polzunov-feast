@@ -61,14 +61,14 @@ public class UserService {
      * @throws UserNotFoundException user doesn't exist
      */
     public void logoutById(long id, LogoutRequest logoutRequest) {
-        if (!userRepo.existsById(id)) {
-            throw new UserNotFoundException(format("Cannot logout: user with id=%d not found", id));
-        }
-        if (!logoutRequest.getNotificationToken().isPresent()) {
-            log.warn("User with id={} didn't provide notification token when login out", id);
-            return;
-        }
-        notificationService.deleteTokenByUserId(id, logoutRequest.getNotificationToken().get());
+//        if (!userRepo.existsById(id)) {
+//            throw new UserNotFoundException(format("Cannot logout: user with id=%d not found", id));
+//        }
+//        if (!logoutRequest.getNotificationToken().isPresent()) {
+//            log.warn("User with id={} didn't provide notification token when login out", id);
+//            return;
+//        }
+//        notificationService.deleteTokenByUserId(id, logoutRequest.getNotificationToken().get());
     }
 
 
