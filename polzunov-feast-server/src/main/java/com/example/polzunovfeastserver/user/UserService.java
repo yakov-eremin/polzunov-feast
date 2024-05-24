@@ -37,9 +37,9 @@ public class UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         UserEntity userEntity = UserMapper.toUserEntity(user, null, Role.USER);
         userEntity = userRepo.save(userEntity);
-        if (user.getNotificationToken().isPresent()) {
-            notificationService.addNotificationToken(userEntity, user.getNotificationToken().get());
-        }
+//        if (user.getNotificationToken().isPresent()) {
+//            notificationService.addNotificationToken(userEntity, user.getNotificationToken().get());
+//        }
         return jwtService.generateToken(userEntity);
     }
 
@@ -51,9 +51,9 @@ public class UserService {
                 new UsernamePasswordAuthenticationToken(credentials.getEmail(), credentials.getPassword()));
         UserEntity user = (UserEntity) auth.getPrincipal();
 
-        if (credentials.getNotificationToken().isPresent()) {
-            notificationService.addNotificationToken(user, credentials.getNotificationToken().get());
-        }
+//        if (credentials.getNotificationToken().isPresent()) {
+//            notificationService.addNotificationToken(user, credentials.getNotificationToken().get());
+//        }
         return jwtService.generateToken(user);
     }
 
