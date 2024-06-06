@@ -1,4 +1,4 @@
-import {Button, DialogContent, Divider, FormLabel, Stack} from "@mui/material";
+import {Button, DialogContent, Divider, FormLabel, Stack, TextField} from "@mui/material";
 import {LabeledInput} from "@/components/commons/LabeledInput.tsx";
 import {TitledDialog} from "@/components/commons/TitledDialog.tsx";
 import {useForm} from "react-hook-form";
@@ -9,7 +9,6 @@ import {
     validateDuration,
     validateEventName
 } from "@/util/validation/eventValidation.ts";
-import {validateAddress, validatePlaceName} from "@/util/validation/placeValidation.ts";
 import {LabeledChipListInput} from "@/components/commons/LabeledChipListInput.tsx";
 import {useEffect, useState} from "preact/hooks";
 import {EventWithPlaceResponse} from "@/openapi/models/EventWithPlaceResponse.ts";
@@ -20,7 +19,6 @@ import {Event} from "@/openapi/models/Event.ts";
 import {
     AddEventImageRequest,
     AddEventRequest,
-    AddPlaceRequest,
     UpdateEventByIdRequest
 } from "@/openapi/apis/AdminApi.ts";
 import {labeledInputLabelStyle} from "@/util/styles.ts";
@@ -46,11 +44,15 @@ export function EventDialog({action = 'create', event = undefined, ...props}:
     } = useForm()
 
     const [availableCategoriesArray, setAvailableCategoriesArray] = useState<Category[]>([])
+    const [places, setAvailablePlaces] = useState<Place[]>([])
 
     useEffect(() => {
         defaultApi.getAllCategories()
             .then(value => setAvailableCategoriesArray(value))
             //TODO show popup with error
+            .catch(reason => console.log(reason))
+        defaultApi.getAllPlaces()
+            .then(value => setAvailablePlaces(value))
             .catch(reason => console.log(reason))
     }, [props.open]);
 
@@ -109,18 +111,19 @@ export function EventDialog({action = 'create', event = undefined, ...props}:
                                           formRegister={register('ageLimit', {validate: validateAgeLimit})}
                                           error={Boolean(errors.ageLimit)}
                                           helperText={errors.ageLimit && errors.ageLimit.message}/>
-                            <LabeledInput labelText='Название места*'
-                                          formRegister={register('place', {validate: validatePlaceName})}
-                                          error={Boolean(errors.place)}
-                                          helperText={errors.place && errors.place.message}/>
-                            <LabeledInput labelText='Адрес*'
-                                          formRegister={register('address', {validate: validateAddress})}
-                                          error={Boolean(errors.address)}
-                                          helperText={errors.address && errors.address.message}/>
                             <LabeledInput labelText='Описание'
                                           formRegister={register('description', {validate: validateDescription})}
                                           error={Boolean(errors.description)}
                                           helperText={errors.description && errors.description.message}/>
+                            <TextField label='Место'
+                                       select
+                                       {...register('placeId')}
+                                       SelectProps={{native: true}}>
+                                {places.map((place) => (
+                                    <option key={place.id} value={place.id}>{place.name}</option>
+                                ))}
+                            </TextField>
+
                         </Stack>
                         <Stack spacing={3}>
                             <LabeledChipListInput labelText='Категории'
@@ -155,12 +158,6 @@ export function EventDialog({action = 'create', event = undefined, ...props}:
     )
 
     function callApi(data) {
-        let place: Place = {
-            id: event === undefined || action === 'create' ? 0 : event.place.id,
-            name: data.place,
-            address: data.address,
-        }
-
         const ageLimit = data.ageLimit
         let newEvent: Event = {
             id: event === undefined || action === 'create' ? 0 : event.id,
@@ -176,36 +173,20 @@ export function EventDialog({action = 'create', event = undefined, ...props}:
                 .filter(c => data.categories.has(c.name))
                 .map(c => c.id)),
             imageUrls: new Set(),
-            placeId: place.id
+            placeId: Number(data.placeId)
         }
+        console.log(newEvent)
 
         if (action === 'create') {
-            addEvent(newEvent, place, data.images)
+            addEvent(newEvent, data.images)
         } else {
-            updateEvent(newEvent, place, data.images)
+            updateEvent(newEvent, data.images)
         }
     }
 
-    async function addEvent(eventToAdd: Event, place: Place, images: File[] = []) {
-        //Добавляем место
-        place.id = 0
-        const addPlaceRequest: AddPlaceRequest = {
-            place: place
-        }
-        let placeId = -1
-        await adminApi.addPlace(addPlaceRequest)
-            .then(value => {
-                placeId = value.id
-                console.log(`Created place ${value}`)
-            })
-            //TODO show popup with error
-            .catch(reason => {
-                throw new Error(`Failed to create place: ${reason}`)
-            })
-
+    async function addEvent(eventToAdd: Event, images: File[] = []) {
         //Добавляем событие
         eventToAdd.id = 0
-        eventToAdd.placeId = placeId
         const addEventRequest: AddEventRequest = {
             event: eventToAdd
         }
@@ -235,7 +216,7 @@ export function EventDialog({action = 'create', event = undefined, ...props}:
         }
     }
 
-    async function updateEvent(eventToUpdate: Event, place: Place, images: File[] = []) {
+    async function updateEvent(eventToUpdate: Event, images: File[] = []) {
         //Обновляем изображения
         const imageUrls = new Set<string>()
         for (let i = 0; i < images.length; i++) {

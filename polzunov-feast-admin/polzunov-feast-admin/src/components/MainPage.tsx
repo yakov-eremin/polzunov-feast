@@ -3,6 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {AppBar, Box, IconButton, ListItemIcon, Menu, MenuItem, MenuList, Paper, Typography} from "@mui/material";
 import {useState} from "preact/hooks";
 import {EventsPage} from "@/components/events/EventsPage.tsx";
+import {PlacePage} from "@/components/places/PlacePage.tsx";
 
 const pagesToIcons = new Map([
     ['Программа', <ListAlt/>],
@@ -11,7 +12,13 @@ const pagesToIcons = new Map([
     ['Администраторы', <AdminPanelSettings/>],
     ['Настройки', <Settings/>]
 ])
-
+const pagesToAddress = new Map([
+    ['Программа', <EventsPage/>],
+    ['Места', <PlacePage/>],
+    ['Пользователи', <EventsPage/>],
+    ['Администраторы', <EventsPage/>],
+    ['Настройки', <EventsPage/>]
+])
 /**
  * Основная страница с апп баром, по которому происходит навигация.
  */
@@ -19,9 +26,11 @@ export function MainPage() {
 
     const [activePage, setActivePage] = useState(pagesToIcons.keys().next().value)
     const [anchorElNav, setAnchorElNav] = useState(null)
+    const [isActivePage, setIsActivePage] = useState(pagesToAddress.get(pagesToIcons.keys().next().value))
 
     const onMenuPageClicked = (page) => {
         setActivePage(page)
+        setIsActivePage(pagesToAddress.get(page))
     }
 
     const openNavMenu = (event) => {
@@ -96,7 +105,7 @@ export function MainPage() {
 
             {/*TODO Сейчас отображается только страница с событиями, фактически навигации нет*/}
             <Paper sx={{m: {md: 2}}}>
-                <EventsPage/>
+                {isActivePage}
             </Paper>
         </>
     )
