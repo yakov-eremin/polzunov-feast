@@ -206,7 +206,9 @@ public class EventService {
 
 
         Page<EventEntity> events = eventRepo.findAll(where(eventParameter), PageRequest.of(page, size));
-        return events.stream().map(ev ->
+        return events.stream()
+                .distinct()
+                .map(ev ->
                 toEventWithPlaceResponse(
                         ev,
                         toPlace(ev.getPlace()),
