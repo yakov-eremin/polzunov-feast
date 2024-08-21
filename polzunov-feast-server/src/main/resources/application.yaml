@@ -1,0 +1,27 @@
+root:
+  #TODO substitute with env variables before prod
+  email: root@root.root
+  password: root123!
+
+static-data:
+  root-dir:
+    /static-data
+  root-url:
+    #TODO change before prod
+    http://localhost:9090
+
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/polzunov-feast-db
+    username: polzunov
+    password: feast
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql

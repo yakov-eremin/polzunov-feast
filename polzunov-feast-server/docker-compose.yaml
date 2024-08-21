@@ -1,0 +1,33 @@
+# to create containers run 'docker-compose up -d' in this directory
+version: "3.9"
+services:
+  polzunov-feast-db:
+    container_name: polzunov-feast-db
+    image: postgres:15.1-alpine
+    environment:
+      POSTGRES_DB: 'polzunov-feast-db'
+      POSTGRES_USER: 'polzunov'
+      POSTGRES_PASSWORD: 'feast'
+    ports:
+      - '5432:5432'
+    volumes:
+      - polzunov-feast-data:/var/lib/postgresql/data
+
+  polzunov-feast-static-server:
+    container_name: polzunov-feast-static-server
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - '9090:9090'
+    volumes:
+      - ./static-data:/home/nginx/static-data
+    environment:
+      - NGINX_PORT=9090
+      - NGINX_HOST=localhost
+      - NGINX_ROOT_DIR=/home/nginx/static-data
+    depends_on:
+      - polzunov-feast-db
+volumes:
+  polzunov-feast-data:
+    name: polzunov-feast-data

@@ -1,0 +1,1466 @@
+openapi: 3.0.3
+info:
+  title: Polzunov.Feast
+  version: '0.1'
+servers:
+  - url: 'http://localhost:8080' #TODO change to real domain
+security:
+  - bearerAuth: [ ]
+tags:
+  - name: user
+    description: Only users can perform this operations
+  - name: admin
+    description: Only admins (including root) can perform this operations. POST and DELETE will not be available if 'prod' mode is on
+  - name: root
+    description: Only root can perform this operations. This actions will not be available if 'prod' mode is on
+  - name: default
+    description: This operations can either be performed by every role or don't require authentication.
+
+paths:
+  ###################################### misc ##########################################################################
+  /auth/token/check:
+    get:
+      summary: Check if token is valid
+      operationId: checkAuthToken
+      responses:
+        200:
+          description: Token is valid
+        401:
+          description: Token is invalid
+        403:
+          description: Token is invalid
+
+  ###################################### root ##########################################################################
+  /admin/signup:
+    post:
+      summary: Sign up new admin
+      operationId: signUpAdmin
+      tags:
+        - root
+      requestBody:
+        required: true
+        description: Admin to sign up
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Admin signed up, authentication token of type "Bearer" passed in the body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        409:
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /admin/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int64
+        required: true
+        description: Admin's id
+    put:
+      summary: Update admin
+      operationId: updateAdminById
+      tags:
+        - root
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Admin updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin with this id not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteAdminById
+      summary: Delete admin
+      tags:
+        - root
+      responses:
+        200:
+          description: Admin deleted
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /admin:
+    get:
+      operationId: getAllAdmins
+      summary: Get all admins
+      tags:
+        - root
+      responses:
+        200:
+          description: List of admins
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only root can perform this operation
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  ###################################### user ##########################################################################
+  /user/signin:
+    post:
+      summary: Sign in user or admin
+      operationId: signInUser
+      security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        200:
+          description: User authenticated, token of type "Bearer" passed in the body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          description: |
+            Code:
+            - WRONG_PASSWORD - wrong password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - user or admin not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /user/signup:
+    post:
+      summary: Sign up new user
+      operationId: signUpUser
+      security: [ ]
+      requestBody:
+        required: true
+        description: User to sign up
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: User signed up, authentication token of type "Bearer" passed in the body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        409:
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /user/check:
+    post:
+      summary: Check if user's email or phone number is taken
+      operationId: checkUser
+      security: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: User can be signed up
+        400:
+          $ref: '#/components/responses/BadRequest'
+        409:
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - user with this email already exists
+            - PHONE_ALREADY_EXISTS - user with this phone number already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /user/logout:
+    put:
+      summary: Log out user
+      description: This operation just deletes user's notification token.
+        JWT stays valid and client can make requests with. 
+        It's client's responsibility to purge the token if user wishes to log out.
+      operationId: logoutUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+      responses:
+        200:
+          description: User logged out
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - user not found
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /user:
+    put:
+      summary: Update user profile info
+      operationId: updateUser
+      tags:
+        - user
+      requestBody:
+        required: true
+        description: User object with new data. *Password can be null, if it doesn't need to be updated.*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: Updated user with *password=null*
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - user making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - EMAIL_ALREADY_EXISTS - if user with this email is already exists
+            - PHONE_ALREADY_EXISTS - if user with this phone number is already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    get:
+      summary: Get user info without password
+      operationId: getUser
+      responses:
+        200:
+          description: User info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      summary: Delete user
+      operationId: deleteUser
+      tags:
+        - user
+      responses:
+        200:
+          description: User deleted
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  ##################################### place ##########################################################################
+  /place:
+    post:
+      summary: Create new place
+      operationId: addPlace
+      tags:
+        - admin
+      requestBody:
+        required: true
+        description: Place to create. *Id can be every random integer value, because provided id will be substituted with generated one*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Place'
+      responses:
+        200:
+          description: Place created, *it will have generated id*
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      summary: Update place by id
+      operationId: updatePlaceById
+      tags:
+        - admin
+      requestBody:
+        required: true
+        description: Place to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Place'
+      responses:
+        200:
+          description: Place updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - PLACE_NOT_FOUND - place with this id is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: There are events associated with this place
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    get:
+      summary: Get all places
+      operationId: getAllPlaces
+      security: [ ]
+      parameters:
+        - in: query
+          name: page
+          description: Index of first page to return
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: size
+          description: Page size
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+      responses:
+        200:
+          description: Places sent
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /place/{id}:
+    parameters:
+      - in: path
+        name: id
+        description: Place id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Get place by id
+      operationId: getPlaceById
+      security: [ ]
+      responses:
+        200:
+          description: Place sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        404:
+          description: |
+            Code:
+            - PLACE_NOT_FOUND - place with this id is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      summary: Delete place by id
+      operationId: deletePlaceById
+      tags:
+        - admin
+      responses:
+        200:
+          description: Place deleted
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - PLACE_HAS_ASSOCIATED_EVENTS - cannot delete place, because there are events associated with it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    ##################################### event ##########################################################################
+  /event:
+    post:
+      summary: Create new event
+      operationId: addEvent
+      tags:
+        - admin
+      requestBody:
+        required: true
+        description: |
+          Event to create. 
+           - *Id can be every random integer value, because provided id will be substituted with generated one*
+           - Field 'canceled' may not be present, because it will be set to false anyway
+           - Not found and duplicated categories will be ignored
+           - Links to pictures will be empty, hence might not be provided
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        200:
+          description: Event created, *it will have generated id*
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventWithPlaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - PLACE_NOT_FOUND - place with this id is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      summary: Update event by id
+      operationId: updateEventById
+      tags:
+        - admin
+      requestBody:
+        required: true
+        description: |
+          Event object with new data. 
+           - Not found and duplicated categories will be ignored
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        200:
+          description: Event updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventWithPlaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - PLACE_NOT_FOUND - place with this id is not found
+            - EVENT_NOT_FOUND - event with this id is not found
+            - IMAGE_NOT_FOUND - some of provided images are not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            This checks will *not* be performed if event is canceled.
+            
+            Code:
+            - EVENT_ALREADY_STARTED - event has already started
+            - EVENT_HAS_ASSOCIATED_ROUTES - event is in someone's route
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      summary: Get all events
+      operationId: getAllEvents
+      security: [ ]
+      parameters:
+        - in: query
+          name: catIds
+          description: Only events with specified category ids will be returned
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+        - in: query
+          name: age
+          description: Only events with age limit <= age will be returned
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: start
+          description: Only events with start time >= start will be returned. *Must be encoded*
+          required: false
+          schema:
+            type: string
+            format: date-time
+          example: 2024-12-04T10%3A15%3A30%2B00%3A00
+        - in: query
+          name: end
+          description: Only events with end time <= end will be returned. *Must be encoded*
+          required: false
+          schema:
+            type: string
+            format: date-time
+          example: 2024-12-05T10%3A15%3A30%2B00%3A00
+        - in: query
+          name: canceled
+          description: If true only canceled events will be returned, if false - only not canceled, if not present - both
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: page
+          description: Index of first page to return
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+        - in: query
+          name: size
+          description: Page size
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+      responses:
+        200:
+          description: Events sent
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventWithPlaceResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /event/{id}:
+    parameters:
+      - in: path
+        name: id
+        description: Event id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Get event by id
+      operationId: getEventById
+      security: [ ]
+      responses:
+        200:
+          description: Event found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventWithPlaceResponse'
+        404:
+          description: |
+            Code:
+            - EVENT_NOT_FOUND - event with this id is not found
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete event by id
+      operationId: deleteEventById
+      tags:
+        - admin
+      responses:
+        200:
+          description: Event deleted
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - EVENT_HAS_ASSOCIATED_ROUTES - cannot delete event, because there are routes associated with it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /event/{id}/image:
+    parameters:
+      - in: path
+        name: id
+        description: Event id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    post:
+      summary: Add an image to the event
+      description: |
+        Image must be of type:
+        - image/png
+        - image/jpeg
+      operationId: addEventImage
+      parameters:
+        - in: query
+          name: main
+          description: If true, this image will be set as main
+          required: false
+          schema:
+            type: boolean
+            default: false
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - image
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: Image added, link to the image returned in the body. Use GET request to obtain the image.
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: url
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - EVENT_NOT_FOUND - event with this id is not found
+        415:
+          description: |
+            Code:
+            - UNSUPPORTED_IMAGE_TYPE - illegal image type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+      
+      
+
+      ##################################### category #######################################################################
+  /category:
+    post:
+      summary: Create new category
+      operationId: addCategory
+      tags:
+        - admin
+      requestBody:
+        required: true
+        description: |
+          Category to create. 
+           - *Id can be every random integer because provided id will be substituted with generated one*
+           - Category name must be unique. Uniqueness check is case-sensitive
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        200:
+          description: Category created, *it will have generated id*
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - CATEGORY_NAME_ALREADY_EXISTS
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      summary: Update category by id
+      operationId: updateCategoryById
+      tags:
+        - admin
+      requestBody:
+        description: Category object with new data. *Category name must be unique. Uniqueness check is case-sensitive*
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        200:
+          description: Category updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+            - CATEGORY_NOT_FOUND - category with this id is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - CATEGORY_NAME_ALREADY_EXISTS - category with this name already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      summary: Get all categories
+      operationId: getAllCategories
+      security: [ ]
+      responses:
+        200:
+          description: Categories sent
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  /category/{id}:
+    parameters:
+      - in: path
+        name: id
+        description: Category id
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Get category by id
+      operationId: getCategoryById
+      security: [ ]
+      responses:
+        200:
+          description: Category found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        404:
+          description: |
+            Code:
+            - CATEGORY_NOT_FOUND - category with this id is not found
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Delete category by id
+      operationId: deleteCategoryById
+      tags:
+        - admin
+      responses:
+        200:
+          description: Category deleted
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only admins (including root) can perform this operation
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - admin making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - CATEGORY_HAS_ASSOCIATED_EVENTS - cannot delete category, because there are events associated with it
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+  
+  ############################################ route ###################################################################
+  /route:
+    put:
+      summary: Update user's route
+      description: |
+        - If there is no route, it will be created and updated.
+        - Route's nodes will be ordered by events' start time from earliest to latest.
+        
+         **Note:** if nodes contains duplicated event ids, duplicates will be ignored
+      operationId: updateRouteByUserId
+      tags:
+        - user
+      requestBody:
+        required: true
+        description: Route object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Route'
+      responses:
+        200:
+          description: Route updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteWithEventResponse'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
+        404:
+          description: |
+            Code:
+            - USER_NOT_FOUND - user who makes this request is not found
+            - EVENT_NOT_FOUND - some of the provided event ids are not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
+          description: |
+            Code:
+            - EVENTS_TIME_OVERLAP - the time of one event overlaps the time of another (e.g., two events with the same start time)
+            - EVENT_ALREADY_STARTED - some events have already started
+            - EVENT_CANCELED - some events are canceled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+    get:
+      summary: Get user's route
+      description: |
+       - If there is no route, it will be created and sent. 
+       - Route's nodes will be ordered by events' start time from earliest to latest
+      operationId: getRouteByUserId
+      tags:
+        - user
+      responses:
+        200:
+          description: Route sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteWithEventResponse'
+        401:
+          $ref: '#/components/responses/TokenUnauthorized'
+        403:
+          description: Only regular users can perform this action
+        404:
+          description: |
+            Code: 
+            - USER_NOT_FOUND - user making this request is not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+#################################### Components ########################################################################
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http #TODO change to https
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    InternalServerError:
+      description: |
+        Code:
+        - INTERNAL_SERVER_ERROR - internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: |
+        Code:
+        - BAD_REQUEST - bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    TokenUnauthorized:
+      description: Token authorization failed, relogin required
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        objectValidationViolations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ObjectValidationViolation'
+          description: Object validation errors
+        fieldValidationViolations:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldValidationViolation'
+          description: Field validation errors
+        httpAttributeValidationViolations:
+          type: array
+          items:
+            $ref: '#/components/schemas/HttpAttributeValidationViolation'
+          description: Http attribute (path variables, request params, etc.) validation errors
+        code:
+          type: string
+          description: Error codes that specifies the type of error
+          enum:
+            - WRONG_PASSWORD
+            - EMAIL_ALREADY_EXISTS
+            - PHONE_ALREADY_EXISTS
+            - USER_NOT_FOUND
+            - PLACE_NOT_FOUND
+            - PLACE_HAS_ASSOCIATED_EVENTS
+            - EVENT_NOT_FOUND
+            - EVENTS_TIME_OVERLAP
+            - EVENT_CANCELED
+            - EVENT_ALREADY_STARTED
+            - EVENT_HAS_ASSOCIATED_ROUTES
+            - CATEGORY_NAME_ALREADY_EXISTS
+            - CATEGORY_NOT_FOUND
+            - CATEGORY_HAS_ASSOCIATED_EVENTS
+            - UNSUPPORTED_IMAGE_TYPE
+            - IMAGE_NOT_FOUND
+            - BAD_REQUEST
+            - INTERNAL_SERVER_ERROR
+            - UNKNOWN
+          example: See the description for the code(s)
+
+    ObjectValidationViolation:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    FieldValidationViolation:
+      type: object
+      required:
+        - field
+        - message
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+    HttpAttributeValidationViolation:
+      type: object
+      required:
+        - attribute
+        - message
+      properties:
+        attribute:
+          type: string
+        message:
+          type: string
+
+    Token:
+      type: object
+      required:
+        - accessToken
+        - tokenType
+      properties:
+        accessToken:
+          type: string
+          format: JWT
+          example: eyJraWQiOiJmNmQ2YjE0NC1jMTMwLTQ5YjgtYTc1MC04ZTEzMTIzYzU4YzciLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiMSIsImV4cCI6MTY3OTc2MDY1NCwiaWF0IjoxNjc5NzU3MDU0LCJzY29wZSI6IlJPTEVfVVNFUiJ9.e7uKeUlNO3pt_erR23LxplEzWA5DhTYlP5SsM4NtF2Y-GJgEJ3BSJnAKj_wh4V9H417J-ck_UiSy749gbCWGDxjXfSWeBYLCQeKd6_cS8V5l73yIYWf1YDznO8sVyX8GT1SS6LqEescE5JUIH6t0SUgsbLa9QPTNXAEkf9pQ7m4mv--9sfJ7Pgk7pjRSxgkNaVPq8OhcDjnSFHSg7SAc3FlJmDrtP6yiu4TOqsBoqPeneDFWjWSTyE0FS0Vu1fa6OYLFq0Z9gMZa4ohTKkWsKqjF4ND2vSduVni5s3hw-Loft0Wmw697us9DHxs8qVOPEsIS3231VDPbZ9QkhCjQ1w
+        tokenType:
+          type: string
+          example: "Bearer"
+
+    User:
+      required:
+        - id
+        - name
+        - email
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.READ_ONLY)'
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 32
+          pattern: ^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?^&])[A-Za-z\d@$!%*#?^&]{3,}$
+          x-pattern-message: must contain at least one letter, one number and one special character
+          writeOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) @NotNull(groups = com.example.polzunovfeastserver.util.validation_group.OnCreate.class)'
+          description: |
+            - must not be null when signing a user up
+            - must contain at least one letter, one number and one special character
+            - must be unique
+        name:
+          type: string
+          minLength: 2
+          maxLength: 256
+          x-field-extra-annotation: '@NotBlank'
+          description: must not be blank
+        phone:
+          type: string
+          format: phone
+          pattern: \+\d{1,3}\d{10}
+          x-pattern-message: must be a phone number in a format +country-codexxxxxxxxxx
+          example: '+71234567890'
+          description: Must be unique
+        email:
+          type: string
+          format: email
+          description: Must be unique
+        notificationToken:
+          type: string
+          nullable: true
+          writeOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)'
+          description: |
+            Token for push notifications. Each device should have its own token.
+             One user cannot have the same token twice. If you provide a token that this user already has, it will be ignored.
+
+    Credentials:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+          maxLength: 32
+          pattern: ^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?^&])[A-Za-z\d@$!%*#?^&]{3,}$
+          x-pattern-message: must contain at least one letter, one number and one special character
+          writeOnly: true
+          x-field-extra-annotation: '@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)'
+          description: Must contain at least one letter, one number and one special character
+        notificationToken:
+          type: string
+          nullable: true
+          writeOnly: true
+          description: |
+            Token for push notifications. Each device should have it's own token.
+             One user cannot have the same token twice. If you provide a token that this user already has, it will be ignored.
+
+    LogoutRequest:
+      type: object
+      properties:
+        notificationToken:
+          type: string
+          nullable: true
+          description: Token for push notifications. User will no longer receive push on device with this token
+
+
+    Event:
+      type: object
+      description: Event duration must be in range of 5 minutes to 24 hours
+      x-class-extra-annotation: '@com.example.polzunovfeastserver.event.util.DurationInMinutes(startField = "startTime", endField = "endTime", min = 5, max = 1440)'
+      required:
+        - id
+        - name
+        - startTime
+        - endTime
+        - placeId
+        - categoryIds
+        - imageUrls
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          minLength: 2
+          maxLength: 128
+          x-field-extra-annotation: '@NotBlank'
+          description: Must not be blank
+        description:
+          type: string
+          default: ''
+          maxLength: 1024
+        startTime:
+          type: string
+          format: date-time
+          example: 2025-01-01T00:00:00+3:00
+          x-field-extra-annotation: '@FutureOrPresent'
+          description: Can be either in future or in present
+        endTime:
+          type: string
+          format: date-time
+          example: 2025-01-01T01:00:00+3:00
+          x-field-extra-annotation: '@Future'
+          description: Can only be in future
+        placeId:
+          type: integer
+          format: int64
+        canceled:
+          type: boolean
+          default: false
+        categoryIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+          description: Might be empty
+        ageLimit:
+          description: Only people whose age >= ageLimit are allowed
+          type: integer
+          format: int32
+          default: 0
+          minimum: 0
+          maximum: 21
+        imageUrls:
+          description: Urls of images of this event. The first image is considered the main one.
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: url
+
+    EventWithPlaceResponse:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - startTime
+        - endTime
+        - place
+        - canceled
+        - categories
+        - ageLimit
+        - imageUrls
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+          default: ""
+        startTime:
+          type: string
+          format: date-time
+          example: 2019-01-01T00:00:00+3:00
+        endTime:
+          type: string
+          format: date-time
+          example: 2019-01-01T01:00:00+3:00
+        place:
+          $ref: '#/components/schemas/Place'
+        canceled:
+          type: boolean
+          default: false
+        categories:
+          type: array
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/Category'
+        ageLimit:
+          description: Only people whose age >= ageLimit are allowed
+          type: integer
+          format: int32
+          default: 0
+        imageUrls:
+          description: Urls of images of this event. The first image is considered the main one.
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            format: url
+
+    Category:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          minLength: 2
+          maxLength: 64
+
+    Place:
+      type: object
+      required:
+        - id
+        - name
+        - address
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          minLength: 2
+          maxLength: 256
+        address:
+          type: string
+          minLength: 2
+          maxLength: 512
+
+    Route:
+      type: object
+      required:
+        - nodes
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteNode'
+    RouteWithEventResponse:
+      type: object
+      required:
+        - nodes
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteNodeWithEventResponse'
+
+    RouteNode:
+      type: object
+      required:
+        - eventId
+      properties:
+        eventId:
+          type: integer
+          format: int64
+    RouteNodeWithEventResponse:
+      type: object
+      required:
+        - event
+      properties:
+        event:
+          $ref: '#/components/schemas/EventWithPlaceResponse'
